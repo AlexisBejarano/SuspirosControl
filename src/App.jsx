@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import ButtonTable from "./components/buttonTable"
+import ButtonEntradasSalidas from "./components/ButtonEntradasSalidas"
+import ButtonCaducidad from "./components/ButtonCaducidad"
+import ButtonAction from "./components/ButtonAction";
 
 const TableComponent = () => {
 
@@ -18,12 +20,12 @@ const TableComponent = () => {
             {
               "id": 1,
               "lote": "L001",
-              "cantidad": 20, //ES LA SUMA Y RESTA DE MOVIMIENTOS
+              "cantidad": 10, //ES LA SUMA Y RESTA DE MOVIMIENTOS
               "caducidad": "2023-12-10T00:00:00Z",
               "movimientos": [
                 {
                   "id": 1,
-                  "entrada": 50,
+                  "entrada": 20,
                   "salida": 30
                 }
               ]
@@ -63,7 +65,7 @@ const TableComponent = () => {
           "id": 2,
           "nombre": "Producto B",
           "unidad_medida": "litros",
-          "stock": 130,
+          "stock": 140,
           "detalle_productos": [
             {
               "id": 3,
@@ -81,13 +83,13 @@ const TableComponent = () => {
             {
               "id": 4,
               "lote": "L004",
-              "cantidad": 10,
+              "cantidad": 20,
               "caducidad": "2024-02-28T00:00:00Z",
               "movimientos": [
                 {
                   "id": 4,
                   "entrada": 50,
-                  "salida": 40
+                  "salida": 30
                 }
               ]
             }
@@ -140,6 +142,18 @@ const TableComponent = () => {
     }
   ]);
 
+  // Handlers para las acciones
+  const handleEditar = (id) => alert(`Editar producto con ID: ${id}`);
+  const handleEntrada = (id) => alert(`Entrada producto con ID: ${id}`);
+  const handleSalida = (id) => alert(`Salida producto con ID: ${id}`);
+  const handleEliminar = (id) => {
+    if (window.confirm("¿Seguro que deseas eliminar este producto?")) {
+      setProductos((prev) => prev.map((group) => ({
+        ...group,
+        productos: group.productos.filter((item) => item.id !== id),
+      })));
+    }
+  };
 
   // Calcular la suma de entradas de un producto
   const calcularSumaEntradas = (producto) =>
@@ -160,56 +174,48 @@ const TableComponent = () => {
   return (
     <>
 
-    <marquee behavior="scroll" direction="left">SUSPIROS</marquee>
-    <div className="flex items-center bg-neutral-300 p-4">
-      
+      <marquee behavior="scroll" direction="left">SUSPIROS</marquee>
+      <div className="flex items-center bg-neutral-300 p-4">
 
 
-      <table className="mx-auto ">
-        <thead>
-          <tr className="bg-gray-800 text-white">
-            <th className="py-3 px-2 border-r-1">Producto</th>
-            <th className="py-3 px-2 border-r-1">Ud. Medida</th>
-            <th className="py-3 px-2 border-r-1">Entrada</th>
-            <th className="py-3 px-2 border-r-1">Salida</th>
-            <th className="py-3 px-2 border-r-1">Stock</th>
-            <th className="py-3 px-2 border-r-1">Caducidad Próxima</th>
-            <th className="py-3 px-2">Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {productos[0].productos.map((producto) => (
-            <tr key={producto.id} className="bg-white border-y-8 border-neutral-300 ">
-              <td className="px-4 py-2 text-center border-r-2 border-r-gray-300">{producto.nombre}</td>
-              <td className="px-4 py-2 text-center border-r-2 border-r-gray-300">{producto.unidad_medida}</td>
-              
-              <td className="px-1 text-center border-r-2 border-r-gray-300">
-                <button className="bg-green-500 min-w-24 text-white px-3 py-1 rounded-lg hover:bg-emerald-700 transition">
-                  {calcularSumaEntradas(producto)}
-                </button>
-              </td>
 
-              <td className="px-1 text-center border-r-2 border-r-gray-300">
-                <button className="bg-green-500 min-w-24 text-white px-3 py-1 rounded-lg hover:bg-emerald-700 transition">
-                  {calcularSumaSalidas(producto)}
-                </button>
-              </td>
-
-              <td className="px-4 py-2 text-center border-r-2 border-r-gray-300">{producto.stock}</td>
-              <td className="px-1 text-center border-r-2 border-r-gray-300">
-                <button className="bg-green-500 w-full text-white px-3 py-1 rounded-lg hover:bg-emerald-700 transition">
-                  {obtenerCaducidadProxima(producto)}
-                </button>
-              </td>
-              <td className="text-center min-w-28">
-                <button onClick={() => handleEditar(producto.id)} className="bg-blue-500 w-12 text-white py-1 mx-1 rounded-lg hover:bg-blue-800 transition">✏</button>
-                <button onClick={() => handleEliminar(producto.id)} className="bg-red-700 w-12 text-white py-1 mr-1 rounded-lg hover:bg-red-900 transition">🗑</button>
-              </td>
+        <table className="mx-auto ">
+          <thead>
+            <tr className="bg-gray-800 text-white">
+              <th className="py-3 px-2 border-r-1">Producto</th>
+              <th className="py-3 px-2 border-r-1">Ud. Medida</th>
+              <th className="py-3 px-2 border-r-1">Entrada</th>
+              <th className="py-3 px-2 border-r-1">Salida</th>
+              <th className="py-3 px-2 border-r-1">Stock</th>
+              <th className="py-3 px-2 border-r-1">Caducidad Próxima</th>
+              <th className="py-3 px-2">Acciones</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+          </thead>
+          <tbody>
+            {productos[0].productos.map((producto) => (
+              <tr key={producto.id} className="bg-white border-y-8 border-neutral-300 ">
+
+                <td className="px-4 py-2 text-center border-r-2 border-r-gray-200">{producto.nombre}</td>
+                <td className="px-4 py-2 text-center border-r-2 border-r-gray-200">{producto.unidad_medida}</td>
+                <td className="px-1 text-center border-r-2 border-r-gray-200">
+                  <ButtonEntradasSalidas buttonEntradasSalidas={calcularSumaEntradas(producto)} />
+                </td>
+                <td className="px-1 text-center border-r-2 border-r-gray-200">
+                  <ButtonEntradasSalidas buttonEntradasSalidas={calcularSumaSalidas(producto)} />
+                </td>
+                <td className="px-4 py-2 text-center border-r-2 border-r-gray-200">{producto.stock}</td>
+                <td className="px-1 text-center border-r-2 border-r-gray-200">
+                  <ButtonCaducidad buttonCaducidad={obtenerCaducidadProxima(producto)} />
+                </td>
+                <td className="text-center min-w-28">
+                  <ButtonAction buttonAction={() => handleEditar(producto.id)} buttonIco={"✏"} color={"bg-blue-500"} colorHover={"hover:bg-blue-800"} />
+                  <ButtonAction buttonAction={() => handleEliminar(producto.id)} buttonIco={"🗑"} color={"bg-red-700"} colorHover={"hover:bg-red-900"} />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </>
   );
 };
