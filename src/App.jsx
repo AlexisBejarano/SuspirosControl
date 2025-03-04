@@ -205,7 +205,7 @@ const TableComponent = () => {
                 </td>
                 <td className="px-4 py-2 text-center border-r-2 border-r-gray-200">{producto.stock}</td>
                 <td className="px-1 text-center border-r-2 border-r-gray-200">
-                  <ButtonCaducidad buttonCaducidad={obtenerCaducidadProxima(producto)} />
+                <ButtonCaducidad buttonCaducidad={obtenerCaducidadProxima(producto)} detalles={producto.detalle_productos} />
                 </td>
                 <td className="text-center min-w-28">
                   <ButtonAction buttonAction={() => handleEditar(producto.id)} buttonIco={"✏"} color={"bg-blue-500"} colorHover={"hover:bg-blue-800"} />
