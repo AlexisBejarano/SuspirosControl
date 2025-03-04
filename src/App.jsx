@@ -10,7 +10,7 @@ const TableComponent = () => {
         //PRODUCTO 1.--------------------------
         {
           "id": 1,
-          "nombre": "Producto A",
+          "nombre": "Producto Aaasdad ad asasdasdasasdasd",
           "unidad_medida": "kg",
           "stock": 130, //ES LA SUMA CANTIDADES DE TODOS LOS LOTES.
           "detalle_productos": [
@@ -141,21 +141,6 @@ const TableComponent = () => {
   ]);
 
 
-    // Handlers para las acciones
-    const handleEditar = (id) => alert(`Editar producto con ID: ${id}`);
-    const handleEntrada = (id) => alert(`Entrada producto con ID: ${id}`);
-    const handleSalida = (id) => alert(`Salida producto con ID: ${id}`);
-    const handleEliminar = (id) => {
-      if (window.confirm("¿Seguro que deseas eliminar este producto?")) {
-        setProductos((prev) => prev.map((group) => ({
-          ...group,
-          productos: group.productos.filter((item) => item.id !== id),
-        })));
-      }
-    };
-
-  
-
   // Calcular la suma de entradas de un producto
   const calcularSumaEntradas = (producto) =>
     producto.detalle_productos.reduce((total, lote) =>
@@ -173,49 +158,59 @@ const TableComponent = () => {
   };
 
   return (
-    <div className="flex justify-center items-center bg-gray-100 p-4">
-      <table>
+    <>
+
+    <marquee behavior="scroll" direction="left">SUSPIROS</marquee>
+    <div className="flex items-center bg-neutral-300 p-4">
+      
+
+
+      <table className="mx-auto ">
         <thead>
           <tr className="bg-gray-800 text-white">
-            <th className="py-3 px-2 border-r-3">Producto</th>
-            <th className="py-3 px-2 border-r-3">Ud. Medida</th>
-            <th className="py-3 px-2 border-r-3">Entrada</th>
-            <th className="py-3 px-2 border-r-3">Salida</th>
-            <th className="py-3 px-2 border-r-3">Stock</th>
-            <th className="py-3 px-2 border-r-3">Caducidad Próxima</th>
+            <th className="py-3 px-2 border-r-1">Producto</th>
+            <th className="py-3 px-2 border-r-1">Ud. Medida</th>
+            <th className="py-3 px-2 border-r-1">Entrada</th>
+            <th className="py-3 px-2 border-r-1">Salida</th>
+            <th className="py-3 px-2 border-r-1">Stock</th>
+            <th className="py-3 px-2 border-r-1">Caducidad Próxima</th>
             <th className="py-3 px-2">Acciones</th>
           </tr>
         </thead>
         <tbody>
           {productos[0].productos.map((producto) => (
-            <tr key={producto.id}>
-              <td className="px-4 border-r-3 border-b-black text-center">{producto.nombre}</td>
-              <td className="px-4 border-r-3 border-b-black text-center">{producto.unidad_medida}</td>
-              <td className="px-4 border-r-3 border-b-black text-center">
+            <tr key={producto.id} className="bg-white border-y-8 border-neutral-300 ">
+              <td className="px-4 py-2 text-center border-r-2 border-r-gray-300">{producto.nombre}</td>
+              <td className="px-4 py-2 text-center border-r-2 border-r-gray-300">{producto.unidad_medida}</td>
+              
+              <td className="px-1 text-center border-r-2 border-r-gray-300">
                 <button className="bg-green-500 min-w-24 text-white px-3 py-1 rounded-lg hover:bg-emerald-700 transition">
                   {calcularSumaEntradas(producto)}
                 </button>
               </td>
-              <td className="px-4 border-r-3 border-b-black text-center">
+
+              <td className="px-1 text-center border-r-2 border-r-gray-300">
                 <button className="bg-green-500 min-w-24 text-white px-3 py-1 rounded-lg hover:bg-emerald-700 transition">
                   {calcularSumaSalidas(producto)}
                 </button>
               </td>
-              <td className="px-4 border-r-3 border-b-black text-center">{producto.stock}</td>
-              <td className="px-4 border-r-3 border-b-black text-center">
+
+              <td className="px-4 py-2 text-center border-r-2 border-r-gray-300">{producto.stock}</td>
+              <td className="px-1 text-center border-r-2 border-r-gray-300">
                 <button className="bg-green-500 w-full text-white px-3 py-1 rounded-lg hover:bg-emerald-700 transition">
                   {obtenerCaducidadProxima(producto)}
                 </button>
               </td>
-              <td className="px-4 border-r-3 border-b-black text-center">
-                <button onClick={() => handleEditar(producto.id)} className="bg-blue-500 w-12 text-white px-3 py-1 rounded-lg hover:bg-blue-800 transition">✏</button>
-                <button onClick={() => handleEliminar(producto.id)} className="bg-red-700 w-12 text-white px-3 py-1 rounded-lg hover:bg-red-900 transition">🗑</button>
+              <td className="text-center min-w-28">
+                <button onClick={() => handleEditar(producto.id)} className="bg-blue-500 w-12 text-white py-1 mx-1 rounded-lg hover:bg-blue-800 transition">✏</button>
+                <button onClick={() => handleEliminar(producto.id)} className="bg-red-700 w-12 text-white py-1 mr-1 rounded-lg hover:bg-red-900 transition">🗑</button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
     </div>
+    </>
   );
 };
 
