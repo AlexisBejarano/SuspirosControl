@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import ButtonEntradasSalidas from "./components/ButtonEntradasSalidas"
+import ButtonDefault from "./components/ButtonDefault"
 import ButtonCaducidad from "./components/ButtonCaducidad"
-import ButtonAction from "./components/ButtonAction";
 
 const TableComponent = () => {
 
@@ -121,12 +120,31 @@ const TableComponent = () => {
   return (
     <>
 
-      <marquee behavior="scroll" direction="left">SUSPIROS</marquee>
-      <div className="flex items-center bg-neutral-300 p-4">
+      
+      <div className="items-center bg-neutral-300 p-4">
+
+      <div className="m-auto max-w-xl flex justify-center gap-2">
+        <ButtonDefault buttonAction={null} textButton={"Agregar Producto"} bgButton={"bg-gray-500"} hoverBgButton={"hover:bg-gray-700"} widthButton={"w-40"} marginButton={"mx-1"} colorButton={"text-white"}/>
+        <ButtonDefault buttonAction={null} textButton={"Generar Reporte"} bgButton={"bg-gray-500"} hoverBgButton={"hover:bg-gray-700"} widthButton={"w-40"} marginButton={"mx-1"} colorButton={"text-white"}/>
+        <ButtonDefault buttonAction={null} textButton={"Cerrar Sesion"} bgButton={"bg-red-700"} hoverBgButton={"hover:bg-red-900"} widthButton={"w-40"} marginButton={"mx-1"} colorButton={"text-white"}/>
+      </div>
 
 
+      <form className="max-w-96 mx-auto my-3">   
+          <label className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
+          <div className="relative">
+              <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                  <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                      <path stroke="currentColor" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                  </svg>
+              </div>
+              <input type="search" id="default-search" className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Mockups, Logos..." required />
+              <button type="submit" className="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
+          </div>
+      </form>
 
-        <table className="mx-auto ">
+
+        <table className="mx-auto">
           <thead>
             <tr className="bg-gray-800 text-white">
               <th className="py-3 px-2 border-r-1">Producto</th>
@@ -145,18 +163,18 @@ const TableComponent = () => {
                 <td className="px-4 py-2 text-center border-r-2 border-r-gray-200">{producto.nombre}</td>
                 <td className="px-4 py-2 text-center border-r-2 border-r-gray-200">{producto.unidad_medida}</td>
                 <td className="px-1 text-center border-r-2 border-r-gray-200">
-                  <ButtonEntradasSalidas buttonEntradasSalidas={producto.movimientos[0].entrada}/>
+                  <ButtonDefault buttonAction={null} textButton={producto.movimientos[0].entrada} bgButton={"bg-green-500"} hoverBgButton={"hover:bg-emerald-700"} widthButton={"min-w-24"}marginButton={"ml-1"} colorButton={"text-white"}/>
                 </td>
                 <td className="px-1 text-center border-r-2 border-r-gray-200">
-                  <ButtonEntradasSalidas buttonEntradasSalidas={producto.movimientos[0].salida} />
+                  <ButtonDefault buttonAction={null} textButton={producto.movimientos[0].salida} bgButton={"bg-green-500"} hoverBgButton={"hover:bg-emerald-700"} widthButton={"min-w-24"}marginButton={"ml-1"} colorButton={"text-white"}/>
                 </td>
                 <td className="px-4 py-2 text-center border-r-2 border-r-gray-200">{producto.stock}</td>
                 <td className="px-1 text-center border-r-2 border-r-gray-200">
-                <ButtonCaducidad detalles={producto.detalle_productos} />
+                  <ButtonCaducidad detalles={producto.detalle_productos} />
                 </td>
                 <td className="text-center min-w-28">
-                  <ButtonAction buttonAction={() => handleEditar(producto.id)} buttonIco={"✏"} color={"bg-blue-500"} colorHover={"hover:bg-blue-800"} />
-                  <ButtonAction buttonAction={() => handleEliminar(producto.id)} buttonIco={"🗑"} color={"bg-red-700"} colorHover={"hover:bg-red-900"} />
+                  <ButtonDefault buttonAction={() => handleEditar(producto.id)} textButton={"✏"}  bgButton={"bg-blue-500"} hoverBgButton={"hover:bg-blue-800"} widthButton={"w-12"} marginButton={"ml-1"} colorButton={"text-white"}/>
+                  <ButtonDefault buttonAction={() => handleEliminar(producto.id)} textButton={"🗑"}  bgButton={"bg-red-700"} hoverBgButton={"hover:bg-red-900"} widthButton={"w-12"} marginButton={"mx-1"} colorButton={"text-white"}/>
                 </td>
               </tr>
             ))}

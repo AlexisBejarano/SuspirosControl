@@ -38,9 +38,12 @@ export default function ButtonCaducidad({ detalles }) {
                     <td className="px-4 py-2 text-center border-x-2 border-x-gray-200">{lote.lote}</td>
                     <td className="px-4 py-2 text-center border-r-2 border-r-gray-200">{lote.cantidad}</td>
                     <td className="px-1 text-center border-r-2 border-r-gray-200">
+
+                      {/* FALTA HACER QUE CUANDO DEN CLIC AL BOTON SE ABRA OTRO MODAL ENZIMA PARA MODIFICAR LA FECHA DE ESE LOTE */}
                       <button onClick={() => setIsOpen(true)} className="bg-green-500 w-full text-white px-3 py-1 rounded-lg hover:bg-emerald-700 transition">
                       {new Date(lote.caducidad).toISOString().split("T")[0]}
                       </button>
+                      
                     </td>
                   </tr>
                 ))}
