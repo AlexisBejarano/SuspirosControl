@@ -22,14 +22,34 @@ export default function ButtonCaducidad({ detalles }) {
         titulo={"Detalles de Caducidad"}
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
-        content={detalles.map((lote, index) => (
-          <div key={index} className="border-b pb-2 mb-2">
-            <p><strong>Lote:</strong> {lote.lote}</p>
-            <p><strong>Caducidad:</strong> {lote.caducidad}</p>
-            <p><strong>Cantidad:</strong> {lote.cantidad}</p>
+        content={
+          <div className="flex items-center">
+            <table className="mx-auto">
+              <thead>
+                <tr className="bg-gray-800 text-white">
+                  <th className="py-3 px-2 border-r-1">Lote</th>
+                  <th className="py-3 px-2 border-r-1">Cantidad</th>
+                  <th className="py-3 px-2 border-r-1">Caducidad</th>
+                </tr>
+              </thead>
+              <tbody>
+                {detalles.map((lote, index) => (
+                  <tr key={index} className="bg-white border-b-1 border-b-gray-200">
+                    <td className="px-4 py-2 text-center border-x-2 border-x-gray-200">{lote.lote}</td>
+                    <td className="px-4 py-2 text-center border-r-2 border-r-gray-200">{lote.cantidad}</td>
+                    <td className="px-1 text-center border-r-2 border-r-gray-200">
+                      <button onClick={() => setIsOpen(true)} className="bg-green-500 w-full text-white px-1 py-1 rounded-lg hover:bg-emerald-700 transition">
+                        {lote.caducidad}
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
-        ))}
+        }
       />
     </>
   );
 }
+
