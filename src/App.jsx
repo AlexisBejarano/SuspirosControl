@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import ButtonDefault from "./components/ButtonDefault"
-import ButtonCaducidad from "./components/ButtonCaducidad"
 
 const TableComponent = () => {
 
@@ -105,6 +104,12 @@ const TableComponent = () => {
   }
   ]);
 
+
+    // Función para obtener la fecha de caducidad más próxima
+    const obtenerCaducidadProxima = (detalles) => {
+    const fechas = detalles.map((lote) => new Date(lote.caducidad));
+    return fechas.length ? new Date(Math.min(...fechas)).toISOString().split("T")[0] : "N/A";
+  };
     // Handlers para las acciones
     const handleEditar = (id) => alert(`Editar producto con ID: ${id}`);
     const handleEliminar = (id) => {
@@ -119,14 +124,22 @@ const TableComponent = () => {
 
   return (
     <>
-
-      
       <div className="items-center bg-neutral-300 p-4">
+        <div className="m-auto max-w-xl flex justify-center gap-2">
+        {/* Botón 1: Agregar Producto */}
+        <ButtonDefault textButton={"Agregar Producto"} bgButton={"bg-gray-500"} hoverBgButton={"hover:bg-gray-700"} widthButton={"w-40"} marginButton={"mx-1"} colorButton={"text-white"}
+          modalType="agregarProducto" // Tipo de modal
+        />
 
-      <div className="m-auto max-w-xl flex justify-center gap-2">
-        <ButtonDefault buttonAction={null} textButton={"Agregar Producto"} bgButton={"bg-gray-500"} hoverBgButton={"hover:bg-gray-700"} widthButton={"w-40"} marginButton={"mx-1"} colorButton={"text-white"}/>
-        <ButtonDefault buttonAction={null} textButton={"Generar Reporte"} bgButton={"bg-gray-500"} hoverBgButton={"hover:bg-gray-700"} widthButton={"w-40"} marginButton={"mx-1"} colorButton={"text-white"}/>
-        <ButtonDefault buttonAction={null} textButton={"Cerrar Sesion"} bgButton={"bg-red-700"} hoverBgButton={"hover:bg-red-900"} widthButton={"w-40"} marginButton={"mx-1"} colorButton={"text-white"}/>
+        {/* Botón 2: Generar Reporte */}
+        <ButtonDefault textButton={"Generar Reporte"} bgButton={"bg-gray-500"} hoverBgButton={"hover:bg-gray-700"} widthButton={"w-40"} marginButton={"mx-1"} colorButton={"text-white"}
+          modalType="generarReporte" // Tipo de modal
+        />
+
+        {/* Botón 3: Cerrar Sesión */}
+        <ButtonDefault textButton={"Cerrar Sesión"} bgButton={"bg-red-700"} hoverBgButton={"hover:bg-red-900"} widthButton={"w-40"} marginButton={"mx-1"} colorButton={"text-white"}
+          modalType="cerrarSesion" // Tipo de modal
+        />
       </div>
 
 
@@ -163,18 +176,21 @@ const TableComponent = () => {
                 <td className="px-4 py-2 text-center border-r-2 border-r-gray-200">{producto.nombre}</td>
                 <td className="px-4 py-2 text-center border-r-2 border-r-gray-200">{producto.unidad_medida}</td>
                 <td className="px-1 text-center border-r-2 border-r-gray-200">
-                  <ButtonDefault buttonAction={null} textButton={producto.movimientos[0].entrada} bgButton={"bg-green-500"} hoverBgButton={"hover:bg-emerald-700"} widthButton={"min-w-24"}marginButton={"ml-1"} colorButton={"text-white"}/>
+                  <ButtonDefault textButton={producto.movimientos[0].entrada} bgButton={"bg-green-500"} hoverBgButton={"hover:bg-emerald-700"} widthButton={"min-w-24"}marginButton={"ml-1"} colorButton={"text-white"}/>
                 </td>
                 <td className="px-1 text-center border-r-2 border-r-gray-200">
-                  <ButtonDefault buttonAction={null} textButton={producto.movimientos[0].salida} bgButton={"bg-green-500"} hoverBgButton={"hover:bg-emerald-700"} widthButton={"min-w-24"}marginButton={"ml-1"} colorButton={"text-white"}/>
+                  <ButtonDefault textButton={producto.movimientos[0].salida} bgButton={"bg-green-500"} hoverBgButton={"hover:bg-emerald-700"} widthButton={"min-w-24"}marginButton={"ml-1"} colorButton={"text-white"}/>
                 </td>
                 <td className="px-4 py-2 text-center border-r-2 border-r-gray-200">{producto.stock}</td>
                 <td className="px-1 text-center border-r-2 border-r-gray-200">
-                  <ButtonCaducidad detalles={producto.detalle_productos} />
+                  <ButtonDefault textButton={obtenerCaducidadProxima(producto.detalle_productos)} bgButton={"bg-green-500"} hoverBgButton={"hover:bg-green-700"} widthButton={"w-40"} marginButton={"mx-1"} colorButton={"text-white"}
+                      modalType="caducidad" // Tipo de modal en el componente
+                      modalData={producto.detalle_productos} // Pasa los detalles como prop para generar la tabla en el modal.
+                    />
                 </td>
                 <td className="text-center min-w-28">
-                  <ButtonDefault buttonAction={() => handleEditar(producto.id)} textButton={"✏"}  bgButton={"bg-blue-500"} hoverBgButton={"hover:bg-blue-800"} widthButton={"w-12"} marginButton={"ml-1"} colorButton={"text-white"}/>
-                  <ButtonDefault buttonAction={() => handleEliminar(producto.id)} textButton={"🗑"}  bgButton={"bg-red-700"} hoverBgButton={"hover:bg-red-900"} widthButton={"w-12"} marginButton={"mx-1"} colorButton={"text-white"}/>
+                  <ButtonDefault textButton={"✏"}  bgButton={"bg-blue-500"} hoverBgButton={"hover:bg-blue-800"} widthButton={"w-12"} marginButton={"ml-1"} colorButton={"text-white"}/>
+                  <ButtonDefault textButton={"🗑"}  bgButton={"bg-red-700"} hoverBgButton={"hover:bg-red-900"} widthButton={"w-12"} marginButton={"mx-1"} colorButton={"text-white"}/>
                 </td>
               </tr>
             ))}
