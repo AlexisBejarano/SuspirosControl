@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Modal from "./ModalPlantilla"; // Asegúrate de importar correctamente
+import Modal from "./ModalPlantilla";
 
 export default function ButtonDefault({ textButton, bgButton, hoverBgButton, widthButton, marginButton, colorButton, modalType, modalData }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,8 +15,8 @@ export default function ButtonDefault({ textButton, bgButton, hoverBgButton, wid
       </button>
 
       <Modal
-        modalType={modalType} // Pasar el tipo de modal
-        modalData={modalData} // Pasar los datos del modal
+        modalType={modalType}
+        modalData={modalData}
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
       />

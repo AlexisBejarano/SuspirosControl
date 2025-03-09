@@ -1,10 +1,9 @@
 import React from "react";
-import ModalContenidoAll from "./ModalContenidoAll"; // Asegúrate de importar correctamente
+import ModalContenidoAll from "./ModalContenidoAll";
 
 export default function Modal({ modalType, modalData, isOpen, onClose }) {
   if (!isOpen) return null;
 
-  // Obtener el título y el contenido del modal
   const { titulo, contenido } = ModalContenidoAll({ modalType, modalData });
 
   return (
