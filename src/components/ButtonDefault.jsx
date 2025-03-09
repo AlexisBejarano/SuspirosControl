@@ -1,13 +1,8 @@
 import React, { useState } from "react";
-import Modal from "./ModalPlantilla";
-import ModalContenidoAll from "./ModalContenidoAll";
+import Modal from "./ModalPlantilla"; // Asegúrate de importar correctamente
 
-export default function ButtonDefault({ textButton, bgButton, hoverBgButton, widthButton, marginButton, colorButton, modalType, modalData,
-}) {
+export default function ButtonDefault({ textButton, bgButton, hoverBgButton, widthButton, marginButton, colorButton, modalType, modalData }) {
   const [isOpen, setIsOpen] = useState(false);
-
-  // Obtener el título y el contenido del modal
-  const { titulo, contenido } = ModalContenidoAll({ modalType, modalData });
 
   const handleButtonClick = () => {
     setIsOpen(true);
@@ -15,19 +10,16 @@ export default function ButtonDefault({ textButton, bgButton, hoverBgButton, wid
 
   return (
     <>
-      <button
-        onClick={handleButtonClick}
-        className={`${bgButton} ${hoverBgButton} ${widthButton} ${colorButton} px-3 py-1 ${marginButton} rounded-lg transition`}
-      >
+      <button onClick={handleButtonClick} className={`${bgButton} ${hoverBgButton} ${widthButton} ${colorButton} px-3 py-1 ${marginButton} rounded-lg transition`}>
         {textButton}
       </button>
 
       <Modal
-        titulo={titulo} // Título dinámico
+        modalType={modalType} // Pasar el tipo de modal
+        modalData={modalData} // Pasar los datos del modal
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
-        content={contenido} // Contenido dinámico
       />
     </>
   );
-} 
+}
