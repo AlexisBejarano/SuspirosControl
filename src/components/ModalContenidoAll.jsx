@@ -29,7 +29,7 @@ export default function ModalContenidoAll({ modalType, modalData }) {
         titulo: "Agregar Producto",
         contenido: (
         <>
-          <label htmlFor="AgregarProductoNombre" className="relative block rounded-md border border-gray-200 shadow-xs">
+          <label htmlFor="AgregarProductoNombre" className="relative mt-3 block rounded-md border border-gray-200 shadow-xs">
             <input type="text" id="AgregarProductoNombre" placeholder="AgregarProductoNombre" className="peer border-none h-10 w-full px-2 bg-transparent placeholder-transparent focus:border-transparent focus:ring-0 focus:outline-hidden"/>
             <span className="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-400 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
               <strong>Nombre Producto</strong>
@@ -166,9 +166,16 @@ export default function ModalContenidoAll({ modalType, modalData }) {
       return {
         titulo: "Editar Caducidad",
         contenido: (
-          <div className="flex items-center">
-            <h1>Aqui se muestra un input de fecha</h1>
-          </div>
+          <>
+          <label className="block mt-3 text-gray-400 font-semibold mb-2">Selecciona una fecha:</label>
+            <DatePicker
+              selected={selectedDate}
+              onChange={(date) => setSelectedDate(date)}
+              dateFormat="yyyy/mm/dd"
+              className="border p-2 rounded w-full text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholderText="Elige una fecha"
+            />
+            </>
         ),
       };
       case "editarProducto":
