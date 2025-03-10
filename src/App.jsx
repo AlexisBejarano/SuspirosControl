@@ -151,8 +151,8 @@ const TableComponent = () => {
                       <path stroke="currentColor" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                   </svg>
               </div>
-              <input type="search" id="default-search" className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Mockups, Logos..." required />
-              <button type="submit" className="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
+              <input type="search" id="default-search" className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Buscar Producto..." required />
+              <button type="submit" className="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Buscar</button>
           </div>
       </form>
 
@@ -176,10 +176,14 @@ const TableComponent = () => {
                 <td className="px-4 py-2 text-center border-r-2 border-r-gray-200">{producto.nombre}</td>
                 <td className="px-4 py-2 text-center border-r-2 border-r-gray-200">{producto.unidad_medida}</td>
                 <td className="px-1 text-center border-r-2 border-r-gray-200">
-                  <ButtonDefault textButton={producto.movimientos[0].entrada} bgButton={"bg-green-500"} hoverBgButton={"hover:bg-emerald-700"} widthButton={"min-w-24"}marginButton={"ml-1"} colorButton={"text-white"}/>
+                  <ButtonDefault textButton={producto.movimientos[0].entrada} bgButton={"bg-green-500"} hoverBgButton={"hover:bg-emerald-700"} widthButton={"min-w-24"}marginButton={"ml-1"} colorButton={"text-white"}
+                    modalType="registrarEntrada"
+                  />
                 </td>
                 <td className="px-1 text-center border-r-2 border-r-gray-200">
-                  <ButtonDefault textButton={producto.movimientos[0].salida} bgButton={"bg-green-500"} hoverBgButton={"hover:bg-emerald-700"} widthButton={"min-w-24"}marginButton={"ml-1"} colorButton={"text-white"}/>
+                  <ButtonDefault textButton={producto.movimientos[0].salida} bgButton={"bg-green-500"} hoverBgButton={"hover:bg-emerald-700"} widthButton={"min-w-24"}marginButton={"ml-1"} colorButton={"text-white"}
+                  modalType="registrarSalida"
+                  />
                 </td>
                 <td className="px-4 py-2 text-center border-r-2 border-r-gray-200">{producto.stock}</td>
                 <td className="px-1 text-center border-r-2 border-r-gray-200">
@@ -189,7 +193,9 @@ const TableComponent = () => {
                     />
                 </td>
                 <td className="text-center min-w-28">
-                  <ButtonDefault textButton={"✏"}  bgButton={"bg-blue-500"} hoverBgButton={"hover:bg-blue-800"} widthButton={"w-12"} marginButton={"ml-1"} colorButton={"text-white"}/>
+                  <ButtonDefault textButton={"✏"}  bgButton={"bg-blue-500"} hoverBgButton={"hover:bg-blue-800"} widthButton={"w-12"} marginButton={"ml-1"} colorButton={"text-white"}
+                  modalType="editarProducto"
+                  />
                   <ButtonDefault textButton={"🗑"}  bgButton={"bg-red-700"} hoverBgButton={"hover:bg-red-900"} widthButton={"w-12"} marginButton={"mx-1"} colorButton={"text-white"}/>
                 </td>
               </tr>
