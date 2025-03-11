@@ -29,13 +29,13 @@ export default function ModalContenidoAll({ modalType, modalData }) {
         titulo: "Agregar Producto",
         contenido: (
         <>
-          <label htmlFor="AgregarProductoNombre" className="relative mt-3 block rounded-md border border-gray-200 shadow-xs">
+          <label htmlFor="AgregarProductoNombre" className="relative mt-3 block rounded-md border border-gray-300 shadow-xs">
             <input type="text" id="AgregarProductoNombre" placeholder="AgregarProductoNombre" className="peer border-none h-10 w-full px-2 bg-transparent placeholder-transparent focus:border-transparent focus:ring-0 focus:outline-hidden"/>
             <span className="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-400 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
               <strong>Nombre Producto</strong>
             </span>
           </label>
-          <label htmlFor="AgregarUdMedida" className="relative block mt-3 rounded-md border border-gray-200 shadow-xs">
+          <label htmlFor="AgregarUdMedida" className="relative block mt-3 rounded-md border border-gray-300 shadow-xs">
             <input type="text" id="AgregarUdMedida" placeholder="AgregarUdMedida" className="peer border-none h-10 w-full px-2 bg-transparent placeholder-transparent focus:border-transparent focus:ring-0 focus:outline-hidden"/>
             <span className="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-400 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
               <strong>Unidad Medida</strong>
@@ -85,25 +85,25 @@ export default function ModalContenidoAll({ modalType, modalData }) {
           <>
             <h3>Producto: aaa</h3>
             <h3>Unidad de medida: aaa</h3>
-            <label htmlFor="AgregarLote" className="relative block mt-3 rounded-md border border-gray-200 shadow-xs">
+            <label htmlFor="AgregarLote" className="relative block mt-3 rounded-md border border-gray-300 shadow-xs">
               <input type="text" id="AgregarLote" placeholder="AgregarLote" className="peer border-none h-10 w-full px-2  bg-transparent placeholder-transparent focus:border-transparent focus:ring-0 focus:outline-hidden"/>
               <span className="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-400 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
-                <strong>Agregar Lote</strong>
+                <strong>Nombre</strong>
               </span>
             </label>
-            <label htmlFor="AgregarCantidadLote" className="relative block mt-3 rounded-md border border-gray-200 shadow-xs">
+            <label htmlFor="AgregarCantidadLote" className="relative block mt-3 rounded-md border border-gray-300 shadow-xs">
               <input type="text" id="AgregarCantidadLote" placeholder="AgregarCantidadLote" className="peer border-none h-10 w-full px-2 bg-transparent placeholder-transparent focus:border-transparent focus:ring-0 focus:outline-hidden"/>
               <span className="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-400 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
-                <strong>Cantidad Por Lote</strong>
+                <strong>Cantidad</strong>
               </span>
             </label>
-            <label className="block mt-3 text-gray-400 font-semibold mb-2">Selecciona una fecha:</label>
+            <label className="block mt-3 text-gray-400 font-semibold mb-2">Fecha Caducidad:</label>
             <DatePicker
               selected={selectedDate}
               onChange={(date) => setSelectedDate(date)}
-              dateFormat="yyyy/mm/dd"
-              className="border p-2 rounded w-full text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholderText="Elige una fecha"
+              dateFormat="YYYY/MM/DD"
+              className="border border-gray-300 p-2 h-10 rounded text-gray-700 focus:ring-0 focus:outline-hidden"
+              placeholderText="Caducidad"
             />
           </>
         ),
@@ -151,7 +151,7 @@ export default function ModalContenidoAll({ modalType, modalData }) {
                     <td className="px-4 py-2 text-center border-x-2 border-x-gray-200">{lote.lote}</td>
                     <td className="px-4 py-2 text-center border-r-2 border-r-gray-200">{lote.cantidad}</td>
                     <td className="px-1 text-center border-r-2 border-r-gray-200">
-                      <ButtonDefault textButton={new Date(lote.caducidad).toISOString().split("T")[0]} bgButton={"bg-gray-500"} hoverBgButton={"hover:bg-gray-700"} widthButton={"w-40"} marginButton={"mx-1"} colorButton={"text-white"}
+                      <ButtonDefault textButton={new Date(lote.caducidad).toISOString().split("T")[0]} bgButton={"bg-green-500"} hoverBgButton={"hover:bg-emerald-700"} widthButton={"w-40"} marginButton={"mx-1"} colorButton={"text-white"}
                         modalType="caducidadEditar" // Tipo de modal
                       />
                     </td>
@@ -167,13 +167,13 @@ export default function ModalContenidoAll({ modalType, modalData }) {
         titulo: "Editar Caducidad",
         contenido: (
           <>
-          <label className="block mt-3 text-gray-400 font-semibold mb-2">Selecciona una fecha:</label>
+            <label className="block mt-3 text-gray-400 font-semibold mb-2">Fecha Caducidad:</label>
             <DatePicker
               selected={selectedDate}
               onChange={(date) => setSelectedDate(date)}
-              dateFormat="yyyy/mm/dd"
-              className="border p-2 rounded w-full text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholderText="Elige una fecha"
+              dateFormat="YYYY/MM/DD"
+              className="border border-gray-300 p-2 h-10 rounded text-gray-700 focus:ring-0 focus:outline-hidden"
+              placeholderText="Caducidad"
             />
             </>
         ),
@@ -183,13 +183,13 @@ export default function ModalContenidoAll({ modalType, modalData }) {
         titulo: "Editar Producto",
         contenido: (
           <>
-          <label htmlFor="AgregarProductoNombre" className="relative block rounded-md border border-gray-200 shadow-xs">
+          <label htmlFor="AgregarProductoNombre" className="relative block rounded-md border border-gray-300 shadow-xs">
             <input type="text" id="AgregarProductoNombre" placeholder="AgregarProductoNombre" className="peer border-none h-10 px-2 bg-transparent placeholder-transparent focus:border-transparent focus:ring-0 focus:outline-hidden"/>
             <span className="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-400 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
               <strong>Nombre Producto</strong>
             </span>
           </label>
-          <label htmlFor="AgregarUdMedida" className="relative block mt-3 rounded-md border border-gray-200 shadow-xs">
+          <label htmlFor="AgregarUdMedida" className="relative block mt-3 rounded-md border border-gray-300 shadow-xs">
             <input type="text" id="AgregarUdMedida" placeholder="AgregarUdMedida" className="peer border-none h-10 px-2 bg-transparent placeholder-transparent focus:border-transparent focus:ring-0 focus:outline-hidden"/>
             <span className="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-400 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
               <strong>Unidad Medida</strong>
