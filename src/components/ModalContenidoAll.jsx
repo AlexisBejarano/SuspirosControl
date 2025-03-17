@@ -3,7 +3,7 @@ import ButtonDefault from "./ButtonDefault";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-export default function ModalContenidoAll({ modalType, modalData }) {
+export default function ModalContenidoAll({ modalType, modalData, onClose }) {
 
   // INICIO PARA AVISO STOCK ---------------------------------------------
     // Estado para el input de número
@@ -59,14 +59,31 @@ export default function ModalContenidoAll({ modalType, modalData }) {
 
         </>
         ),
+        buttons: (
+          <>
+            <button onClick={onClose} className="w-24 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-700">
+              Aceptar
+            </button>
+            <button onClick={onClose} className="w-24 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-700">
+              Cancelar
+            </button>
+          </>
+        ),
       };
     case "generarReporte":
       return {
         titulo: "Generar Reporte",
         contenido: (
           <div>
-            <h1>Opciones para generar un reporte</h1>
+            <h1>Se esta generando el reporte.</h1>
           </div>
+        ),
+        buttons: (
+          <>
+            <button onClick={onClose} className="w-24 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-700">
+              Aceptar
+            </button>
+          </>
         ),
       };
     case "cerrarSesion":
@@ -79,11 +96,11 @@ export default function ModalContenidoAll({ modalType, modalData }) {
         ),
         buttons: (
           <>
-            {/*<button onClick={() => setIsOpen(false)} className="w-24 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-700">
+            <button onClick={onClose} className="w-24 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-700">
                 Aceptar
-            </button>*/}
-            <button onClick={() => setIsOpen(false)} className="w-24 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-700">
-              Cerrar
+            </button>
+            <button onClick={onClose} className="w-24 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-700">
+              Cancelar
             </button>
           </>
         ),
@@ -117,6 +134,16 @@ export default function ModalContenidoAll({ modalType, modalData }) {
             />
           </>
         ),
+        buttons: (
+          <>
+            <button onClick={onClose} className="w-24 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-700">
+                Aceptar
+            </button>
+            <button onClick={onClose} className="w-24 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-700">
+              Cancelar
+            </button>
+          </>
+        ),
       };
       case "registrarSalida":
       return {
@@ -140,6 +167,13 @@ export default function ModalContenidoAll({ modalType, modalData }) {
               </tbody>
             </table>
           </div>
+        ),
+        buttons: (
+          <>
+            <button onClick={onClose} className="w-24 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-700">
+                Aceptar
+            </button>
+          </>
         ),
       };
     case "caducidad":
@@ -171,6 +205,13 @@ export default function ModalContenidoAll({ modalType, modalData }) {
             </table>
           </div>
         ),
+        buttons: (
+          <>
+            <button onClick={onClose} className="w-24 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-700">
+                Aceptar
+            </button>
+          </>
+        ),
       };
       case "caducidadEditar":
       return {
@@ -185,7 +226,17 @@ export default function ModalContenidoAll({ modalType, modalData }) {
               className="border border-gray-300 p-2 h-10 rounded text-gray-700 focus:ring-0 focus:outline-hidden"
               placeholderText="Caducidad"
             />
-            </>
+          </>
+        ),
+        buttons: (
+          <>
+            <button onClick={onClose} className="w-24 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-700">
+                Aceptar
+            </button>
+            <button onClick={onClose} className="w-24 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-700">
+              Cancelar
+            </button>
+          </>
         ),
       };
       case "editarProducto":
@@ -220,8 +271,36 @@ export default function ModalContenidoAll({ modalType, modalData }) {
                 </button>
               </div>
             </div>
-
         </>
+        ),
+        buttons: (
+          <>
+            <button onClick={onClose} className="w-24 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-700">
+                Aceptar
+            </button>
+            <button onClick={onClose} className="w-24 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-700">
+              Cancelar
+            </button>
+          </>
+        ),
+      };
+      case "eliminarProducto":
+      return {
+        titulo: "Eliminar Producto",
+        contenido: (
+          <div>
+            <h1>¿Seguro que desea Eliminar?</h1>
+          </div>
+        ),
+        buttons: (
+          <>
+            <button onClick={onClose} className="w-24 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-700">
+                Aceptar
+            </button>
+            <button onClick={onClose} className="w-24 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-700">
+              Cancelar
+            </button>
+          </>
         ),
       };
     default:

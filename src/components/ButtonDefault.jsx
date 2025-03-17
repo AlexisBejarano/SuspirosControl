@@ -1,19 +1,34 @@
 import React, { useState } from "react";
 import ModalContenidoAll from "./ModalContenidoAll";
 
-
-export default function ButtonDefault({ textButton, bgButton, hoverBgButton, widthButton, marginButton, colorButton, modalType, modalData }) {
+export default function ButtonDefault({
+  textButton,
+  bgButton,
+  hoverBgButton,
+  widthButton,
+  marginButton,
+  colorButton,
+  modalType,
+  modalData,
+}) {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleButtonClick = () => {
-    setIsOpen(true);
+    setIsOpen(true); // Abre el modal
   };
 
-  const { titulo, contenido, buttons } = ModalContenidoAll({ modalType, modalData,  onClose: () => setIsOpen(false) });
+  const { titulo, contenido, buttons } = ModalContenidoAll({
+    modalType,
+    modalData,
+    onClose: () => setIsOpen(false), // Pasas la función para cerrar el modal
+  });
 
   return (
     <>
-      <button onClick={handleButtonClick} className={`${bgButton} ${hoverBgButton} ${widthButton} ${colorButton} px-3 py-1 ${marginButton} rounded-lg transition`}>
+      <button
+        onClick={handleButtonClick}
+        className={`${bgButton} ${hoverBgButton} ${widthButton} ${colorButton} px-3 py-1 ${marginButton} rounded-lg transition`}
+      >
         {textButton}
       </button>
 
@@ -23,7 +38,9 @@ export default function ButtonDefault({ textButton, bgButton, hoverBgButton, wid
             <h2 className="text-lg font-bold mb-1">{titulo}</h2>
             <div className="overflow-y-auto">{contenido}</div>
             <div className="mx-full mt-4">
-              <div className="flex justify-center items-center space-x-4">{buttons}</div>
+              <div className="flex justify-center items-center space-x-4">
+                {buttons} {/* Renderiza los botones aquí */}
+              </div>
             </div>
           </div>
         </div>

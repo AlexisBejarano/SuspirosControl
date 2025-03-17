@@ -196,7 +196,9 @@ const TableComponent = () => {
                   <ButtonDefault textButton={"✏"}  bgButton={"bg-blue-500"} hoverBgButton={"hover:bg-blue-800"} widthButton={"w-12"} marginButton={"ml-1"} colorButton={"text-white"}
                   modalType="editarProducto"
                   />
-                  <ButtonDefault textButton={"🗑"}  bgButton={"bg-red-700"} hoverBgButton={"hover:bg-red-900"} widthButton={"w-12"} marginButton={"mx-1"} colorButton={"text-white"}/>
+                  <ButtonDefault textButton={"🗑"}  bgButton={"bg-red-700"} hoverBgButton={"hover:bg-red-900"} widthButton={"w-12"} marginButton={"mx-1"} colorButton={"text-white"}
+                  modalType="eliminarProducto"
+                  />
                 </td>
               </tr>
             ))}
