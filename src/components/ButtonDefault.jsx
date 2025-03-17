@@ -15,7 +15,7 @@ export default function ButtonDefault({ textButton, bgButton, hoverBgButton, wid
       <button onClick={handleButtonClick} className={`${bgButton} ${hoverBgButton} ${widthButton} ${colorButton} ${paddingButtonX} ${paddingButtonY} ${marginButton} rounded-lg transition`}>
         {textButton}
       </button>
-
+      
       {isOpen && (
         <div className="fixed inset-0 flex items-center justify-center backdrop-blur-xs bg-gray-300/50 z-10">
           <div className="bg-white p-6 rounded-lg shadow-lg">

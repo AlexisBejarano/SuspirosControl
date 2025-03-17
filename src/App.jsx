@@ -3,7 +3,6 @@ import ButtonDefault from "./components/ButtonDefault"
 
 const TableComponent = () => {
 
-
   const [productos, setProductos] = useState([
   {
     "productos": [
