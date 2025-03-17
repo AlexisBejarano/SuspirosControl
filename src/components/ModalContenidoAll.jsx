@@ -77,6 +77,16 @@ export default function ModalContenidoAll({ modalType, modalData }) {
             <h1>¿Estás seguro de que deseas cerrar sesión?</h1>
           </div>
         ),
+        buttons: (
+          <>
+            {/*<button onClick={() => setIsOpen(false)} className="w-24 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-700">
+                Aceptar
+            </button>*/}
+            <button onClick={() => setIsOpen(false)} className="w-24 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-700">
+              Cerrar
+            </button>
+          </>
+        ),
       };
       case "registrarEntrada":
       return {

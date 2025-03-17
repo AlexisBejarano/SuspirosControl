@@ -1,27 +1,15 @@
 import React, { useState } from "react";
 import ModalContenidoAll from "./ModalContenidoAll";
 
-export default function ButtonDefault({
-  textButton,
-  bgButton,
-  hoverBgButton,
-  widthButton,
-  marginButton,
-  colorButton,
-  modalType,
-  modalData,
-}) {
+
+export default function ButtonDefault({ textButton, bgButton, hoverBgButton, widthButton, marginButton, colorButton, modalType, modalData }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleButtonClick = () => {
     setIsOpen(true);
   };
 
-  const { titulo, contenido } = ModalContenidoAll({
-    modalType,
-    modalData,
-    onClose: () => setIsOpen(false),
-  });
+  const { titulo, contenido, buttons } = ModalContenidoAll({ modalType, modalData,  onClose: () => setIsOpen(false) });
 
   return (
     <>
@@ -35,14 +23,7 @@ export default function ButtonDefault({
             <h2 className="text-lg font-bold mb-1">{titulo}</h2>
             <div className="overflow-y-auto">{contenido}</div>
             <div className="mx-full mt-4">
-              <div className="flex justify-center items-center space-x-4">
-                <button onClick={() => setIsOpen(false)} className="w-24 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-700">
-                  Aceptar
-                </button>
-                <button onClick={() => setIsOpen(false)} className="w-24 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-700">
-                  Cerrar
-                </button>
-              </div>
+              <div className="flex justify-center items-center space-x-4">{buttons}</div>
             </div>
           </div>
         </div>
