@@ -1,6 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
+import DatePicker from "react-datepicker";
 
-export default function modalRegistrarEntrada() {
+export default function ModalRegistrarEntrada() {
+  
+  //INICIO PARA DATE SELECCIONAR FECHA--------------------------------
+  const [selectedDate, setSelectedDate] = useState(null);
+  //FIN PARA DATE SELECCIONAR FECHA--------------------------------
+
   return (
     <>
       <h3>Producto: aaa</h3>

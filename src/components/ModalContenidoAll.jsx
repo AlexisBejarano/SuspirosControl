@@ -1,47 +1,30 @@
-import React, { useState } from "react";
+import React from "react";
 import ButtonDefault from "./ButtonDefault";
-import DatePicker from "react-datepicker";
+
 import "react-datepicker/dist/react-datepicker.css";
-import modalAgregarProducto from "./modalComponents/modalAgregarProducto";
-import modalGenerarReporte from "./modalComponents/modalGenerarReporte";
-import modalAlert from "./modalComponents/modalAlerta";
-import modalCaducidad from "./modalComponents/modalCaducidad";
-import modalCaducidadEditar from "./modalComponents/modalCaducidadEditar";
-import modalCerrarSesion from "./modalComponents/modalCerrarSesion";
-import modalEditarProducto from "./modalComponents/modalEditarProducto";
-import modalEliminarProducto from "./modalComponents/modalEliminarProducto";
-import modalRegistrarEntrada from "./modalComponents/modalRegistrarEntrada";
-import modalRegistrarSalida from "./modalComponents/modalRegistrarSalida";
-import modalSalidaLote from "./modalComponents/modalSalidaLote";
+
+
+import ModalAgregarProducto from "./modalComponents/ModalAgregarProducto";
+import ModalGenerarReporte from "./modalComponents/modalGenerarReporte";
+import ModalAlert from "./modalComponents/modalAlerta";
+import ModalCaducidad from "./modalComponents/modalCaducidad";
+import ModalCaducidadEditar from "./modalComponents/modalCaducidadEditar";
+import ModalCerrarSesion from "./modalComponents/modalCerrarSesion";
+import ModalEditarProducto from "./modalComponents/modalEditarProducto";
+import ModalEliminarProducto from "./modalComponents/modalEliminarProducto";
+import ModalRegistrarEntrada from "./modalComponents/modalRegistrarEntrada";
+import ModalRegistrarSalida from "./modalComponents/modalRegistrarSalida";
+import ModalSalidaLote from "./modalComponents/modalSalidaLote";
 
 
 export default function ModalContenidoAll({ modalType, modalData, onClose }) {
-
-  // INICIO PARA AVISO STOCK ---------------------------------------------
-  // Estado para el input de número
-  const [number, setNumber] = useState(0);
-
-  const handleDecrease = () => {
-    setNumber((prev) => (prev > 0 ? prev - 1 : prev));
-  };
-
-  const handleIncrease = () => {
-    setNumber((prev) => prev + 1);
-  };
-  // FIN PARA AVISO STOCK ---------------------------------------------
-
-  //INICIO PARA DATE SELECCIONAR FECHA--------------------------------
-  const [selectedDate, setSelectedDate] = useState(null);
-  //FIN PARA DATE SELECCIONAR FECHA--------------------------------
-
-
   switch (modalType) {
     case "agregarProducto":
       return {
         titulo: "Agregar Producto",
         contenido: (
           <>
-            <modalAgregarProducto />
+            <ModalAgregarProducto/>
           </>
         ),
         buttons: (
@@ -60,7 +43,7 @@ export default function ModalContenidoAll({ modalType, modalData, onClose }) {
         titulo: "Generar Reporte",
         contenido: (
           <>
-            <modalGenerarReporte />
+            <ModalGenerarReporte />
           </>
         ),
         buttons: (
@@ -77,7 +60,7 @@ export default function ModalContenidoAll({ modalType, modalData, onClose }) {
         titulo: "Cerrar Sesión",
         contenido: (
           <>
-            <modalCerrarSesion />
+            <ModalCerrarSesion />
           </>
         ),
         buttons: (
@@ -96,7 +79,7 @@ export default function ModalContenidoAll({ modalType, modalData, onClose }) {
         titulo: "Registrar Entrada",
         contenido: (
           <>
-            <modalRegistrarEntrada />
+            <ModalRegistrarEntrada />
           </>
         ),
         buttons: (
@@ -115,7 +98,7 @@ export default function ModalContenidoAll({ modalType, modalData, onClose }) {
         titulo: "Registrar Saldia",
         contenido: (
           <>
-            <modalRegistrarSalida />
+            <ModalRegistrarSalida />
           </>
         ),
         buttons: (
@@ -132,7 +115,7 @@ export default function ModalContenidoAll({ modalType, modalData, onClose }) {
         titulo: "Salida de Lote",
         contenido: (
           <>
-            <modalSalidaLote />
+            <ModalSalidaLote />
           </>
         ),
         buttons: (
@@ -151,7 +134,7 @@ export default function ModalContenidoAll({ modalType, modalData, onClose }) {
         titulo: "Detalles de Caducidad",
         contenido: (
           <>
-            <modalCaducidad />
+            <ModalCaducidad />
           </>
         ),
         buttons: (
@@ -168,7 +151,7 @@ export default function ModalContenidoAll({ modalType, modalData, onClose }) {
         titulo: "Editar Caducidad",
         contenido: (
           <>
-            <modalCaducidadEditar />
+            <ModalCaducidadEditar />
           </>
         ),
         buttons: (
@@ -187,7 +170,7 @@ export default function ModalContenidoAll({ modalType, modalData, onClose }) {
         titulo: "Editar Producto",
         contenido: (
           <>
-            <modalEditarProducto />
+            <ModalEditarProducto />
           </>
         ),
         buttons: (
@@ -206,7 +189,7 @@ export default function ModalContenidoAll({ modalType, modalData, onClose }) {
         titulo: "Eliminar Producto",
         contenido: (
           <>
-            <modalEliminarProducto />
+            <ModalEliminarProducto />
           </>
         ),
         buttons: (
@@ -225,7 +208,7 @@ export default function ModalContenidoAll({ modalType, modalData, onClose }) {
         titulo: "¡ALERTA!",
         contenido: (
           <>
-            <modalAlert />
+            <ModalAlert />
           </>
         ),
         buttons: (

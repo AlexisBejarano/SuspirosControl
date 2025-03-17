@@ -1,6 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
+import DatePicker from "react-datepicker";
 
-export default function modalCaducidadEditar() {
+export default function ModalCaducidadEditar() {
+    //INICIO PARA DATE SELECCIONAR FECHA--------------------------------
+    const [selectedDate, setSelectedDate] = useState(null);
+    //FIN PARA DATE SELECCIONAR FECHA--------------------------------
   return (
     <>
       <label className="block mt-3 text-gray-400 font-semibold mb-2">Fecha Caducidad:</label>

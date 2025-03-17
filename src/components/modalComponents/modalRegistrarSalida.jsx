@@ -1,6 +1,7 @@
 import React from "react";
+import ButtonDefault from "../ButtonDefault";
 
-export default function modalRegistrarSalida() {
+export default function ModalRegistrarSalida() {
   return (
     <>
       <div className="flex items-center">

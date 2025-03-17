@@ -1,6 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 
-export default function modalSalidaLote() {
+export default function ModalSalidaLote() {
+
+    // INICIO PARA AVISO STOCK ---------------------------------------------
+    // Estado para el input de número
+    const [number, setNumber] = useState(0);
+  
+    const handleDecrease = () => {
+      setNumber((prev) => (prev > 0 ? prev - 1 : prev));
+    };
+  
+    const handleIncrease = () => {
+      setNumber((prev) => prev + 1);
+    };
+    // FIN PARA AVISO STOCK ---------------------------------------------
+  
+  
   return (
     <>
       <div className="flex items-center">

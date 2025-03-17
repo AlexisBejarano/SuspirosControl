@@ -1,8 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 
-export default function modalAgregarProducto() {
+
+export default function ModalAgregarProducto() {
+  // INICIO PARA AVISO STOCK ---------------------------------------------
+  // Estado para el input de número
+  const [number, setNumber] = useState(0);
+
+  const handleDecrease = () => {
+    setNumber((prev) => (prev > 0 ? prev - 1 : prev));
+  };
+
+  const handleIncrease = () => {
+    setNumber((prev) => prev + 1);
+  };
+  // FIN PARA AVISO STOCK ---------------------------------------------
+
+
+
     return (
-        <>
+        <div>
             <label htmlFor="AgregarProductoNombre" className="relative mt-3 block rounded-md border border-gray-300 shadow-xs">
                 <input type="text" id="AgregarProductoNombre" placeholder="AgregarProductoNombre" className="peer border-none h-10 w-full px-2 bg-transparent placeholder-transparent focus:border-transparent focus:ring-0 focus:outline-hidden" />
                 <span className="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-400 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
@@ -30,6 +46,6 @@ export default function modalAgregarProducto() {
                     </button>
                 </div>
             </div>
-        </>
+        </div>
     );
 }
