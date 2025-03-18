@@ -1,7 +1,7 @@
 import React from "react";
 import ButtonDefault from "./ButtonDefault";
 
-import "react-datepicker/dist/react-datepicker.css";
+
 
 
 import ModalAgregarProducto from "./modalComponents/ModalAgregarProducto";
