@@ -16,7 +16,7 @@ import ModalRegistrarSalida from "./modalComponents/modalRegistrarSalida";
 import ModalSalidaLote from "./modalComponents/modalSalidaLote";
 
 
-export default function ModalContenidoAll({ modalType, modalData, onClose }) {
+export default function ModalContenidoAll({ modalType, modalData, onClose, setIsOpen  }) {
 
   switch (modalType) {
     case "agregarProducto":
@@ -31,7 +31,7 @@ export default function ModalContenidoAll({ modalType, modalData, onClose }) {
           <>
             <ButtonDefault textButton={"Aceptar"} bgButton={"bg-green-500"} hoverBgButton={"hover:bg-green-700"} widthButton={"w-24"} paddingButtonX={"px-4"} paddingButtonY={"py-2"} marginButton={"mx-1"} colorButton={"text-white"}
               modalType="ButtonActionAceptar" />
-            <button onClick={onClose} className="w-24 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-700">
+            <button onClick={() => setIsOpen(false)} className="w-24 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-700">
               Cancelar
             </button>
           </>
@@ -48,14 +48,14 @@ export default function ModalContenidoAll({ modalType, modalData, onClose }) {
         ),
         buttons: (
           <>
-            <button onClick={onClose} className="w-24 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-700">
+            <button onClick={() => setIsOpen(false)} className="w-24 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-700">
               Aceptar
             </button>
           </>
         ),
       };
 
-    case "cerrarSesion":
+      case "cerrarSesion":
       return {
         titulo: "Cerrar Sesión",
         contenido: (
@@ -65,9 +65,10 @@ export default function ModalContenidoAll({ modalType, modalData, onClose }) {
         ),
         buttons: (
           <>
-            <ButtonDefault textButton={"Aceptar"} bgButton={"bg-green-500"} hoverBgButton={"hover:bg-green-700"} widthButton={"w-24"} paddingButtonX={"px-4"} paddingButtonY={"py-2"} marginButton={"mx-1"} colorButton={"text-white"}
-              modalType="ButtonActionAceptar" />
-            <button onClick={onClose} className="w-24 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-700">
+            <button onClick={onClose} className="w-24 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-700">
+              Aceptar
+            </button>
+            <button onClick={() => setIsOpen(false)} className="w-24 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-700">
               Cancelar
             </button>
           </>
@@ -86,7 +87,7 @@ export default function ModalContenidoAll({ modalType, modalData, onClose }) {
           <>
             <ButtonDefault textButton={"Aceptar"} bgButton={"bg-green-500"} hoverBgButton={"hover:bg-green-700"} widthButton={"w-24"} paddingButtonX={"px-4"} paddingButtonY={"py-2"} marginButton={"mx-1"} colorButton={"text-white"}
               modalType="ButtonActionAceptar" />
-            <button onClick={onClose} className="w-24 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-700">
+            <button onClick={() => setIsOpen(false)} className="w-24 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-700">
               Cancelar
             </button>
           </>
@@ -103,7 +104,7 @@ export default function ModalContenidoAll({ modalType, modalData, onClose }) {
         ),
         buttons: (
           <>
-            <button onClick={onClose} className="w-24 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-700">
+            <button onClick={() => setIsOpen(false)} className="w-24 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-700">
               Aceptar
             </button>
           </>
@@ -122,7 +123,7 @@ export default function ModalContenidoAll({ modalType, modalData, onClose }) {
           <>
             <ButtonDefault textButton={"Aceptar"} bgButton={"bg-green-500"} hoverBgButton={"hover:bg-green-700"} widthButton={"w-24"} paddingButtonX={"px-4"} paddingButtonY={"py-2"} marginButton={"mx-1"} colorButton={"text-white"}
               modalType="ButtonActionAceptar" />
-            <button onClick={onClose} className="w-24 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-700">
+            <button onClick={() => setIsOpen(false)} className="w-24 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-700">
               Cancelar
             </button>
           </>
@@ -139,7 +140,7 @@ export default function ModalContenidoAll({ modalType, modalData, onClose }) {
         ),
         buttons: (
           <>
-            <button onClick={onClose} className="w-24 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-700">
+            <button onClick={() => setIsOpen(false)} className="w-24 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-700">
               Aceptar
             </button>
           </>
@@ -158,7 +159,7 @@ export default function ModalContenidoAll({ modalType, modalData, onClose }) {
           <>
             <ButtonDefault textButton={"Aceptar"} bgButton={"bg-green-500"} hoverBgButton={"hover:bg-green-700"} widthButton={"w-24"} paddingButtonX={"px-4"} paddingButtonY={"py-2"} marginButton={"mx-1"} colorButton={"text-white"}
               modalType="ButtonActionAceptar" />
-            <button onClick={onClose} className="w-24 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-700">
+            <button onClick={() => setIsOpen(false)} className="w-24 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-700">
               Cancelar
             </button>
           </>
@@ -177,7 +178,7 @@ export default function ModalContenidoAll({ modalType, modalData, onClose }) {
           <>
             <ButtonDefault textButton={"Aceptar"} bgButton={"bg-green-500"} hoverBgButton={"hover:bg-green-700"} widthButton={"w-24"} paddingButtonX={"px-4"} paddingButtonY={"py-2"} marginButton={"mx-1"} colorButton={"text-white"}
               modalType="ButtonActionAceptar" />
-            <button onClick={onClose} className="w-24 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-700">
+            <button onClick={() => setIsOpen(false)} className="w-24 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-700">
               Cancelar
             </button>
           </>
@@ -196,7 +197,7 @@ export default function ModalContenidoAll({ modalType, modalData, onClose }) {
           <>
             <ButtonDefault textButton={"Aceptar"} bgButton={"bg-green-500"} hoverBgButton={"hover:bg-green-700"} widthButton={"w-24"} paddingButtonX={"px-4"} paddingButtonY={"py-2"} marginButton={"mx-1"} colorButton={"text-white"}
               modalType="ButtonActionAceptar" />
-            <button onClick={onClose} className="w-24 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-700">
+            <button onClick={() => setIsOpen(false)} className="w-24 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-700">
               Cancelar
             </button>
           </>
@@ -216,7 +217,7 @@ export default function ModalContenidoAll({ modalType, modalData, onClose }) {
             <button onClick={onClose} className="w-24 mr-1 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-700">
               Aceptar
             </button>
-            <button onClick={onClose} className="w-24 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-700">
+            <button onClick={() => setIsOpen(false)} className="w-24 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-700">
               Cancelar
             </button>
           </>

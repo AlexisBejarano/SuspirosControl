@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Cookies from "universal-cookie";
-import { useNavigate } from "react-router-dom";
 
 const baseUrl = "http://localhost:3001/usuarios";
 const cookies = new Cookies();
 
 export default function Login() {
     // Hook para redireccionar
-    const navigate = useNavigate();
 
     // Usamos useState para manejar el estado del formulario
     const [form, setForm] = useState({
@@ -37,14 +35,10 @@ export default function Login() {
 
             // Verifica si response.data existe y tiene al menos un elemento
             if (response.data && response.data.length > 0) {
-                let respuesta = response.data[0]; // Accede a response.data, no a response directamente
-
-                // Guarda las cookies
+                let respuesta = response.data[0];
                 cookies.set("id", respuesta.id, { path: "/" });
                 cookies.set("username", respuesta.username, { path: "/" });
-
-                alert("Inicio correcto!");
-                navigate("/app");
+                window.location.href = '/app';
             } else {
                 alert("El usuario o la contraseña no son correctos");
             }
