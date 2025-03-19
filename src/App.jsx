@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import ButtonDefault from "./components/ButtonDefault"
 
+
 const TableComponent = () => {
+
+  
 
   const [productos, setProductos] = useState([
   {

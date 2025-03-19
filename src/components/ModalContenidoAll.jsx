@@ -3,7 +3,6 @@ import ButtonDefault from "./ButtonDefault";
 
 
 
-
 import ModalAgregarProducto from "./modalComponents/ModalAgregarProducto";
 import ModalGenerarReporte from "./modalComponents/modalGenerarReporte";
 import ModalAlert from "./modalComponents/modalAlerta";
@@ -18,6 +17,7 @@ import ModalSalidaLote from "./modalComponents/modalSalidaLote";
 
 
 export default function ModalContenidoAll({ modalType, modalData, onClose }) {
+
   switch (modalType) {
     case "agregarProducto":
       return {
