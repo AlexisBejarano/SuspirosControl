@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ButtonDefault from "./components/ButtonDefault"
 import Cookies from "universal-cookie";
 
@@ -109,7 +109,7 @@ const TableComponent = () => {
   // Función para cerrar sesión
   const handleCerrarSesion = () => {
     cookies.remove("id", { path: "/" });
-    cookies.remove("username", { path: "/" });
+    cookies.remove("nombre", { path: "/" });
     window.location.href = '/'; 
   };
 
@@ -129,6 +129,13 @@ const TableComponent = () => {
       })));
     }
   };
+
+  // Redirigir si ya hay una sesión activa
+  useEffect(() => {
+    if (!cookies.get('nombre')) {
+        window.location.href = '/';
+    }
+}, []);
 
 
   return (

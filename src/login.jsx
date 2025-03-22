@@ -1,20 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Cookies from "universal-cookie";
 
-const baseUrl = "http://localhost:3001/usuarios";
+const baseUrl = "http://localhost:8080/usuario/login"; // Asegúrate de que esta URL sea correcta
 const cookies = new Cookies();
 
 export default function Login() {
-    // Hook para redireccionar
-
-    // Usamos useState para manejar el estado del formulario
     const [form, setForm] = useState({
-        username: '',
+        nombre: '',  // Asegúrate de que este campo coincida con lo que espera el backend
         password: ''
     });
 
-    // Función para manejar los cambios en los inputs
     const handleChange = (e) => {
         const { name, value } = e.target;
         setForm({
@@ -23,30 +19,33 @@ export default function Login() {
         });
     };
 
-    // Función para iniciar sesión
     const iniciarSesion = async () => {
         try {
-            const response = await axios.get(baseUrl, {
-                params: {
-                    username: form.username,
-                    password: form.password
-                }
+            const response = await axios.post(baseUrl, {
+                nombre: form.nombre,
+                password: form.password
             });
 
-            // Verifica si response.data existe y tiene al menos un elemento
-            if (response.data && response.data.length > 0) {
-                let respuesta = response.data[0];
-                cookies.set("id", respuesta.id, { path: "/" });
-                cookies.set("username", respuesta.username, { path: "/" });
+            if (response.data.status === "success") {
+                // Guardar cookies y redirigir
+                cookies.set("id", 1, { path: "/" }); // Usa un valor predeterminado o obtén el ID de otra manera
+                cookies.set("nombre", form.nombre, { path: "/" }); // Usa el nombre del formulario
                 window.location.href = '/app';
             } else {
-                alert("El usuario o la contraseña no son correctos");
+                alert(response.data.message || "El usuario o la contraseña no son correctos");
             }
         } catch (error) {
             console.log(error);
             alert("Ocurrió un error al iniciar sesión");
         }
     };
+
+    // Redirigir si ya hay una sesión activa
+    useEffect(() => {
+        if (cookies.get('nombre')) {
+            window.location.href = '/app';
+        }
+    }, []);
 
     return (
         <>
@@ -58,7 +57,7 @@ export default function Login() {
                     <div className="relative">
                         <input
                             type="text"
-                            name="username"
+                            name="nombre"
                             onChange={handleChange}
                             className="peer py-2.5 sm:py-3 px-4 ps-11 block w-full bg-gray-100 border-transparent rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
                             placeholder="Enter name"
@@ -89,7 +88,7 @@ export default function Login() {
 
                     <button
                         type="button"
-                        onClick={iniciarSesion} // Llamamos directamente a la función
+                        onClick={iniciarSesion}
                         className="text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
                     >
                         Acceder
