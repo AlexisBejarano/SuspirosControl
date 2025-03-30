@@ -11,6 +11,8 @@ export default function Login() {
         password: ''
     });
 
+    const [loading, setLoading] = useState(false); // Estado para controlar el botón
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setForm({
@@ -20,6 +22,7 @@ export default function Login() {
     };
 
     const iniciarSesion = async () => {
+        setLoading(true); // Deshabilitar el botón y cambiar el texto
         try {
             const response = await axios.post(baseUrl, {
                 nombre: form.nombre,
@@ -38,6 +41,7 @@ export default function Login() {
             console.log(error);
             alert("Ocurrió un error al iniciar sesión");
         }
+          setLoading(false); // Habilitar el botón nuevamente
     };
 
     // Redirigir si ya hay una sesión activa
@@ -92,9 +96,13 @@ export default function Login() {
                 </div>
                 <button
                   onClick={iniciarSesion}
-                  className="w-full mt-6 bg-gradient-to-r from-purple-500 to-pink-500 p-2 text-white py-3 rounded-lg text-lg font-semibold hover:bg-gradient-to-r hover:from-purple-400 hover:to-pink-400 hover:border-2 hover:p-2.5 transition"
+                  disabled={loading} // Deshabilitar el botón si loading es true
+                  className={`w-full mt-6 p-2 text-white py-3 rounded-lg text-lg font-semibold transition ${
+                    loading
+                        ? "bg-gradient-to-r from-purple-800 to-pink-800 cursor-not-allowed"
+                        : "bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-400 hover:to-pink-400 hover:border-2 hover:p-2.5"}`}
                 >
-                  Login
+                  {loading ? "Procesando..." : "Acceder"}
                 </button>
               </div>
             </div>
