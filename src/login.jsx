@@ -50,7 +50,7 @@ export default function Login() {
     };
 
     useEffect(() => {
-        if (cookies.get('nombre')) {
+        if (cookies.get('token')) {
             window.location.href = '/app';
         }
     }, []);

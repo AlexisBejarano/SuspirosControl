@@ -110,6 +110,7 @@ const TableComponent = () => {
   const handleCerrarSesion = () => {
     cookies.remove("id", { path: "/" });
     cookies.remove("nombre", { path: "/" });
+    cookies.remove("token", { path: "/" });
     window.location.href = '/'; 
   };
 
@@ -132,7 +133,7 @@ const TableComponent = () => {
 
   // Redirigir si ya hay una sesión activa
   useEffect(() => {
-    if (!cookies.get('nombre')) {
+    if (!cookies.get('token')) {
         window.location.href = '/';
     }
 }, []);
