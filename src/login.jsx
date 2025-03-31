@@ -12,6 +12,7 @@ export default function Login() {
     });
 
     const [loading, setLoading] = useState(false); // Estado para controlar el botón
+    const [error, setError] = useState(null);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -22,31 +23,51 @@ export default function Login() {
     };
 
     const iniciarSesion = async () => {
-        setLoading(true); // Deshabilitar el botón y cambiar el texto
+        setLoading(true);
+        setError(null);
+        
         try {
             const response = await axios.post(baseUrl, {
                 nombre: form.nombre,
                 password: form.password
+            }, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }
             });
 
             if (response.data.status === "success") {
-                // Guardar cookies y redirigir
-                cookies.set("id", 1, { path: "/" }); // Usa un valor predeterminado o obtén el ID de otra manera
-                cookies.set("nombre", form.nombre, { path: "/" }); // Usa el nombre del formulario
+                // Guardar token y datos de usuario
+                const { token, user } = response.data;
+                
+                cookies.set("token", token, { path: "/", maxAge: 3600 }); // 1 hora de expiración
+                if (user) {
+                    cookies.set("user", JSON.stringify(user), { path: "/", maxAge: 3600 });
+                }
+                
+                // Configurar Axios para futuras solicitudes
+                axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+                
                 window.location.href = '/app';
             } else {
-                alert(response.data.message || "El usuario o la contraseña no son correctos");
+                setError(response.data.message || "Credenciales incorrectas");
             }
         } catch (error) {
-            console.log(error);
-            alert("Ocurrió un error al iniciar sesión");
+            console.error("Error:", error);
+            const errorMessage = error.response?.data?.message || 
+                               error.message || 
+                               "Error al iniciar sesión";
+            setError(errorMessage);
+        } finally {
+            setLoading(false);
         }
-          setLoading(false); // Habilitar el botón nuevamente
     };
+
 
     // Redirigir si ya hay una sesión activa
     useEffect(() => {
-        if (cookies.get('nombre')) {
+        if (cookies.get('token')) {
             window.location.href = '/app';
         }
     }, []);
@@ -94,6 +115,7 @@ export default function Login() {
                   <input type="checkbox" id="remember" className="mr-2" />
                   <label htmlFor="remember" className="text-gray-600">Remember me</label>
                 </div>
+                
                 <button
                   onClick={iniciarSesion}
                   disabled={loading} // Deshabilitar el botón si loading es true
@@ -104,6 +126,11 @@ export default function Login() {
                 >
                   {loading ? "Procesando..." : "Acceder"}
                 </button>
+                {error && (
+                    <div className="mt-4 p-2 bg-red-100 text-red-700 rounded-lg text-sm">
+                        {error}
+                    </div>
+                )}
               </div>
             </div>
           </div>

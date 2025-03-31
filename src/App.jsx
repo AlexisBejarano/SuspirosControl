@@ -140,7 +140,7 @@ const TableComponent = () => {
 
   return (
     <>
-      <div className="items-center p-4 bg-gradient-to-r from-red-500 to-blue-500 h-screen">
+      <div className="items-center p-4 bg-gradient-to-r from-purple-500 to-pink-500 h-screen">
         <div className="m-auto max-w-xl flex justify-center gap-2">
           {/* Botón 1: Agregar Producto */}
           <ButtonDefault textButton={"Agregar Producto"} bgButton={"bg-gray-500"} hoverBgButton={"hover:bg-gray-700"} widthButton={"w-40"} paddingButtonX={"px-3"} paddingButtonY={"py-1"} marginButton={"mx-1"} colorButton={"text-white"}
