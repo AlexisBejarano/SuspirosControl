@@ -35,7 +35,7 @@ const [productos, setProductos] = useState([]);
     }
   };
   */
-
+/*
   // Redirigir si ya hay una sesión activa
   useEffect(() => {
     if (!cookies.get('token')) {
@@ -43,7 +43,7 @@ const [productos, setProductos] = useState([]);
     }
 }, []);
 
-
+*/
 // CODIGO PARA GET AL SERVIDOR TOMANDO COMO CABECERA EL TOKEN
 
 useEffect(() => {
@@ -51,7 +51,7 @@ useEffect(() => {
     const token = cookies.get("token");
 
     if (!token) {
-      window.location.href = "/";
+      handleCerrarSesion();
       return;
     }
 
@@ -70,10 +70,11 @@ useEffect(() => {
 
       const data = await response.json();
       console.log("Respuesta del servidor:", data);
-      setProductos(data.data); // Puedes comentar esto si solo quieres mostrar en consola
+      setProductos(data.data);
 
     } catch (error) {
       console.error("Hubo un error al obtener los datos:", error);
+      handleCerrarSesion(); // <-- Si hay un error, cerrar sesión
     }
   };
 
@@ -136,16 +137,16 @@ useEffect(() => {
                 <td className="px-4 py-2 text-center border-r-2 border-r-gray-200">{producto.nombre}</td>
                 <td className="px-4 py-2 text-center border-r-2 border-r-gray-200">{producto.unidad}</td>
                 <td className="px-1 text-center border-r-2 border-r-gray-200">
-                  <ButtonDefault textButton={"aaa"} bgButton={"bg-green-500"} hoverBgButton={"hover:bg-emerald-700"} widthButton={"min-w-24"} paddingButtonX={"px-3"} paddingButtonY={"py-1"} marginButton={"ml-1"} colorButton={"text-white"}
+                  <ButtonDefault textButton={producto.movimientos?.entrada?.[0] || "0"} bgButton={"bg-green-500"} hoverBgButton={"hover:bg-emerald-700"} widthButton={"min-w-24"} paddingButtonX={"px-3"} paddingButtonY={"py-1"} marginButton={"ml-1"} colorButton={"text-white"}
                     modalType="registrarEntrada"
                   />
                 </td>
                 <td className="px-1 text-center border-r-2 border-r-gray-200">
-                  <ButtonDefault textButton={"aaa"} bgButton={"bg-green-500"} hoverBgButton={"hover:bg-emerald-700"} widthButton={"min-w-24"} paddingButtonX={"px-3"} paddingButtonY={"py-1"} marginButton={"ml-1"} colorButton={"text-white"}
+                  <ButtonDefault textButton={producto.movimientos?.salida?.[0] || "0"} bgButton={"bg-green-500"} hoverBgButton={"hover:bg-emerald-700"} widthButton={"min-w-24"} paddingButtonX={"px-3"} paddingButtonY={"py-1"} marginButton={"ml-1"} colorButton={"text-white"}
                     modalType="registrarSalida"
                   />
                 </td>
-                <td className="px-4 py-2 text-center border-r-2 border-r-gray-200">{"aaa"}</td>
+                <td className="px-4 py-2 text-center border-r-2 border-r-gray-200">{producto.stock}</td>
                 <td className="px-1 text-center border-r-2 border-r-gray-200">
                   <ButtonDefault textButton={"aaa"} bgButton={"bg-green-500"} hoverBgButton={"hover:bg-green-700"} widthButton={"w-40"} paddingButtonX={"px-3"} paddingButtonY={"py-1"} marginButton={"mx-1"} colorButton={"text-white"}
                     modalType="caducidad" // Tipo de modal en el componente
