@@ -96,10 +96,10 @@ export default function ModalContenidoAll({ modalType, modalData, onClose, setIs
 
     case "registrarSalida":
       return {
-        titulo: "Registrar Saldia",
+        titulo: "Registrar Salida",
         contenido: (
           <>
-            <ModalRegistrarSalida />
+            <ModalRegistrarSalida modalData={modalData}/>
           </>
         ),
         buttons: (

@@ -151,7 +151,7 @@ useEffect(() => {
                 </td>
                 <td className="px-1 text-center border-r-2 border-r-gray-200">
                   <ButtonDefault textButton={totalSalida} bgButton={"bg-green-500"} hoverBgButton={"hover:bg-emerald-700"} widthButton={"min-w-24"} paddingButtonX={"px-3"} paddingButtonY={"py-1"} marginButton={"ml-1"} colorButton={"text-white"}
-                    modalType="registrarSalida"
+                    modalType="registrarSalida" modalData={producto}
                   />
                 </td>
                 <td className="px-4 py-2 text-center border-r-2 border-r-gray-200">{producto.stock}</td>
