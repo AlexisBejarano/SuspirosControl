@@ -35,15 +35,6 @@ const [productos, setProductos] = useState([]);
     }
   };
   */
-/*
-  // Redirigir si ya hay una sesión activa
-  useEffect(() => {
-    if (!cookies.get('token')) {
-        window.location.href = '/';
-    }
-}, []);
-
-*/
 // CODIGO PARA GET AL SERVIDOR TOMANDO COMO CABECERA EL TOKEN
 
 useEffect(() => {
@@ -119,7 +110,7 @@ useEffect(() => {
         </form>
 
 
-        <table className="mx-auto">
+        <table className="mx-auto table-fixed border-separate border-spacing-y-2">
           <thead>
             <tr className="bg-gray-800 text-white">
               <th className="py-3 px-2 border-r-1">Producto</th>
@@ -145,7 +136,7 @@ useEffect(() => {
             ) ?? 0;
             
             return (
-              <tr key={producto.id} className="bg-white border-y-8 border-neutral-300 ">
+              <tr key={producto.id} className="bg-white shadow-md">
                 <td className="px-4 py-2 text-center border-r-2 border-r-gray-200">{producto.nombre}</td>
                 <td className="px-4 py-2 text-center border-r-2 border-r-gray-200">{producto.unidad}</td>
                 <td className="px-1 text-center border-r-2 border-r-gray-200">
