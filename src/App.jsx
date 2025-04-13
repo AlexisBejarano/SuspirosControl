@@ -4,107 +4,8 @@ import Cookies from "universal-cookie";
 
 const cookies = new Cookies();
 const TableComponent = () => {
+const [productos, setProductos] = useState([]);
 
-
-  const [productos, setProductos] = useState([
-    {
-      "productos": [
-        {
-          "id": 1,
-          "nombre": "Producto A",
-          "unidad_medida": "kg",
-          "stock": 130,
-          "movimientos": [
-            {
-              "id": 1,
-              "entrada": 20,
-              "salida": 30
-            }
-          ],
-          "detalle_productos": [
-            {
-              "id": 1,
-              "lote": "L001",
-              "cantidad": 10,
-              "caducidad": "2023-12-10T00:00:00Z"
-            },
-            {
-              "id": 2,
-              "lote": "L002",
-              "cantidad": 70,
-              "caducidad": "2024-01-31T00:00:00Z"
-            },
-            {
-              "id": 3,
-              "lote": "L003",
-              "cantidad": 40,
-              "caducidad": "2024-01-20T00:00:00Z"
-            }
-          ]
-        },
-        {
-          "id": 2,
-          "nombre": "Producto B",
-          "unidad_medida": "litros",
-          "stock": 140,
-          "movimientos": [
-            {
-              "id": 3,
-              "entrada": 150,
-              "salida": 30
-            }
-          ],
-          "detalle_productos": [
-            {
-              "id": 3,
-              "lote": "L003",
-              "cantidad": 120,
-              "caducidad": "2023-11-15T00:00:00Z"
-            },
-            {
-              "id": 4,
-              "lote": "L004",
-              "cantidad": 20,
-              "caducidad": "2024-02-28T00:00:00Z"
-            }
-          ]
-        },
-        {
-          "id": 3,
-          "nombre": "Producto C",
-          "unidad_medida": "unidades",
-          "stock": 65,
-          "movimientos": [
-            {
-              "id": 5,
-              "entrada": 50,
-              "salida": 5
-            }
-          ],
-          "detalle_productos": [
-            {
-              "id": 5,
-              "lote": "L005",
-              "cantidad": 45,
-              "caducidad": "2023-10-10T00:00:00Z"
-            },
-            {
-              "id": 6,
-              "lote": "L006",
-              "cantidad": 20,
-              "caducidad": "2024-03-15T00:00:00Z"
-            }
-          ]
-        }
-      ],
-      "usuarios": [
-        {
-          "id": 1,
-          "username": "user1",
-          "password": "password1"
-        }]
-    }
-  ]);
 
   // Función para cerrar sesión
   const handleCerrarSesion = () => {
@@ -114,12 +15,15 @@ const TableComponent = () => {
     window.location.href = '/'; 
   };
 
+  /*
   // Función para obtener la fecha de caducidad más próxima
   const obtenerCaducidadProxima = (detalles) => {
     const fechas = detalles.map((lote) => new Date(lote.caducidad));
     return fechas.length ? new Date(Math.min(...fechas)).toISOString().split("T")[0] : "N/A";
   };
+  */
 
+  /*
   // Handlers para las acciones
   const handleEditar = (id) => alert(`Editar producto con ID: ${id}`);
   const handleEliminar = (id) => {
@@ -130,6 +34,7 @@ const TableComponent = () => {
       })));
     }
   };
+  */
 
   // Redirigir si ya hay una sesión activa
   useEffect(() => {
@@ -137,6 +42,44 @@ const TableComponent = () => {
         window.location.href = '/';
     }
 }, []);
+
+
+// CODIGO PARA GET AL SERVIDOR TOMANDO COMO CABECERA EL TOKEN
+
+useEffect(() => {
+  const fetchData = async () => {
+    const token = cookies.get("token");
+
+    if (!token) {
+      window.location.href = "/";
+      return;
+    }
+
+    try {
+      const response = await fetch("http://localhost:8080/todo", {
+        method: "GET",
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json"
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error("Error en la petición");
+      }
+
+      const data = await response.json();
+      console.log("Respuesta del servidor:", data);
+      setProductos(data.data); // Puedes comentar esto si solo quieres mostrar en consola
+
+    } catch (error) {
+      console.error("Hubo un error al obtener los datos:", error);
+    }
+  };
+
+  fetchData();
+}, []);
+
 
 
   return (
@@ -188,26 +131,25 @@ const TableComponent = () => {
             </tr>
           </thead>
           <tbody>
-            {productos[0].productos.map((producto) => (
+          {productos.map((producto) => (
               <tr key={producto.id} className="bg-white border-y-8 border-neutral-300 ">
-
                 <td className="px-4 py-2 text-center border-r-2 border-r-gray-200">{producto.nombre}</td>
-                <td className="px-4 py-2 text-center border-r-2 border-r-gray-200">{producto.unidad_medida}</td>
+                <td className="px-4 py-2 text-center border-r-2 border-r-gray-200">{producto.unidad}</td>
                 <td className="px-1 text-center border-r-2 border-r-gray-200">
-                  <ButtonDefault textButton={producto.movimientos[0].entrada} bgButton={"bg-green-500"} hoverBgButton={"hover:bg-emerald-700"} widthButton={"min-w-24"} paddingButtonX={"px-3"} paddingButtonY={"py-1"} marginButton={"ml-1"} colorButton={"text-white"}
+                  <ButtonDefault textButton={"aaa"} bgButton={"bg-green-500"} hoverBgButton={"hover:bg-emerald-700"} widthButton={"min-w-24"} paddingButtonX={"px-3"} paddingButtonY={"py-1"} marginButton={"ml-1"} colorButton={"text-white"}
                     modalType="registrarEntrada"
                   />
                 </td>
                 <td className="px-1 text-center border-r-2 border-r-gray-200">
-                  <ButtonDefault textButton={producto.movimientos[0].salida} bgButton={"bg-green-500"} hoverBgButton={"hover:bg-emerald-700"} widthButton={"min-w-24"} paddingButtonX={"px-3"} paddingButtonY={"py-1"} marginButton={"ml-1"} colorButton={"text-white"}
+                  <ButtonDefault textButton={"aaa"} bgButton={"bg-green-500"} hoverBgButton={"hover:bg-emerald-700"} widthButton={"min-w-24"} paddingButtonX={"px-3"} paddingButtonY={"py-1"} marginButton={"ml-1"} colorButton={"text-white"}
                     modalType="registrarSalida"
                   />
                 </td>
-                <td className="px-4 py-2 text-center border-r-2 border-r-gray-200">{producto.stock}</td>
+                <td className="px-4 py-2 text-center border-r-2 border-r-gray-200">{"aaa"}</td>
                 <td className="px-1 text-center border-r-2 border-r-gray-200">
-                  <ButtonDefault textButton={obtenerCaducidadProxima(producto.detalle_productos)} bgButton={"bg-green-500"} hoverBgButton={"hover:bg-green-700"} widthButton={"w-40"} paddingButtonX={"px-3"} paddingButtonY={"py-1"} marginButton={"mx-1"} colorButton={"text-white"}
+                  <ButtonDefault textButton={"aaa"} bgButton={"bg-green-500"} hoverBgButton={"hover:bg-green-700"} widthButton={"w-40"} paddingButtonX={"px-3"} paddingButtonY={"py-1"} marginButton={"mx-1"} colorButton={"text-white"}
                     modalType="caducidad" // Tipo de modal en el componente
-                    modalData={producto.detalle_productos} // Pasa los detalles como prop para generar la tabla en el modal.
+                    modalData={"aaa"} // Pasa los detalles como prop para generar la tabla en el modal.
                   />
                 </td>
                 <td className="text-center min-w-28">
