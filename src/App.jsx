@@ -16,14 +16,6 @@ const [productos, setProductos] = useState([]);
   };
 
   /*
-  // Función para obtener la fecha de caducidad más próxima
-  const obtenerCaducidadProxima = (detalles) => {
-    const fechas = detalles.map((lote) => new Date(lote.caducidad));
-    return fechas.length ? new Date(Math.min(...fechas)).toISOString().split("T")[0] : "N/A";
-  };
-  */
-
-  /*
   // Handlers para las acciones
   const handleEditar = (id) => alert(`Editar producto con ID: ${id}`);
   const handleEliminar = (id) => {
@@ -135,6 +127,19 @@ useEffect(() => {
               0
             ) ?? 0;
             
+            // Obtener caducidad más próxima
+            const caducidadMasProxima = producto.detalle_productos
+              ?.map((d) => new Date(d.caducidad))
+              .sort((a, b) => a - b)[0]; // ordena y toma la más cercana
+
+            const caducidadProxima = caducidadMasProxima
+              ? caducidadMasProxima.toLocaleDateString("es-MX", {
+                  year: "numeric",
+                  month: "2-digit",
+                  day: "2-digit",
+                })
+              : "Sin fecha";
+
             return (
               <tr key={producto.id} className="bg-white shadow-md">
                 <td className="px-4 py-2 text-center border-r-2 border-r-gray-200">{producto.nombre}</td>
@@ -151,7 +156,7 @@ useEffect(() => {
                 </td>
                 <td className="px-4 py-2 text-center border-r-2 border-r-gray-200">{producto.stock}</td>
                 <td className="px-1 text-center border-r-2 border-r-gray-200">
-                  <ButtonDefault textButton={"aaa"} bgButton={"bg-green-500"} hoverBgButton={"hover:bg-green-700"} widthButton={"w-40"} paddingButtonX={"px-3"} paddingButtonY={"py-1"} marginButton={"mx-1"} colorButton={"text-white"}
+                  <ButtonDefault textButton={caducidadProxima} bgButton={"bg-green-500"} hoverBgButton={"hover:bg-green-700"} widthButton={"w-40"} paddingButtonX={"px-3"} paddingButtonY={"py-1"} marginButton={"mx-1"} colorButton={"text-white"}
                     modalType="caducidad" // Tipo de modal en el componente
                     modalData={"aaa"} // Pasa los detalles como prop para generar la tabla en el modal.
                   />
