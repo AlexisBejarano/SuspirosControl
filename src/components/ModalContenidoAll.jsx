@@ -80,7 +80,7 @@ export default function ModalContenidoAll({ modalType, modalData, onClose, setIs
         titulo: "Registrar Entrada",
         contenido: (
           <>
-            <ModalRegistrarEntrada />
+            <ModalRegistrarEntrada modalData={modalData}/>
           </>
         ),
         buttons: (
