@@ -116,7 +116,7 @@ export default function ModalContenidoAll({ modalType, modalData, onClose, setIs
         titulo: "Salida de Lote",
         contenido: (
           <>
-            <ModalSalidaLote />
+            <ModalSalidaLote modalData={modalData}/>
           </>
         ),
         buttons: (
