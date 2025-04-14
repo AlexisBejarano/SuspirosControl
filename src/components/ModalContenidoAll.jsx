@@ -135,7 +135,7 @@ export default function ModalContenidoAll({ modalType, modalData, onClose, setIs
         titulo: "Detalles de Caducidad",
         contenido: (
           <>
-            <ModalCaducidad />
+            <ModalCaducidad modalData={modalData}/>
           </>
         ),
         buttons: (

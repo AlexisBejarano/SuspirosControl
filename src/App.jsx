@@ -158,7 +158,7 @@ useEffect(() => {
                 <td className="px-1 text-center border-r-2 border-r-gray-200">
                   <ButtonDefault textButton={caducidadProxima} bgButton={"bg-green-500"} hoverBgButton={"hover:bg-green-700"} widthButton={"w-40"} paddingButtonX={"px-3"} paddingButtonY={"py-1"} marginButton={"mx-1"} colorButton={"text-white"}
                     modalType="caducidad" // Tipo de modal en el componente
-                    modalData={"aaa"} // Pasa los detalles como prop para generar la tabla en el modal.
+                    modalData={producto} // Pasa los detalles como prop para generar la tabla en el modal.
                   />
                 </td>
                 <td className="text-center min-w-28">

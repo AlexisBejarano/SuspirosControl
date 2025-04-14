@@ -17,6 +17,8 @@ export default function ModalRegistrarSalida({ modalData }) {
 
   return (
     <>
+      <h3>Producto: {modalData?.nombre || "No disponible"}</h3>
+      <h3 className="mb-2">Unidad de medida: {modalData?.unidad || "No disponible"}</h3>
       <div className="flex items-center">
         <table className="mx-auto">
           <thead>
