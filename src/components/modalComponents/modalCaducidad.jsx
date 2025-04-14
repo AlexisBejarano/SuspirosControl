@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ButtonDefault from "../ButtonDefault";
 
 export default function ModalCaducidad({ modalData }) {
@@ -34,7 +34,7 @@ export default function ModalCaducidad({ modalData }) {
                 <td className="px-4 py-2 text-center border-r-2 border-r-gray-200">{detalle.cantidad || "N/A"}</td>
                 <td className="px-1 text-center border-r-2 border-r-gray-200">
                   <ButtonDefault textButton={formatDate(detalle.caducidad)} bgButton={"bg-green-500"} hoverBgButton={"hover:bg-green-700"} widthButton={"w-35"} marginButton={"mx-1"} paddingButtonX={"px-4"} paddingButtonY={"py-1"} colorButton={"text-black"}
-                    modalType="caducidadEditar"
+                    modalType="caducidadEditar" modalData={{...detalle, productoNombre: modalData.nombre}}
                   />
                 </td>
               </tr>
