@@ -28,7 +28,7 @@ export default function ModalRegistrarEntrada({ modalData }) {
       <DatePicker
         selected={selectedDate}
         onChange={(date) => setSelectedDate(date)}
-        dateFormat="YYYY/MM/DD"
+        dateFormat="DD/MM/YYYY"
         className="border border-gray-300 p-2 h-10 rounded text-gray-700 focus:ring-0 focus:outline-hidden"
         placeholderText="Caducidad"
       />

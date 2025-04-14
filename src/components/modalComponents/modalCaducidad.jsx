@@ -16,8 +16,9 @@ export default function ModalCaducidad({ modalData }) {
 
   return (
     <>
-      <h3>Producto: aaa</h3>
-      <div className="flex mt-5 items-center">
+      <h3>Producto: {modalData?.nombre || "No disponible"}</h3>
+      <h3 className="mb-2">Unidad de medida: {modalData?.unidad || "No disponible"}</h3>
+      <div className="flex items-center">
         <table className="mx-auto">
           <thead>
             <tr className="bg-gray-800 text-white">
@@ -32,7 +33,7 @@ export default function ModalCaducidad({ modalData }) {
                 <td className="px-4 py-2 text-center border-x-2 border-x-gray-200">{detalle.lote || "N/A"}</td>
                 <td className="px-4 py-2 text-center border-r-2 border-r-gray-200">{detalle.cantidad || "N/A"}</td>
                 <td className="px-1 text-center border-r-2 border-r-gray-200">
-                  <ButtonDefault textButton={formatDate(detalle.caducidad)} bgButton={"bg-green-500"} hoverBgButton={"hover:bg-green-700"} widthButton={"w-40"} marginButton={"mx-1"} paddingButtonX={"px-4"} paddingButtonY={"py-1"} colorButton={"text-black"}
+                  <ButtonDefault textButton={formatDate(detalle.caducidad)} bgButton={"bg-green-500"} hoverBgButton={"hover:bg-green-700"} widthButton={"w-35"} marginButton={"mx-1"} paddingButtonX={"px-4"} paddingButtonY={"py-1"} colorButton={"text-black"}
                     modalType="caducidadEditar"
                   />
                 </td>
