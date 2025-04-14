@@ -1,5 +1,18 @@
 import React, { useState } from "react";
 
+/*
+
+COSAS FALTANTES:
+
+- SE DESHABILITE TODOS LOS BOTONES HASTA QUE LA TABLA SE GENERE.
+- CORREGIR EL BOTON AGREGAR PRODUCTO AL MODAL.
+- EL BOTON DEL MODAL SE DESHABILITE PARA EVITAR MULTIPLES PETICIONES.
+- SE CIERRE TODO MODAL AVIERTO EN VENTANA AL MOMENTO SE GUARDE UN PRODUCTO.
+- SE DEBERIA HACER UN REFRESH A LA TABLA AL AGREGAR UN PRODUCTO.
+
+*/
+
+
 // Función para obtener el token desde las cookies
 function getCookie(name) {
     const value = `; ${document.cookie}`;
@@ -25,6 +38,9 @@ export default function ModalAgregarProducto({ onClose }) {
     };
     // FIN PARA AVISO STOCK ---------------------------------------------
 
+    const [loading, setLoading] = useState(false);
+
+
     const handleAgregarProducto = async () => {
         if (!nombre || !unidad) {
             alert("Por favor completa todos los campos.");
@@ -32,6 +48,7 @@ export default function ModalAgregarProducto({ onClose }) {
         }
 
         const token = getCookie("token");
+        setLoading(true); // deshabilitar el botón al iniciar la petición
 
         try {
             const response = await fetch("http://localhost:8080/producto", {
@@ -62,6 +79,8 @@ export default function ModalAgregarProducto({ onClose }) {
         } catch (error) {
             console.error("Error al enviar el producto:", error);
             alert("Ocurrió un error al conectar con el servidor.");
+        } finally {
+            setLoading(false); // vuelve a habilitar
         }
     };
 
@@ -72,13 +91,13 @@ export default function ModalAgregarProducto({ onClose }) {
                 <input type="text" id="AgregarProductoNombre" placeholder="AgregarProductoNombre" className="peer border-none h-10 w-full px-2 bg-transparent placeholder-transparent focus:border-transparent focus:ring-0 focus:outline-hidden"
                     value={nombre}
                     onChange={(e) => setNombre(e.target.value)}
-                 />
+                />
                 <span className="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-400 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
                     <strong>Nombre Producto</strong>
                 </span>
             </label>
             <label htmlFor="AgregarUdMedida" className="relative block mt-3 rounded-md border border-gray-300 shadow-xs">
-                <input type="text" id="AgregarUdMedida" placeholder="AgregarUdMedida" className="peer border-none h-10 w-full px-2 bg-transparent placeholder-transparent focus:border-transparent focus:ring-0 focus:outline-hidden" 
+                <input type="text" id="AgregarUdMedida" placeholder="AgregarUdMedida" className="peer border-none h-10 w-full px-2 bg-transparent placeholder-transparent focus:border-transparent focus:ring-0 focus:outline-hidden"
                     value={unidad}
                     onChange={(e) => setUnidad(e.target.value)}
                 />
@@ -102,8 +121,11 @@ export default function ModalAgregarProducto({ onClose }) {
                 </div>
             </div>
             <div className="mt-4 text-center">
-                <button onClick={handleAgregarProducto} className="bg-green-600 hover:bg-green-800 text-white px-6 py-2 rounded">
-                    Agregar Producto
+                <button className={`px-6 py-2 rounded text-white ${loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-600 hover:bg-green-800'}`}
+                    onClick={handleAgregarProducto}
+                    disabled={loading}
+                >
+                    {loading ? "Guardando..." : "Agregar Producto"}
                 </button>
             </div>
         </div>
