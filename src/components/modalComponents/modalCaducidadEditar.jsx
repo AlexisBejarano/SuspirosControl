@@ -25,7 +25,9 @@ export default function ModalCaducidadEditar({ modalData }) {
       <DatePicker
         selected={selectedDate}
         onChange={(date) => setSelectedDate(date)}
-        dateFormat="DD/MM/YYYY"
+        dateFormat="dd/MM/yyyy"
+        locale={es} // Establece el locale español
+        minDate={new Date()} // Opcional: no permitir fechas pasadas
         className="border border-gray-300 p-2 h-10 rounded text-gray-700 focus:ring-0 focus:outline-hidden"
         placeholderText="Caducidad"
       />
