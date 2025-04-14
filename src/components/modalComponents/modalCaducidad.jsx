@@ -16,9 +16,11 @@ export default function ModalCaducidad({ modalData }) {
 
   return (
     <>
-      <h3>Producto: {modalData?.nombre || "No disponible"}</h3>
-      <h3 className="mb-2">Unidad de medida: {modalData?.unidad || "No disponible"}</h3>
-      <div className="flex items-center">
+      <hr className="mb-2 mt-1"/>
+      <h3><strong>{modalData?.nombre || "No disponible"}</strong></h3>
+      <h3><i>{modalData?.unidad || "No disponible"}</i></h3>
+
+      <div className="flex items-center mt-3">
         <table className="mx-auto">
           <thead>
             <tr className="bg-gray-800 text-white">

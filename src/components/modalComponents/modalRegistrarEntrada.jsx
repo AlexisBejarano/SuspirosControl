@@ -10,8 +10,9 @@ export default function ModalRegistrarEntrada({ modalData }) {
 
   return (
     <>
-      <h3>Producto: {modalData?.nombre || "No disponible"}</h3>
-      <h3>Unidad de medida: {modalData?.unidad || "No disponible"}</h3>
+      <hr className="mb-2 mt-1"/>
+          <h3><strong>{modalData?.nombre || "No disponible"}</strong></h3>
+          <h3><i>{modalData?.unidad || "No disponible"}</i></h3>
       <label htmlFor="AgregarLote" className="relative block mt-3 rounded-md border border-gray-300 shadow-xs">
         <input type="text" id="AgregarLote" placeholder="AgregarLote" className="peer border-none h-10 w-full px-2  bg-transparent placeholder-transparent focus:border-transparent focus:ring-0 focus:outline-hidden" />
         <span className="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-400 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">

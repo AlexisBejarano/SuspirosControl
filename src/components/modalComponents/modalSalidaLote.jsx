@@ -29,8 +29,10 @@ export default function ModalSalidaLote({ modalData }) {
   
   return (
     <>
-    <h3 className="text-center mb-4">Producto: {modalData?.productoNombre || "N/A"}</h3>
-      <div className="flex items-center">
+    <hr className="mb-2 mt-1"/>
+          <h3><strong>{modalData?.productoNombre || "No disponible"}</strong></h3>
+          <h3><i>{modalData?.productoUnidad || "No disponible"}</i></h3>
+      <div className="flex items-center mt-3">
         <table className="mx-auto">
           <thead>
             <tr className="bg-gray-800 text-white">
@@ -41,9 +43,9 @@ export default function ModalSalidaLote({ modalData }) {
           </thead>
           <tbody>
             <tr className="bg-white border-b-1 border-b-gray-200">
-              <td className="px-1 text-center border-r-2 border-r-gray-200">{modalData?.lote || "N/A"}</td>
+              <td className="px-2 text-center border-r-2 border-r-gray-200">{modalData?.lote || "N/A"}</td>
               <td className="px-4 py-2 text-center border-r-2 border-r-gray-200">{modalData?.cantidad || "N/A"}</td>
-              <td className="px-1 text-center border-r-2 border-r-gray-200">{formatDate(modalData?.caducidad)}</td>
+              <td className="px-2 text-center border-r-2 border-r-gray-200">{formatDate(modalData?.caducidad)}</td>
             </tr>
           </tbody>
         </table>
