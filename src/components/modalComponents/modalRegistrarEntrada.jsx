@@ -2,38 +2,115 @@ import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-export default function ModalRegistrarEntrada({ modalData }) {
-  
-  //INICIO PARA DATE SELECCIONAR FECHA--------------------------------
+function getCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(";").shift();
+}
+
+export default function ModalRegistrarEntrada({ modalData, onClose }) {
+
+  const [lote, setLote] = useState("");
+  const [cantidad, setCantidad] = useState("");
   const [selectedDate, setSelectedDate] = useState(null);
-  //FIN PARA DATE SELECCIONAR FECHA--------------------------------
+  const [loading, setLoading] = useState(false);
+
+  const handleRegistrarEntrada = async () => {
+    if (!lote || !cantidad || !selectedDate || !modalData?.id) {
+      alert("Por favor completa todos los campos.");
+      return;
+    }
+
+    const token = getCookie("token");
+    setLoading(true);
+
+    try {
+      const response = await fetch("http://localhost:8080/detalles/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          lote,
+          productos: modalData.id,
+          cantidad: parseInt(cantidad),
+          caducidad: selectedDate.toISOString().split('T')[0], // yyyy-mm-dd
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert("Entrada registrada correctamente.");
+        setLote("");
+        setCantidad("");
+        setSelectedDate(null);
+        if (onClose) onClose(); // Cierra modal si se pasa onClose
+      } else {
+        alert("Error al registrar la entrada: " + (data.message || response.status));
+      }
+    } catch (error) {
+      console.error("Error al registrar la entrada:", error);
+      alert("Ocurrió un error al conectar con el servidor.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <>
-      <hr className="mb-2 mt-1"/>
-          <h3><strong>{modalData?.nombre || "No disponible"}</strong></h3>
-          <h3><i>{modalData?.unidad || "No disponible"}</i></h3>
+      <hr className="mb-2 mt-1" />
+      <h3><strong>{modalData?.nombre || "No disponible"}</strong></h3>
+      <h3><i>{modalData?.unidad || "No disponible"}</i></h3>
+
       <label htmlFor="AgregarLote" className="relative block mt-3 rounded-md border border-gray-300 shadow-xs">
-        <input type="text" id="AgregarLote" placeholder="AgregarLote" className="peer border-none h-10 w-full px-2  bg-transparent placeholder-transparent focus:border-transparent focus:ring-0 focus:outline-hidden" />
+        <input
+          type="text"
+          id="AgregarLote"
+          placeholder="AgregarLote"
+          className="peer border-none h-10 w-full px-2 bg-transparent placeholder-transparent focus:border-transparent focus:ring-0 focus:outline-hidden"
+          value={lote}
+          onChange={(e) => setLote(e.target.value)}
+        />
         <span className="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-400 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
           <strong>Lote</strong>
         </span>
       </label>
+
       <label htmlFor="AgregarCantidadLote" className="relative block mt-3 rounded-md border border-gray-300 shadow-xs">
-        <input type="text" id="AgregarCantidadLote" placeholder="AgregarCantidadLote" className="peer border-none h-10 w-full px-2 bg-transparent placeholder-transparent focus:border-transparent focus:ring-0 focus:outline-hidden" />
+        <input
+          type="number"
+          id="AgregarCantidadLote"
+          placeholder="AgregarCantidadLote"
+          className="peer border-none h-10 w-full px-2 bg-transparent placeholder-transparent focus:border-transparent focus:ring-0 focus:outline-hidden"
+          value={cantidad}
+          onChange={(e) => setCantidad(e.target.value)}
+        />
         <span className="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-400 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
           <strong>Cantidad</strong>
         </span>
       </label>
+
       <label className="block mt-3 text-gray-400 font-semibold mb-2">Fecha Caducidad:</label>
       <DatePicker
         selected={selectedDate}
         onChange={(date) => setSelectedDate(date)}
         dateFormat="dd/MM/yyyy"
-        minDate={new Date()} // Opcional: no permitir fechas pasadas
+        minDate={new Date()}
         className="border border-gray-300 p-2 h-10 rounded text-gray-700 focus:ring-0 focus:outline-hidden"
         placeholderText="Caducidad"
       />
+
+      <div className="mt-4 text-center">
+        <button
+          className={`px-6 py-2 rounded text-white ${loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-600 hover:bg-green-800'}`}
+          onClick={handleRegistrarEntrada}
+          disabled={loading}
+        >
+          {loading ? "Guardando..." : "Registrar Entrada"}
+        </button>
+      </div>
     </>
   );
 }
