@@ -25,7 +25,7 @@ export default function ModalRegistrarEntrada({ modalData, onClose }) {
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:8080/detalles/create", {
+      const response = await fetch("http://localhost:8080/detalles/input", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
