@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import ModalAlerta from "./modalAlerta";
+
 
 /*
 
@@ -24,6 +26,9 @@ export default function ModalAgregarProducto({ onClose }) {
     const [nombre, setNombre] = useState("");
     const [unidad, setUnidad] = useState("");
     const [number, setNumber] = useState(0); // Aviso stock
+    const [loading, setLoading] = useState(false);
+    const [showConfirmModal, setShowConfirmModal] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
 
     // INICIO PARA AVISO STOCK ---------------------------------------------
     // Estado para el input de número
@@ -37,15 +42,26 @@ export default function ModalAgregarProducto({ onClose }) {
     };
     // FIN PARA AVISO STOCK ---------------------------------------------
 
-    const [loading, setLoading] = useState(false);
+    // Validar campos antes de mostrar el modal de alerta
+    const handleOpenConfirmModal = () => {
+        const regex = /^[a-zA-Z0-9\s]+$/;
 
-
-    const handleAgregarProducto = async () => {
-        if (!nombre || !unidad) {
-            alert("Por favor completa todos los campos.");
+        if (!nombre.trim() || !unidad.trim()) {
+            setErrorMessage("Todos los campos son obligatorios.");
             return;
         }
 
+        if (!regex.test(nombre) || !regex.test(unidad)) {
+            setErrorMessage("Solo se permiten letras, números y espacios.");
+            return;
+        }
+
+        setErrorMessage(""); // limpiar errores
+        setShowConfirmModal(true);
+    };
+
+
+    const handleAgregarProducto = async () => {
         const token = getCookie("token");
         setLoading(true); // deshabilitar el botón al iniciar la petición
 
@@ -67,10 +83,11 @@ export default function ModalAgregarProducto({ onClose }) {
             const data = await response.json();
 
             if (response.ok) {
-                alert("Producto agregado correctamente.");
                 setNombre("");
                 setUnidad("");
                 setNumber(0);
+                setShowConfirmModal(false); //cerrar modal de alerta
+                setErrorMessage(""); // limpiar errores
                 if (onClose) onClose();
             } else {
                 alert("Error al agregar producto: " + (data.message || response.status));
@@ -85,7 +102,7 @@ export default function ModalAgregarProducto({ onClose }) {
 
 
     return (
-        <div>
+        <>
             <label htmlFor="AgregarProductoNombre" className="relative mt-3 block rounded-md border border-gray-300 shadow-xs">
                 <input type="text" id="AgregarProductoNombre" placeholder="AgregarProductoNombre" className="peer border-none h-10 w-full px-2 bg-transparent placeholder-transparent focus:border-transparent focus:ring-0 focus:outline-hidden"
                     value={nombre}
@@ -119,14 +136,37 @@ export default function ModalAgregarProducto({ onClose }) {
                     </button>
                 </div>
             </div>
-            <div className="mt-4 text-center">
-                <button className={`px-6 py-2 rounded text-white ${loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-600 hover:bg-green-800'}`}
-                    onClick={handleAgregarProducto}
+            <div className="mt-4 text-center space-x-2">
+                <button
+                    onClick={handleOpenConfirmModal} // 🔧 Usamos la validación aquí
                     disabled={loading}
+                    className={`px-6 py-2 rounded text-white ${loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-600 hover:bg-green-800'}`}
                 >
-                    {loading ? "Guardando..." : "Agregar Producto"}
+                    {loading ? "Guardando..." : "Aceptar"}
+                </button>
+                <button
+                    onClick={onClose}
+                    className="px-6 py-2 bg-red-500 hover:bg-red-700 text-white rounded"
+                >
+                    Cancelar
                 </button>
             </div>
-        </div>
+
+            {errorMessage && (
+                <p className="mt-2 text-center text-sm text-red-500">{errorMessage}</p>
+            )}
+
+            {showConfirmModal && (
+                <div className="fixed inset-0 flex items-center justify-center backdrop-blur-xs bg-gray-300/50 z-20">
+                    <div className="bg-white p-6 rounded-lg shadow-lg">
+                        <ModalAlerta
+                            onAceptar={handleAgregarProducto}
+                            onCancelar={() => setShowConfirmModal(false)}
+                            loading={loading}
+                        />
+                    </div>
+                </div>
+            )}
+        </>
     );
 }
