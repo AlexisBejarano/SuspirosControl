@@ -74,16 +74,11 @@ export default function ModalContenidoAll({ modalType, modalData, onClose, setIs
         titulo: "Registrar Entrada",
         contenido: (
           <>
-            <ModalRegistrarEntrada modalData={modalData} />
+            <ModalRegistrarEntrada onClose={() => setIsOpen(false)}/>
           </>
         ),
         buttons: (
           <>
-            <ButtonDefault textButton={"Aceptar"} bgButton={"bg-green-500"} hoverBgButton={"hover:bg-green-700"} widthButton={"w-24"} paddingButtonX={"px-4"} paddingButtonY={"py-2"} marginButton={"mx-1"} colorButton={"text-white"}
-              modalType="ButtonActionAceptar" />
-            <button onClick={() => setIsOpen(false)} className="w-24 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-700">
-              Cancelar
-            </button>
           </>
         ),
       };
@@ -206,35 +201,51 @@ export default function ModalContenidoAll({ modalType, modalData, onClose, setIs
             <ModalAlert onAceptar={async () => {
               setLoading(true);
               try {
-                // Aquí va la acción (como un fetch, por ejemplo)
-                const res = await fetch("http://localhost:8080/accion", {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify(modalData),
-                });
+                let url = "";
+              let metodo = "POST";
 
-                const data = await res.json();
-
-                if (res.ok) {
-                  alert("Acción realizada exitosamente.");
-                  setIsOpen(false); // cerrar modal alerta
-                  if (modalData?.onSuccess) {
-                    modalData.onSuccess(); // cerrar modal anterior si se pasó función
-                  }
-                } else {
-                  alert("Error: " + (data.message || "Error desconocido."));
-                }
-              } catch (error) {
-                console.error(error);
-                alert("Error de red o del servidor.");
-              } finally {
-                setLoading(false);
+              switch (modalData?.tipo) {
+                case "entrada":
+                  url = "http://localhost:8080/entrada";
+                  break;
+                case "salida":
+                  url = "http://localhost:8080/salida";
+                  break;
+                case "salidaLote":
+                  url = "http://localhost:8080/salidaLote";
+                  break;
+                default:
+                  throw new Error("Tipo de acción no válida.");
               }
-            }}
-              loading={loading} />
-          </>
+
+              const res = await fetch(url, {
+                method: metodo,
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(modalData),
+              });
+
+              const data = await res.json();
+
+              if (res.ok) {
+                alert("Acción realizada exitosamente.");
+                setIsOpen(false); // cerrar modal alerta
+                if (modalData?.onSuccess) modalData.onSuccess(); // cerrar modal padre
+                if (modalData?.onActualizar) modalData.onActualizar(); // actualizar tabla
+              } else {
+                alert("Error: " + (data.message || "Error desconocido."));
+              }
+            } catch (error) {
+              console.error(error);
+              alert("Error de red o del servidor.");
+            } finally {
+              setLoading(false);
+            }
+          }}
+          loading={loading}
+        />
+      </>
         ),
         buttons: loading ? null : ( // ocultar botones mientras carga
           <button onClick={() => setIsOpen(false)} className="w-24 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-700">
