@@ -74,7 +74,7 @@ export default function ModalContenidoAll({ modalType, modalData, onClose, setIs
         titulo: "Registrar Entrada",
         contenido: (
           <>
-            <ModalRegistrarEntrada onClose={() => setIsOpen(false)}/>
+            <ModalRegistrarEntrada modalData={modalData} onClose={() => setIsOpen(false)}/>
           </>
         ),
         buttons: (
@@ -88,7 +88,7 @@ export default function ModalContenidoAll({ modalType, modalData, onClose, setIs
         titulo: "Registrar Salida",
         contenido: (
           <>
-            <ModalRegistrarSalida modalData={modalData} />
+            <ModalRegistrarSalida onClose={() => setIsOpen(false)}/>
           </>
         ),
         buttons: (
@@ -105,7 +105,7 @@ export default function ModalContenidoAll({ modalType, modalData, onClose, setIs
         titulo: "Salida de Lote",
         contenido: (
           <>
-            <ModalSalidaLote modalData={modalData} />
+            <ModalSalidaLote onClose={() => setIsOpen(false)}/>
           </>
         ),
         buttons: (
@@ -206,7 +206,7 @@ export default function ModalContenidoAll({ modalType, modalData, onClose, setIs
 
               switch (modalData?.tipo) {
                 case "entrada":
-                  url = "http://localhost:8080/entrada";
+                  url = "http://localhost:8080/detalles/input";
                   break;
                 case "salida":
                   url = "http://localhost:8080/salida";

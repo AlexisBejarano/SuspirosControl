@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import ModalAlerta from "./modalAlerta";
 
 function getCookie(name) {
   const value = `; ${document.cookie}`;
@@ -12,17 +13,32 @@ export default function ModalRegistrarEntrada({ modalData, onClose }) {
 
   const [lote, setLote] = useState("");
   const [cantidad, setCantidad] = useState("");
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const handleRegistrarEntrada = async () => {
-    if (!lote || !cantidad || !selectedDate || !modalData?.id) {
-      alert("Por favor completa todos los campos.");
-      return;
+   // Validar campos antes de mostrar el modal de alerta
+   const handleOpenConfirmModal = () => {
+    const regex = /^[a-zA-Z0-9\s]+$/;
+
+    if (!lote.trim() || !cantidad.trim() || cantidad==0) {
+        setErrorMessage("Todos los campos son obligatorios.");
+        return;
     }
 
+    if (!regex.test(lote) || !regex.test(cantidad)) {
+        setErrorMessage("Solo se permiten letras, números y espacios.");
+        return;
+    }
+
+    setErrorMessage(""); // limpiar errores
+    setShowConfirmModal(true);
+  };
+
+  const handleRegistrarEntrada = async () => {
     const token = getCookie("token");
-    setLoading(true);
+    setLoading(true); // deshabilitar el botón al iniciar la petición
 
     try {
       const response = await fetch("http://localhost:8080/detalles/input", {
@@ -46,6 +62,7 @@ export default function ModalRegistrarEntrada({ modalData, onClose }) {
         setLote("");
         setCantidad("");
         setSelectedDate(null);
+        setErrorMessage(""); // limpiar errores
         if (onClose) onClose(); // Cierra modal si se pasa onClose
       } else {
         alert("Error al registrar la entrada: " + (data.message || response.status));
@@ -102,15 +119,37 @@ export default function ModalRegistrarEntrada({ modalData, onClose }) {
         placeholderText="Caducidad"
       />
 
-      <div className="mt-4 text-center">
+      <div className="mt-4 text-center space-x-2">
         <button
-          className={`px-6 py-2 rounded text-white ${loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-600 hover:bg-green-800'}`}
-          onClick={handleRegistrarEntrada}
+          onClick={handleOpenConfirmModal} // 🔧 Usamos la validación aquí
           disabled={loading}
+          className={`px-6 py-2 rounded text-white ${loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-600 hover:bg-green-800'}`}
         >
-          {loading ? "Guardando..." : "Registrar Entrada"}
+          {loading ? "Guardando..." : "Aceptar"}
+        </button>
+        <button
+          onClick={onClose}
+          className="px-6 py-2 bg-red-500 hover:bg-red-700 text-white rounded"
+        >
+          Cancelar
         </button>
       </div>
+
+      {errorMessage && (
+        <p className="mt-2 text-center text-sm text-red-500">{errorMessage}</p>
+      )}
+
+      {showConfirmModal && (
+        <div className="fixed inset-0 flex items-center justify-center backdrop-blur-xs bg-gray-300/50 z-20">
+          <div className="bg-white p-6 rounded-lg shadow-lg">
+            <ModalAlerta
+              onAceptar={handleRegistrarEntrada}
+              onCancelar={() => setShowConfirmModal(false)}
+              loading={loading}
+            />
+          </div>
+        </div>
+      )}
     </>
   );
 }
