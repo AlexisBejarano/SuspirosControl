@@ -5,29 +5,17 @@ import Cookies from "universal-cookie";
 const cookies = new Cookies();
 const TableComponent = () => {
 const [productos, setProductos] = useState([]);
+const [searchTerm, setSearchTerm] = useState("");
+const filteredProductos = productos.filter((producto) =>
+  producto.nombre.toLowerCase().includes(searchTerm.toLowerCase())
+);
 
-
-  // Función para cerrar sesión
   const handleCerrarSesion = () => {
     cookies.remove("id", { path: "/" });
     cookies.remove("nombre", { path: "/" });
     cookies.remove("token", { path: "/" });
     window.location.href = '/'; 
   };
-
-  /*
-  // Handlers para las acciones
-  const handleEditar = (id) => alert(`Editar producto con ID: ${id}`);
-  const handleEliminar = (id) => {
-    if (window.confirm("¿Seguro que deseas eliminar este producto?")) {
-      setProductos((prev) => prev.map((group) => ({
-        ...group,
-        productos: group.productos.filter((item) => item.id !== id),
-      })));
-    }
-  };
-  */
-// CODIGO PARA GET AL SERVIDOR TOMANDO COMO CABECERA EL TOKEN
 
 useEffect(() => {
   const fetchData = async () => {
@@ -57,7 +45,7 @@ useEffect(() => {
 
     } catch (error) {
       console.error("Hubo un error al obtener los datos:", error);
-      handleCerrarSesion(); // <-- Si hay un error, cerrar sesión
+      handleCerrarSesion();
     }
   };
 
@@ -83,7 +71,7 @@ useEffect(() => {
           {/* Botón 3: Cerrar Sesión */}
           <ButtonDefault textButton={"Cerrar Sesión"} bgButton={"bg-red-700"} hoverBgButton={"hover:bg-red-900"} widthButton={"w-40"} paddingButtonX={"px-3"} paddingButtonY={"py-1"} marginButton={"mx-1"} colorButton={"text-white"} 
             modalType="cerrarSesion" // Tipo de modal
-            onCerrarSesion={handleCerrarSesion} // Pasa la función como prop
+            onCerrarSesion={handleCerrarSesion}
           />
         </div>
 
@@ -96,7 +84,11 @@ useEffect(() => {
                 <path stroke="currentColor" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
               </svg>
             </div>
-            <input type="search" id="default-search" className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Buscar Producto..." required />
+            <input type="search" id="default-search" className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+            placeholder="Buscar Producto..." 
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            required />
             <button type="submit" className="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Buscar</button>
           </div>
         </form>
@@ -115,7 +107,7 @@ useEffect(() => {
             </tr>
           </thead>
           <tbody>
-          {productos.map((producto) => {
+          {filteredProductos.map((producto) => {
 
             const totalEntrada = producto.movimientos?.reduce(
               (total, mov) => total + parseInt(mov.entrada),
