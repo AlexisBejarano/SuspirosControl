@@ -13,6 +13,8 @@ import ModalEliminarProducto from "./modalComponents/modalEliminarProducto";
 import ModalRegistrarEntrada from "./modalComponents/modalRegistrarEntrada";
 import ModalRegistrarSalida from "./modalComponents/modalRegistrarSalida";
 import ModalSalidaLote from "./modalComponents/modalSalidaLote";
+import ModalEditarDetalle from "./modalComponents/modalEditarDetalle";
+
 
 
 export default function ModalContenidoAll({ modalType, modalData, onClose, setIsOpen }) {
@@ -137,6 +139,21 @@ export default function ModalContenidoAll({ modalType, modalData, onClose, setIs
         contenido: (
           <>
             <ModalCaducidadEditar modalData={modalData} onClose={() => setIsOpen(false)}/>
+          </>
+        ),
+        buttons: (
+          <>
+        
+          </>
+        ),
+      };
+
+      case "detalleEditar":
+      return {
+        titulo: "Editar Detalles",
+        contenido: (
+          <>
+            <ModalEditarDetalle modalData={modalData} onClose={() => setIsOpen(false)}/>
           </>
         ),
         buttons: (
