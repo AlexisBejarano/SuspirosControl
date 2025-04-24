@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import ModalAlerta from "./modalAlerta";
 
+/*
+  Falta que haga correctamente la peticion.
+
+*/
+
 function getCookie(name) {
   const value = `; ${document.cookie}`;
   const parts = value.split(`; ${name}=`);
@@ -9,7 +14,6 @@ function getCookie(name) {
 
 export default function ModalSalidaLote({ modalData, onClose }) {
   const [number, setNumber] = useState(0);
-  const [cantidad, setCantidad] = useState("");
   const [loading, setLoading] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -68,13 +72,12 @@ export default function ModalSalidaLote({ modalData, onClose }) {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${token}`,
         },
-        body: JSON.stringify({ cantidad: parseInt(cantidad) }),
+        body: JSON.stringify({ cantidad: number }),
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        setCantidad("");
         alert("Entrada registrada correctamente.");
         setErrorMessage(""); // limpiar errores
         alert("Salida registrada correctamente.");

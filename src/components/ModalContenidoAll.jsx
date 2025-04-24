@@ -199,17 +199,6 @@ export default function ModalContenidoAll({ modalType, modalData, onClose, setIs
                 let url = "";
               let metodo = "POST";
 
-              switch (modalData?.tipo) {
-                case "entrada":
-                  url = "http://localhost:8080/detalles/input";
-                  break;
-                case "salidaLote":
-                  url = "http://localhost:8080/salidaLote";
-                  break;
-                default:
-                  throw new Error("Tipo de acción no válida.");
-              }
-
               const res = await fetch(url, {
                 method: metodo,
                 headers: {
