@@ -6,6 +6,8 @@ const cookies = new Cookies();
 const TableComponent = () => {
   const [productos, setProductos] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [reloadTable, setReloadTable] = useState(false);
+
 
   const filteredProductos = productos.filter((producto) => {
     const entrada = producto.movimientos?.reduce(
@@ -83,7 +85,10 @@ const TableComponent = () => {
     };
 
     fetchData();
-  }, []);
+    
+  }, 
+  [reloadTable]);
+
 
 
 
@@ -191,6 +196,7 @@ const TableComponent = () => {
                     <td className="text-center min-w-28">
                       <ButtonDefault textButton={"✏"} bgButton={"bg-blue-500"} hoverBgButton={"hover:bg-blue-800"} widthButton={"w-12"} marginButton={"ml-1"} paddingButtonX={"px-3"} paddingButtonY={"py-1"} colorButton={"text-white"}
                         modalType="editarProducto"
+                        modalData={producto}
                       />
                       <ButtonDefault textButton={"🗑"} bgButton={"bg-red-700"} hoverBgButton={"hover:bg-red-900"} widthButton={"w-12"} marginButton={"mx-1"} paddingButtonX={"px-3"} paddingButtonY={"py-1"} colorButton={"text-white"}
                         modalType="eliminarProducto"
