@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import ModalAlerta from "./modalAlerta";
 
 function getCookie(name) {
   const value = `; ${document.cookie}`;
@@ -6,9 +7,27 @@ function getCookie(name) {
   if (parts.length === 2) return parts.pop().split(";").shift();
 }
 
-export default function ModalSalidaLote({ modalData }) {
+export default function ModalSalidaLote({ modalData, onClose }) {
   const [number, setNumber] = useState(0);
+  const [cantidad, setCantidad] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleOpenConfirmModal = () => {
+
+    if (number == 0) {
+      setErrorMessage("Todos los campos son obligatorios.");
+      return;
+    }
+
+    if (number  > modalData.cantidad) {
+      return;
+    }
+
+    setErrorMessage(""); // limpiar errores
+    setShowConfirmModal(true);
+  };
 
   const handleDecrease = () => {
     setNumber((prev) => (prev > 0 ? prev - 1 : prev));
@@ -29,18 +48,18 @@ export default function ModalSalidaLote({ modalData }) {
   };
 
   const handleRegistrarSalida = async () => {
-    if (number <= 0) {
+    const token = getCookie("token");
+    setLoading(true);
+
+    if (number  <= 0) {
       alert("Debes ingresar una cantidad mayor a 0");
       return;
     }
 
-    if (number > modalData.cantidad) {
+    if (number  > modalData.cantidad) {
       alert("No puedes retirar más de lo disponible");
       return;
     }
-
-    const token = getCookie("token");
-    setLoading(true);
 
     try {
       const response = await fetch(`http://localhost:8080/detalles/editOutput/${modalData.id}`, {
@@ -49,12 +68,15 @@ export default function ModalSalidaLote({ modalData }) {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${token}`,
         },
-        body: JSON.stringify({ cantidad: number }),
+        body: JSON.stringify({ cantidad: parseInt(cantidad) }),
       });
 
       const data = await response.json();
 
       if (response.ok) {
+        setCantidad("");
+        alert("Entrada registrada correctamente.");
+        setErrorMessage(""); // limpiar errores
         alert("Salida registrada correctamente.");
         // Puedes cerrar el modal aquí si tienes una función para hacerlo
       } else {
@@ -117,15 +139,37 @@ export default function ModalSalidaLote({ modalData }) {
           <p className="text-red-500 mt-2">No puedes retirar más de lo disponible</p>
         )}
 
-        <div className="mt-4 text-center">
+        <div className="mt-4 text-center space-x-2">
           <button
-            onClick={handleRegistrarSalida}
+            onClick={handleOpenConfirmModal} // 🔧 Usamos la validación aquí
             disabled={loading}
             className={`px-6 py-2 rounded text-white ${loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-600 hover:bg-green-800'}`}
           >
-            {loading ? "Procesando..." : "Registrar Salida"}
+            {loading ? "Guardando..." : "Aceptar"}
+          </button>
+          <button
+            onClick={onClose}
+            className="px-6 py-2 bg-red-500 hover:bg-red-700 text-white rounded"
+          >
+            Cancelar
           </button>
         </div>
+
+        {errorMessage && (
+          <p className="mt-2 text-center text-sm text-red-500">{errorMessage}</p>
+        )}
+
+        {showConfirmModal && (
+          <div className="fixed inset-0 flex items-center justify-center backdrop-blur-xs bg-gray-300/50 z-20">
+            <div className="bg-white p-6 rounded-lg shadow-lg">
+              <ModalAlerta
+                onAceptar={handleRegistrarSalida}
+                onCancelar={() => setShowConfirmModal(false)}
+                loading={loading}
+              />
+            </div>
+          </div>
+        )}
       </div>
     </>
   );

@@ -88,7 +88,7 @@ export default function ModalContenidoAll({ modalType, modalData, onClose, setIs
         titulo: "Registrar Salida",
         contenido: (
           <>
-            <ModalRegistrarSalida onClose={() => setIsOpen(false)}/>
+            <ModalRegistrarSalida modalData={modalData} onClose={() => setIsOpen(false)}/>
           </>
         ),
         buttons: (
@@ -105,16 +105,11 @@ export default function ModalContenidoAll({ modalType, modalData, onClose, setIs
         titulo: "Salida de Lote",
         contenido: (
           <>
-            <ModalSalidaLote onClose={() => setIsOpen(false)}/>
+            <ModalSalidaLote modalData={modalData} onClose={() => setIsOpen(false)}/>
           </>
         ),
         buttons: (
           <>
-            <ButtonDefault textButton={"Aceptar"} bgButton={"bg-green-500"} hoverBgButton={"hover:bg-green-700"} widthButton={"w-24"} paddingButtonX={"px-4"} paddingButtonY={"py-2"} marginButton={"mx-1"} colorButton={"text-white"}
-              modalType="ButtonActionAceptar" />
-            <button onClick={() => setIsOpen(false)} className="w-24 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-700">
-              Cancelar
-            </button>
           </>
         ),
       };
@@ -207,9 +202,6 @@ export default function ModalContenidoAll({ modalType, modalData, onClose, setIs
               switch (modalData?.tipo) {
                 case "entrada":
                   url = "http://localhost:8080/detalles/input";
-                  break;
-                case "salida":
-                  url = "http://localhost:8080/salida";
                   break;
                 case "salidaLote":
                   url = "http://localhost:8080/salidaLote";
