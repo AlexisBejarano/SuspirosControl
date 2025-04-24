@@ -3,7 +3,6 @@ import ButtonDefault from "../ButtonDefault";
 
 export default function ModalCaducidad({ modalData }) {
 
-  // Formatear la fecha para mostrarla mejor
   const formatDate = (dateString) => {
     if (!dateString) return "Sin fecha";
     const date = new Date(dateString);

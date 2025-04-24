@@ -1,20 +1,6 @@
 import React, { useState } from "react";
 import ModalAlerta from "./modalAlerta";
 
-
-/*
-
-COSAS FALTANTES:
-
-- SE DESHABILITE TODOS LOS BOTONES HASTA QUE LA TABLA SE GENERE.
-- CORREGIR EL BOTON AGREGAR PRODUCTO AL MODAL.
-- SE CIERRE TODO MODAL AVIERTO EN VENTANA AL MOMENTO SE GUARDE UN PRODUCTO.
-- SE DEBERIA HACER UN REFRESH A LA TABLA AL AGREGAR UN PRODUCTO.
-
-*/
-
-
-// Función para obtener el token desde las cookies
 function getCookie(name) {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);
@@ -25,13 +11,10 @@ export default function ModalAgregarProducto({ onClose }) {
 
     const [nombre, setNombre] = useState("");
     const [unidad, setUnidad] = useState("");
-    const [number, setNumber] = useState(0); // Aviso stock
+    const [number, setNumber] = useState(0);
     const [loading, setLoading] = useState(false);
     const [showConfirmModal, setShowConfirmModal] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
-
-    // INICIO PARA AVISO STOCK ---------------------------------------------
-    // Estado para el input de número
 
     const handleDecrease = () => {
         setNumber((prev) => (prev > 0 ? prev - 1 : prev));
@@ -40,9 +23,7 @@ export default function ModalAgregarProducto({ onClose }) {
     const handleIncrease = () => {
         setNumber((prev) => prev + 1);
     };
-    // FIN PARA AVISO STOCK ---------------------------------------------
 
-    // Validar campos antes de mostrar el modal de alerta
     const handleOpenConfirmModal = () => {
         const regex = /^[a-zA-Z0-9\s]+$/;
 
@@ -56,14 +37,14 @@ export default function ModalAgregarProducto({ onClose }) {
             return;
         }
 
-        setErrorMessage(""); // limpiar errores
+        setErrorMessage("");
         setShowConfirmModal(true);
     };
 
 
     const handleAgregarProducto = async () => {
         const token = getCookie("token");
-        setLoading(true); // deshabilitar el botón al iniciar la petición
+        setLoading(true);
 
         try {
             const response = await fetch("http://localhost:8080/producto", {
@@ -86,8 +67,8 @@ export default function ModalAgregarProducto({ onClose }) {
                 setNombre("");
                 setUnidad("");
                 setNumber(0);
-                setShowConfirmModal(false); //cerrar modal de alerta
-                setErrorMessage(""); // limpiar errores
+                setShowConfirmModal(false);
+                setErrorMessage("");
                 if (onClose) onClose();
             } else {
                 alert("Error al agregar producto: " + (data.message || response.status));
@@ -96,7 +77,7 @@ export default function ModalAgregarProducto({ onClose }) {
             console.error("Error al enviar el producto:", error);
             alert("Ocurrió un error al conectar con el servidor.");
         } finally {
-            setLoading(false); // vuelve a habilitar
+            setLoading(false);
         }
     };
 
@@ -138,7 +119,7 @@ export default function ModalAgregarProducto({ onClose }) {
             </div>
             <div className="mt-4 text-center space-x-2">
                 <button
-                    onClick={handleOpenConfirmModal} // 🔧 Usamos la validación aquí
+                    onClick={handleOpenConfirmModal}
                     disabled={loading}
                     className={`px-6 py-2 rounded text-white ${loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-600 hover:bg-green-800'}`}
                 >

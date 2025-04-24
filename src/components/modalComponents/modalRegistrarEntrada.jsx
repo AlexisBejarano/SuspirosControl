@@ -18,7 +18,6 @@ export default function ModalRegistrarEntrada({ modalData, onClose }) {
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-   // Validar campos antes de mostrar el modal de alerta
    const handleOpenConfirmModal = () => {
     const regex = /^[a-zA-Z0-9\s]+$/;
 
@@ -32,13 +31,13 @@ export default function ModalRegistrarEntrada({ modalData, onClose }) {
         return;
     }
 
-    setErrorMessage(""); // limpiar errores
+    setErrorMessage("");
     setShowConfirmModal(true);
   };
 
   const handleRegistrarEntrada = async () => {
     const token = getCookie("token");
-    setLoading(true); // deshabilitar el botón al iniciar la petición
+    setLoading(true);
 
     try {
       const response = await fetch("http://localhost:8080/detalles/input", {
@@ -51,19 +50,18 @@ export default function ModalRegistrarEntrada({ modalData, onClose }) {
           lote,
           productos: modalData.id,
           cantidad: parseInt(cantidad),
-          caducidad: selectedDate.toISOString().split('T')[0], // yyyy-mm-dd
+          caducidad: selectedDate.toISOString().split('T')[0],
         }),
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        alert("Entrada registrada correctamente.");
         setLote("");
         setCantidad("");
         setSelectedDate(null);
-        setErrorMessage(""); // limpiar errores
-        if (onClose) onClose(); // Cierra modal si se pasa onClose
+        setErrorMessage("");
+        if (onClose) onClose();
       } else {
         alert("Error al registrar la entrada: " + (data.message || response.status));
       }
@@ -121,7 +119,7 @@ export default function ModalRegistrarEntrada({ modalData, onClose }) {
 
       <div className="mt-4 text-center space-x-2">
         <button
-          onClick={handleOpenConfirmModal} // 🔧 Usamos la validación aquí
+          onClick={handleOpenConfirmModal}
           disabled={loading}
           className={`px-6 py-2 rounded text-white ${loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-600 hover:bg-green-800'}`}
         >

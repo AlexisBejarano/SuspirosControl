@@ -1,11 +1,6 @@
 import React, { useState } from "react";
 import ModalAlerta from "./modalAlerta";
 
-/*
-  Falta que haga correctamente la peticion.
-
-*/
-
 function getCookie(name) {
   const value = `; ${document.cookie}`;
   const parts = value.split(`; ${name}=`);
@@ -29,7 +24,7 @@ export default function ModalSalidaLote({ modalData, onClose }) {
       return;
     }
 
-    setErrorMessage(""); // limpiar errores
+    setErrorMessage("");
     setShowConfirmModal(true);
   };
 
@@ -78,10 +73,7 @@ export default function ModalSalidaLote({ modalData, onClose }) {
       const data = await response.json();
 
       if (response.ok) {
-        alert("Entrada registrada correctamente.");
-        setErrorMessage(""); // limpiar errores
-        alert("Salida registrada correctamente.");
-        // Puedes cerrar el modal aquí si tienes una función para hacerlo
+        setErrorMessage("");
       } else {
         alert("Error al registrar la salida: " + (data.message || response.status));
       }
@@ -144,7 +136,7 @@ export default function ModalSalidaLote({ modalData, onClose }) {
 
         <div className="mt-4 text-center space-x-2">
           <button
-            onClick={handleOpenConfirmModal} // 🔧 Usamos la validación aquí
+            onClick={handleOpenConfirmModal}
             disabled={loading}
             className={`px-6 py-2 rounded text-white ${loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-600 hover:bg-green-800'}`}
           >
@@ -168,10 +160,9 @@ export default function ModalSalidaLote({ modalData, onClose }) {
               <ModalAlerta
                 onAceptar={async () => {
                   await handleRegistrarSalida();
-                  onClose(); // Cierra el modal de salida después de la acción
-                  setShowConfirmModal(false); // Cierra el modal de alerta
+                  onClose();
+                  setShowConfirmModal(false);
                 }}
-                onCancelar={() => setShowConfirmModal(false)} // Cierra solo el modal de alerta
                 loading={loading}
               />
             </div>

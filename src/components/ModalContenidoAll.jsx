@@ -189,42 +189,10 @@ export default function ModalContenidoAll({ modalType, modalData, onClose, setIs
         titulo: "¡ALERTA!",
         contenido: (
           <>
-            <ModalAlert onAceptar={async () => {
-              setLoading(true);
-              try {
-                let url = "";
-              let metodo = "POST";
-
-              const res = await fetch(url, {
-                method: metodo,
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify(modalData),
-              });
-
-              const data = await res.json();
-
-              if (res.ok) {
-                alert("Acción realizada exitosamente.");
-                setIsOpen(false); // cerrar modal alerta
-                if (modalData?.onSuccess) modalData.onSuccess(); // cerrar modal padre
-                if (modalData?.onActualizar) modalData.onActualizar(); // actualizar tabla
-              } else {
-                alert("Error: " + (data.message || "Error desconocido."));
-              }
-            } catch (error) {
-              console.error(error);
-              alert("Error de red o del servidor.");
-            } finally {
-              setLoading(false);
-            }
-          }}
-          loading={loading}
-        />
+            <ModalAlert />
       </>
         ),
-        buttons: loading ? null : ( // ocultar botones mientras carga
+        buttons: loading ? null : (
           <button onClick={() => setIsOpen(false)} className="w-24 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-700">
             Cancelar
           </button>

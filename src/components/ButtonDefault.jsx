@@ -1,4 +1,4 @@
-import React, { useState } from "react"; // Importa useState
+import React, { useState } from "react";
 import ModalContenidoAll from "./ModalContenidoAll";
 export default function ButtonDefault({ textButton, bgButton, hoverBgButton, widthButton, marginButton, colorButton, modalType, modalData, paddingButtonX, paddingButtonY, onCerrarSesion }) {
   
@@ -12,12 +12,12 @@ export default function ButtonDefault({ textButton, bgButton, hoverBgButton, wid
     modalType,
     modalData,
     onClose: () => {
-      setIsOpen(false); // Cierra el modal
+      setIsOpen(false);
       if (modalType === "cerrarSesion" && onCerrarSesion) {
-        onCerrarSesion(); // Ejecuta la función de cierre de sesión
+        onCerrarSesion();
       }
     },
-    setIsOpen, // Pasamos setIsOpen para que "Cancelar" pueda cerrar el modal
+    setIsOpen,
   });
 
   return (

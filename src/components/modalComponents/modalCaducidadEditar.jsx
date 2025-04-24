@@ -15,7 +15,6 @@ export default function ModalCaducidadEditar({ modalData, onClose }) {
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  // Formatear la fecha para mostrarla mejor
   const formatDate = (dateString) => {
     if (!dateString) return "Sin fecha";
     const date = new Date(dateString);
@@ -32,7 +31,7 @@ export default function ModalCaducidadEditar({ modalData, onClose }) {
       return;
     }
 
-    setErrorMessage(""); // Limpiar errores
+    setErrorMessage("");
     setShowConfirmModal(true);
   };
 
@@ -54,8 +53,8 @@ export default function ModalCaducidadEditar({ modalData, onClose }) {
 
       if (response.ok) {
         alert("Caducidad actualizada correctamente.");
-        setErrorMessage(""); // Limpiar errores
-        onClose(); // Cierra el modal después de la acción
+        setErrorMessage("");
+        onClose();
       } else {
         alert("Error al actualizar la caducidad: " + (data.message || response.status));
       }
@@ -76,7 +75,7 @@ export default function ModalCaducidadEditar({ modalData, onClose }) {
         selected={selectedDate}
         onChange={(date) => setSelectedDate(date)}
         dateFormat="dd/MM/yyyy"
-        minDate={new Date()} // Opcional: no permitir fechas pasadas
+        minDate={new Date()}
         className="border border-gray-300 p-2 h-10 rounded text-gray-700 focus:ring-0 focus:outline-hidden"
         placeholderText="Caducidad"
       />
@@ -107,9 +106,9 @@ export default function ModalCaducidadEditar({ modalData, onClose }) {
             <ModalAlerta
               onAceptar={async () => {
                 await handleRegistrarCaducidad();
-                setShowConfirmModal(false); // Cierra el modal de alerta
+                setShowConfirmModal(false);
               }}
-              onCancelar={() => setShowConfirmModal(false)} // Cierra solo el modal de alerta
+              onCancelar={() => setShowConfirmModal(false)}
               loading={loading}
             />
           </div>

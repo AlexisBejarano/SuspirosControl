@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 
 export default function ModalEditarProducto() {
-    // INICIO PARA AVISO STOCK ---------------------------------------------
-    // Estado para el input de número
+  
     const [number, setNumber] = useState(0);
   
     const handleDecrease = () => {
@@ -12,7 +11,7 @@ export default function ModalEditarProducto() {
     const handleIncrease = () => {
       setNumber((prev) => prev + 1);
     };
-    // FIN PARA AVISO STOCK ---------------------------------------------
+
   return (
     <>
       <label htmlFor="AgregarProductoNombre" className="relative block rounded-md border border-gray-300 shadow-xs">
