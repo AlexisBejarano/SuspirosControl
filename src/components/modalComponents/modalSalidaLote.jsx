@@ -166,8 +166,12 @@ export default function ModalSalidaLote({ modalData, onClose }) {
           <div className="fixed inset-0 flex items-center justify-center backdrop-blur-xs bg-gray-300/50 z-20">
             <div className="bg-white p-6 rounded-lg shadow-lg">
               <ModalAlerta
-                onAceptar={handleRegistrarSalida}
-                onCancelar={() => setShowConfirmModal(false)}
+                onAceptar={async () => {
+                  await handleRegistrarSalida();
+                  onClose(); // Cierra el modal de salida después de la acción
+                  setShowConfirmModal(false); // Cierra el modal de alerta
+                }}
+                onCancelar={() => setShowConfirmModal(false)} // Cierra solo el modal de alerta
                 loading={loading}
               />
             </div>
