@@ -128,79 +128,80 @@ const TableComponent = () => {
           </div>
         </form>
 
+        <div className="overflow-y-auto max-h-[calc(100vh-150px)] w-full">
+          <table className="mx-auto table-fixed border-separate border-spacing-y-2">
+            <thead className="sticky top-0 bg-gray-800 text-white z-10">
+              <tr>
+                <th className="py-3 px-2 border-r-1">Producto</th>
+                <th className="py-3 px-2 border-r-1">Ud. Medida</th>
+                <th className="py-3 px-2 border-r-1">Entrada</th>
+                <th className="py-3 px-2 border-r-1">Salida</th>
+                <th className="py-3 px-2 border-r-1">Stock</th>
+                <th className="py-3 px-2 border-r-1">Caducidad Próxima</th>
+                <th className="py-3 px-2">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredProductos.map((producto) => {
 
-        <table className="mx-auto table-fixed border-separate border-spacing-y-2">
-          <thead>
-            <tr className="bg-gray-800 text-white">
-              <th className="py-3 px-2 border-r-1">Producto</th>
-              <th className="py-3 px-2 border-r-1">Ud. Medida</th>
-              <th className="py-3 px-2 border-r-1">Entrada</th>
-              <th className="py-3 px-2 border-r-1">Salida</th>
-              <th className="py-3 px-2 border-r-1">Stock</th>
-              <th className="py-3 px-2 border-r-1">Caducidad Próxima</th>
-              <th className="py-3 px-2">Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredProductos.map((producto) => {
+                const totalEntrada = producto.movimientos?.reduce(
+                  (total, mov) => total + parseInt(mov.entrada),
+                  0
+                ) ?? 0;
 
-              const totalEntrada = producto.movimientos?.reduce(
-                (total, mov) => total + parseInt(mov.entrada),
-                0
-              ) ?? 0;
+                const totalSalida = producto.movimientos?.reduce(
+                  (total, mov) => total + parseInt(mov.salida),
+                  0
+                ) ?? 0;
 
-              const totalSalida = producto.movimientos?.reduce(
-                (total, mov) => total + parseInt(mov.salida),
-                0
-              ) ?? 0;
+                // Obtener caducidad más próxima
+                const caducidadMasProxima = producto.detalle_productos
+                  ?.map((d) => new Date(d.caducidad))
+                  .sort((a, b) => a - b)[0]; // ordena y toma la más cercana
 
-              // Obtener caducidad más próxima
-              const caducidadMasProxima = producto.detalle_productos
-                ?.map((d) => new Date(d.caducidad))
-                .sort((a, b) => a - b)[0]; // ordena y toma la más cercana
+                const caducidadProxima = caducidadMasProxima
+                  ? caducidadMasProxima.toLocaleDateString("es-MX", {
+                    year: "numeric",
+                    month: "2-digit",
+                    day: "2-digit",
+                  })
+                  : "Sin fecha";
 
-              const caducidadProxima = caducidadMasProxima
-                ? caducidadMasProxima.toLocaleDateString("es-MX", {
-                  year: "numeric",
-                  month: "2-digit",
-                  day: "2-digit",
-                })
-                : "Sin fecha";
-
-              return (
-                <tr key={producto.id} className="bg-white shadow-md">
-                  <td className="px-4 py-2 text-center border-r-2 border-r-gray-200">{producto.nombre}</td>
-                  <td className="px-4 py-2 text-center border-r-2 border-r-gray-200">{producto.unidad}</td>
-                  <td className="px-1 text-center border-r-2 border-r-gray-200">
-                    <ButtonDefault textButton={totalEntrada} bgButton={"bg-green-500"} hoverBgButton={"hover:bg-emerald-700"} widthButton={"min-w-24"} paddingButtonX={"px-3"} paddingButtonY={"py-1"} marginButton={"ml-1"} colorButton={"text-white"}
-                      modalType="registrarEntrada" modalData={producto}
-                    />
-                  </td>
-                  <td className="px-1 text-center border-r-2 border-r-gray-200">
-                    <ButtonDefault textButton={totalSalida} bgButton={"bg-green-500"} hoverBgButton={"hover:bg-emerald-700"} widthButton={"min-w-24"} paddingButtonX={"px-3"} paddingButtonY={"py-1"} marginButton={"ml-1"} colorButton={"text-white"}
-                      modalType="registrarSalida" modalData={producto}
-                    />
-                  </td>
-                  <td className="px-4 py-2 text-center border-r-2 border-r-gray-200">{producto.stock}</td>
-                  <td className="px-1 text-center border-r-2 border-r-gray-200">
-                    <ButtonDefault textButton={caducidadProxima} bgButton={"bg-green-500"} hoverBgButton={"hover:bg-green-700"} widthButton={"w-40"} paddingButtonX={"px-3"} paddingButtonY={"py-1"} marginButton={"mx-1"} colorButton={"text-white"}
-                      modalType="caducidad" // Tipo de modal en el componente
-                      modalData={producto} // Pasa los detalles como prop para generar la tabla en el modal.
-                    />
-                  </td>
-                  <td className="text-center min-w-28">
-                    <ButtonDefault textButton={"✏"} bgButton={"bg-blue-500"} hoverBgButton={"hover:bg-blue-800"} widthButton={"w-12"} marginButton={"ml-1"} paddingButtonX={"px-3"} paddingButtonY={"py-1"} colorButton={"text-white"}
-                      modalType="editarProducto"
-                    />
-                    <ButtonDefault textButton={"🗑"} bgButton={"bg-red-700"} hoverBgButton={"hover:bg-red-900"} widthButton={"w-12"} marginButton={"mx-1"} paddingButtonX={"px-3"} paddingButtonY={"py-1"} colorButton={"text-white"}
-                      modalType="eliminarProducto"
-                    />
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+                return (
+                  <tr key={producto.id} className="bg-white shadow-md">
+                    <td className="px-4 py-2 text-center border-r-2 border-r-gray-200">{producto.nombre}</td>
+                    <td className="px-4 py-2 text-center border-r-2 border-r-gray-200">{producto.unidad}</td>
+                    <td className="px-1 text-center border-r-2 border-r-gray-200">
+                      <ButtonDefault textButton={totalEntrada} bgButton={"bg-green-500"} hoverBgButton={"hover:bg-emerald-700"} widthButton={"min-w-24"} paddingButtonX={"px-3"} paddingButtonY={"py-1"} marginButton={"ml-1"} colorButton={"text-white"}
+                        modalType="registrarEntrada" modalData={producto}
+                      />
+                    </td>
+                    <td className="px-1 text-center border-r-2 border-r-gray-200">
+                      <ButtonDefault textButton={totalSalida} bgButton={"bg-green-500"} hoverBgButton={"hover:bg-emerald-700"} widthButton={"min-w-24"} paddingButtonX={"px-3"} paddingButtonY={"py-1"} marginButton={"ml-1"} colorButton={"text-white"}
+                        modalType="registrarSalida" modalData={producto}
+                      />
+                    </td>
+                    <td className="px-4 py-2 text-center border-r-2 border-r-gray-200">{producto.stock}</td>
+                    <td className="px-1 text-center border-r-2 border-r-gray-200">
+                      <ButtonDefault textButton={caducidadProxima} bgButton={"bg-green-500"} hoverBgButton={"hover:bg-green-700"} widthButton={"w-40"} paddingButtonX={"px-3"} paddingButtonY={"py-1"} marginButton={"mx-1"} colorButton={"text-white"}
+                        modalType="caducidad" // Tipo de modal en el componente
+                        modalData={producto} // Pasa los detalles como prop para generar la tabla en el modal.
+                      />
+                    </td>
+                    <td className="text-center min-w-28">
+                      <ButtonDefault textButton={"✏"} bgButton={"bg-blue-500"} hoverBgButton={"hover:bg-blue-800"} widthButton={"w-12"} marginButton={"ml-1"} paddingButtonX={"px-3"} paddingButtonY={"py-1"} colorButton={"text-white"}
+                        modalType="editarProducto"
+                      />
+                      <ButtonDefault textButton={"🗑"} bgButton={"bg-red-700"} hoverBgButton={"hover:bg-red-900"} widthButton={"w-12"} marginButton={"mx-1"} paddingButtonX={"px-3"} paddingButtonY={"py-1"} colorButton={"text-white"}
+                        modalType="eliminarProducto"
+                      />
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       </div>
     </>
   );

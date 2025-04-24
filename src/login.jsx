@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Cookies from "universal-cookie";
 
-const baseUrl = "http://localhost:8080/usuario/login";
 const cookies = new Cookies();
 
 export default function Login() {
@@ -31,7 +30,7 @@ export default function Login() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                withCredentials: false, // Importante para desarrollo local
+                withCredentials: false,
             });
     
             if (response.data.token) {
