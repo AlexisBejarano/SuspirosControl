@@ -1,12 +1,63 @@
 import React, { useState, useEffect } from "react";
 import ButtonDefault from "./components/ButtonDefault"
 import Cookies from "universal-cookie";
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
 
 const cookies = new Cookies();
 const TableComponent = () => {
   const [productos, setProductos] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [reloadTable, setReloadTable] = useState(false);
+
+  //GENERADOR DE REPORTE EXCEL
+  const exportToExcel = () => {
+  const data = productos.map((producto) => {
+    const entrada = producto.movimientos?.reduce(
+      (total, mov) => total + parseInt(mov.entrada),
+      0
+    ) ?? 0;
+
+    const salida = producto.movimientos?.reduce(
+      (total, mov) => total + parseInt(mov.salida),
+      0
+    ) ?? 0;
+
+    const caducidadMasProxima = producto.detalle_productos
+      ?.map((d) => new Date(d.caducidad))
+      .sort((a, b) => a - b)[0];
+
+    const caducidadProxima = caducidadMasProxima
+      ? caducidadMasProxima.toLocaleDateString("es-MX", {
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+        })
+      : "Sin fecha";
+
+    return {
+      Nombre: producto.nombre,
+      Unidad: producto.unidad,
+      Entrada: entrada,
+      Salida: salida,
+      Stock: producto.stock,
+      "Caducidad Próxima": caducidadProxima,
+    };
+  });
+
+  const worksheet = XLSX.utils.json_to_sheet(data);
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, "Reporte");
+
+  const excelBuffer = XLSX.write(workbook, {
+    bookType: "xlsx",
+    type: "array",
+  });
+
+  const blob = new Blob([excelBuffer], { type: "application/octet-stream" });
+  saveAs(blob, `Reporte_Productos_${new Date().toLocaleDateString("es-MX")}.xlsx`);
+};
+
 
 
   const filteredProductos = productos.filter((producto) => {
@@ -102,9 +153,12 @@ const TableComponent = () => {
           />
 
           {/* Botón 2: Generar Reporte */}
-          <ButtonDefault textButton={"Generar Reporte"} bgButton={"bg-gray-500"} hoverBgButton={"hover:bg-gray-700"} widthButton={"w-40"} paddingButtonX={"px-3"} paddingButtonY={"py-1"} marginButton={"mx-1"} colorButton={"text-white"}
-            modalType="generarReporte" // Tipo de modal
-          />
+          <button
+            onClick={exportToExcel}
+            className="bg-gray-500 hover:bg-gray-700 w-40 text-white px-3 py-1 mx-1 rounded-lg transition"
+          >
+            Generar Reporte
+          </button>
 
           {/* Botón 3: Cerrar Sesión */}
           <ButtonDefault textButton={"Cerrar Sesión"} bgButton={"bg-red-700"} hoverBgButton={"hover:bg-red-900"} widthButton={"w-40"} paddingButtonX={"px-3"} paddingButtonY={"py-1"} marginButton={"mx-1"} colorButton={"text-white"}
