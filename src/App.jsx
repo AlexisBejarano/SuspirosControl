@@ -3,6 +3,7 @@ import ButtonDefault from "./components/ButtonDefault"
 import Cookies from "universal-cookie";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
+import ExcelJS from "exceljs";
 
 const cookies = new Cookies();
 const TableComponent = () => {
@@ -11,52 +12,92 @@ const TableComponent = () => {
   const [reloadTable, setReloadTable] = useState(false);
 
   //GENERADOR DE REPORTE EXCEL
-  const exportToExcel = () => {
-  const data = productos.map((producto) => {
-    const entrada = producto.movimientos?.reduce(
-      (total, mov) => total + parseInt(mov.entrada),
-      0
-    ) ?? 0;
-
-    const salida = producto.movimientos?.reduce(
-      (total, mov) => total + parseInt(mov.salida),
-      0
-    ) ?? 0;
-
-    const caducidadMasProxima = producto.detalle_productos
-      ?.map((d) => new Date(d.caducidad))
-      .sort((a, b) => a - b)[0];
-
-    const caducidadProxima = caducidadMasProxima
-      ? caducidadMasProxima.toLocaleDateString("es-MX", {
-          year: "numeric",
-          month: "2-digit",
-          day: "2-digit",
-        })
-      : "Sin fecha";
-
-    return {
-      Nombre: producto.nombre,
-      Unidad: producto.unidad,
-      Entrada: entrada,
-      Salida: salida,
-      Stock: producto.stock,
-      "Caducidad Próxima": caducidadProxima,
-    };
-  });
-
-  const worksheet = XLSX.utils.json_to_sheet(data);
-  const workbook = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(workbook, worksheet, "Reporte");
-
-  const excelBuffer = XLSX.write(workbook, {
-    bookType: "xlsx",
-    type: "array",
-  });
-
-  const blob = new Blob([excelBuffer], { type: "application/octet-stream" });
-  saveAs(blob, `Reporte_Productos_${new Date().toLocaleDateString("es-MX")}.xlsx`);
-};
+  const exportToExcel = async () => {
+    const workbook = new ExcelJS.Workbook();
+    const worksheet = workbook.addWorksheet("Reporte");
+  
+    // Encabezados
+    const headers = [
+      "Producto",
+      "Ud. Medida",
+      "Entrada",
+      "Salida",
+      "Stock",
+      "Cad. Próxima"
+    ];
+  
+    // Añadir encabezado
+    worksheet.addRow(headers);
+  
+    // Aplicar estilos al encabezado
+    const headerRow = worksheet.getRow(1);
+    headerRow.eachCell((cell) => {
+      cell.font = { bold: true, color: { argb: "FF404040" } }; // Negrita y gris oscuro
+      cell.alignment = { vertical: "middle", horizontal: "center" };
+      cell.fill = {
+        type: "pattern",
+        pattern: "solid",
+        fgColor: { argb: "FFD3D3D3" }, // Fondo gris claro
+      };
+    });
+  
+    // Agregar datos
+    productos.forEach((producto) => {
+      const entrada = producto.movimientos?.reduce(
+        (total, mov) => total + parseInt(mov.entrada), 0
+      ) ?? 0;
+  
+      const salida = producto.movimientos?.reduce(
+        (total, mov) => total + parseInt(mov.salida), 0
+      ) ?? 0;
+  
+      const caducidadMasProxima = producto.detalle_productos
+        ?.map((d) => new Date(d.caducidad))
+        .sort((a, b) => a - b)[0];
+  
+      const caducidadProxima = caducidadMasProxima
+        ? caducidadMasProxima.toLocaleDateString("es-MX", {
+            year: "numeric", month: "2-digit", day: "2-digit",
+          })
+        : "Sin fecha";
+  
+      const row = worksheet.addRow([
+        producto.nombre,
+        producto.unidad,
+        entrada,
+        salida,
+        producto.stock,
+        caducidadProxima,
+      ]);
+  
+      // Centrar celdas de columnas 2 a 6
+      [2, 3, 4, 5, 6].forEach((colIndex) => {
+        row.getCell(colIndex).alignment = { vertical: "middle", horizontal: "center" };
+      });
+    });
+  
+    // Ajustar manualmente el ancho de algunas columnas
+    worksheet.getColumn(1).width = 20; // Producto
+    worksheet.getColumn(2).width = 13; // Ud. Medida
+    worksheet.getColumn(6).width = 13; // Cad. Próxima
+  
+    // Auto ajustar el resto si hace falta
+    worksheet.columns.forEach(column => {
+      if (!column.width) {
+        column.width = Math.max(
+          ...column.values.map(v => (v ? v.toString().length : 10))
+        ) + 2;
+      }
+    });
+  
+    // Guardar archivo
+    const buffer = await workbook.xlsx.writeBuffer();
+    const blob = new Blob([buffer], {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    });
+    saveAs(blob, `Reporte_Productos_${new Date().toLocaleDateString("es-MX")}.xlsx`);
+  };
+  
 
 
 
