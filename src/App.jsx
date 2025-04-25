@@ -4,12 +4,55 @@ import Cookies from "universal-cookie";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 import ExcelJS from "exceljs";
+import ModalAlerta from "./components/modalComponents/modalAlerta";
+
+function getCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(";").shift();
+}
 
 const cookies = new Cookies();
-const TableComponent = () => {
+
+//ESTE ES EL APP------------------------------------------
+const TableComponent = ({ modalData, onUpdate }) => {
+  const [loading, setLoading] = useState(false);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [ProductoSeleccionado, setProductoSeleccionado] = useState(null);
   const [productos, setProductos] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [reloadTable, setReloadTable] = useState(false);
+
+  const handleEliminarProducto = async () => {
+    if (!ProductoSeleccionado) return;
+
+    setLoading(true);
+    const token = getCookie("token");
+
+    try {
+      const response = await fetch(`http://localhost:8080/producto/${ProductoSeleccionado.id}`, {
+        method: "DELETE",
+        headers: {
+          "Authorization": `Bearer ${token}`,
+        },
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setShowConfirmModal(false);
+        setProductoSeleccionado(null);
+        onUpdate?.(); // actualiza la tabla si hay función de update
+      } else {
+        alert("Error al eliminar: " + (data.message || response.status));
+      }
+    } catch (error) {
+      console.error("Error al eliminar producto:", error);
+      alert("Ocurrió un error al intentar eliminar el producto.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   //GENERADOR DE REPORTE EXCEL
   //GENERADOR DE REPORTE EXCEL
@@ -284,9 +327,15 @@ const TableComponent = () => {
                         modalType="editarProducto"
                         modalData={producto}
                       />
-                      <ButtonDefault textButton={"🗑"} bgButton={"bg-red-700"} hoverBgButton={"hover:bg-red-900"} widthButton={"w-12"} marginButton={"mx-1"} paddingButtonX={"px-3"} paddingButtonY={"py-1"} colorButton={"text-white"}
-                        modalType="eliminarProducto"
-                      />
+                      <button
+                        onClick={() => {
+                          setProductoSeleccionado(producto);
+                          setShowConfirmModal(true);
+                        }}
+                        className="px-3 py-1 mx-1 w-12 rounded bg-red-700 hover:bg-red-900 text-white"
+                      >
+                        🗑
+                      </button>
                     </td>
                   </tr>
                 );
@@ -295,6 +344,20 @@ const TableComponent = () => {
           </table>
         </div>
       </div>
+      {showConfirmModal && (
+        <div className="fixed inset-0 flex items-center justify-center backdrop-blur-xs bg-gray-300/50 z-20">
+          <div className="bg-white p-6 rounded-lg shadow-lg">
+            <ModalAlerta
+              onAceptar={handleEliminarProducto}
+              onCancelar={() => {
+                setShowConfirmModal(false);
+                setProductoSeleccionado(null);
+              }}
+              loading={loading}
+            />
+          </div>
+        </div>
+      )}
     </>
   );
 };

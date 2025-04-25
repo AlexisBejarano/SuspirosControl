@@ -7,7 +7,6 @@ import ModalAgregarProducto from "./modalComponents/modalAgregarProducto";
 import ModalGenerarReporte from "./modalComponents/modalGenerarReporte";
 import ModalCerrarSesion from "./modalComponents/modalCerrarSesion";
 import ModalEditarProducto from "./modalComponents/modalEditarProducto";
-import ModalEliminarProducto from "./modalComponents/modalEliminarProducto";
 import ModalRegistrarEntrada from "./modalComponents/modalRegistrarEntrada";
 import ModalRegistrarSalida from "./modalComponents/modalRegistrarSalida";
 import ModalSalidaLote from "./modalComponents/modalSalidaLote";
@@ -139,25 +138,6 @@ export default function ModalContenidoAll({ modalType, modalData, onClose, setIs
         ),
         buttons: (
           <>
-          </>
-        ),
-      };
-
-    case "eliminarProducto":
-      return {
-        titulo: "Eliminar Producto",
-        contenido: (
-          <>
-            <ModalEliminarProducto />
-          </>
-        ),
-        buttons: (
-          <>
-            <ButtonDefault textButton={"Aceptar"} bgButton={"bg-green-500"} hoverBgButton={"hover:bg-green-700"} widthButton={"w-24"} paddingButtonX={"px-4"} paddingButtonY={"py-2"} marginButton={"mx-1"} colorButton={"text-white"}
-              modalType="ButtonActionAceptar" />
-            <button onClick={() => setIsOpen(false)} className="w-24 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-700">
-              Cancelar
-            </button>
           </>
         ),
       };
