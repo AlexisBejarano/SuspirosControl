@@ -1,5 +1,8 @@
 import React from "react";
 
+//http://localhost:8080/producto/1
+//DELETE
+
 export default function ModalEliminarProducto() {
     return (
         <>

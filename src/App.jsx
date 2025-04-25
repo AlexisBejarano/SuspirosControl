@@ -12,10 +12,11 @@ const TableComponent = () => {
   const [reloadTable, setReloadTable] = useState(false);
 
   //GENERADOR DE REPORTE EXCEL
+  //GENERADOR DE REPORTE EXCEL
   const exportToExcel = async () => {
     const workbook = new ExcelJS.Workbook();
     const worksheet = workbook.addWorksheet("Reporte");
-  
+
     // Encabezados
     const headers = [
       "Producto",
@@ -25,42 +26,42 @@ const TableComponent = () => {
       "Stock",
       "Cad. Próxima"
     ];
-  
+
     // Añadir encabezado
     worksheet.addRow(headers);
-  
+
     // Aplicar estilos al encabezado
     const headerRow = worksheet.getRow(1);
     headerRow.eachCell((cell) => {
       cell.font = { bold: true, color: { argb: "FF404040" } }; // Negrita y gris oscuro
-      cell.alignment = { vertical: "middle", horizontal: "center" };
+      cell.alignment = { vertical: "middle", horizontal: "center", wrapText: true }; // Ajuste de texto
       cell.fill = {
         type: "pattern",
         pattern: "solid",
         fgColor: { argb: "FFD3D3D3" }, // Fondo gris claro
       };
     });
-  
+
     // Agregar datos
     productos.forEach((producto) => {
       const entrada = producto.movimientos?.reduce(
         (total, mov) => total + parseInt(mov.entrada), 0
       ) ?? 0;
-  
+
       const salida = producto.movimientos?.reduce(
         (total, mov) => total + parseInt(mov.salida), 0
       ) ?? 0;
-  
+
       const caducidadMasProxima = producto.detalle_productos
         ?.map((d) => new Date(d.caducidad))
         .sort((a, b) => a - b)[0];
-  
+
       const caducidadProxima = caducidadMasProxima
         ? caducidadMasProxima.toLocaleDateString("es-MX", {
-            year: "numeric", month: "2-digit", day: "2-digit",
-          })
+          year: "numeric", month: "2-digit", day: "2-digit",
+        })
         : "Sin fecha";
-  
+
       const row = worksheet.addRow([
         producto.nombre,
         producto.unidad,
@@ -69,27 +70,25 @@ const TableComponent = () => {
         producto.stock,
         caducidadProxima,
       ]);
-  
-      // Centrar celdas de columnas 2 a 6
-      [2, 3, 4, 5, 6].forEach((colIndex) => {
-        row.getCell(colIndex).alignment = { vertical: "middle", horizontal: "center" };
-      });
-    });
-  
-    // Ajustar manualmente el ancho de algunas columnas
-    worksheet.getColumn(1).width = 20; // Producto
-    worksheet.getColumn(2).width = 13; // Ud. Medida
-    worksheet.getColumn(6).width = 13; // Cad. Próxima
-  
-    // Auto ajustar el resto si hace falta
-    worksheet.columns.forEach(column => {
-      if (!column.width) {
-        column.width = Math.max(
-          ...column.values.map(v => (v ? v.toString().length : 10))
-        ) + 2;
+
+      // Centrar celdas de columnas 2 a 6 y ajustar texto en todas
+      for (let i = 1; i <= 6; i++) {
+        row.getCell(i).alignment = {
+          vertical: "middle",
+          horizontal: i > 1 ? "center" : "left", // primer campo (nombre) justificado a la izquierda
+          wrapText: true
+        };
       }
     });
-  
+
+    // Ajustar manualmente el ancho de algunas columnas
+    worksheet.getColumn(1).width = 35;
+    worksheet.getColumn(2).width = 15;
+    worksheet.getColumn(3).width = 10;
+    worksheet.getColumn(4).width = 10;
+    worksheet.getColumn(5).width = 15;
+    worksheet.getColumn(6).width = 13;
+
     // Guardar archivo
     const buffer = await workbook.xlsx.writeBuffer();
     const blob = new Blob([buffer], {
@@ -97,9 +96,6 @@ const TableComponent = () => {
     });
     saveAs(blob, `Reporte_Productos_${new Date().toLocaleDateString("es-MX")}.xlsx`);
   };
-  
-
-
 
   const filteredProductos = productos.filter((producto) => {
     const entrada = producto.movimientos?.reduce(
@@ -177,9 +173,9 @@ const TableComponent = () => {
     };
 
     fetchData();
-    
-  }, 
-  [reloadTable]);
+
+  },
+    [reloadTable]);
 
 
 
@@ -217,8 +213,8 @@ const TableComponent = () => {
                 <path stroke="currentColor" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
               </svg>
             </div>
-            <input type="search" 
-              id="default-search" 
+            <input type="search"
+              id="default-search"
               className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Buscar Producto..."
               value={searchTerm}
