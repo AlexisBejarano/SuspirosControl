@@ -60,7 +60,6 @@ export default function ModalEditarProducto({ modalData, onClose }) {
       const data = await response.json();
 
       if (response.ok) {
-        alert("Producto actualizado correctamente.");
         setShowConfirmModal(false);
         setErrorMessage("");
         if (onClose) onClose();

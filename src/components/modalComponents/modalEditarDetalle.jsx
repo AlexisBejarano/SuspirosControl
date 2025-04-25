@@ -61,7 +61,6 @@ export default function ModalEditarDetalle({ modalData, onClose }) {
       const data = await response.json();
 
       if (response.ok) {
-        alert("Detalle actualizado correctamente.");
         setShowConfirmModal(false);
         if (onClose) onClose();
       } else {
