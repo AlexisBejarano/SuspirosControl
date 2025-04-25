@@ -85,7 +85,7 @@ export default function ModalEditarProducto({ modalData, onClose }) {
 
   return (
     <>
-      <label className="relative block rounded-md border border-gray-300 shadow-xs">
+      <label className="relative block mt-2 rounded-md border border-gray-300 shadow-xs">
         <input
           type="text"
           value={nombre}
@@ -93,7 +93,7 @@ export default function ModalEditarProducto({ modalData, onClose }) {
           placeholder="Nombre Producto"
           className="peer border-none h-10 px-2 bg-transparent placeholder-transparent focus:border-transparent focus:ring-0 focus:outline-none"
         />
-        <span className="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-400 peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
+        <span className="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-400 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
           <strong>Nombre Producto</strong>
         </span>
       </label>
@@ -106,12 +106,12 @@ export default function ModalEditarProducto({ modalData, onClose }) {
           placeholder="Unidad de Medida"
           className="peer border-none h-10 px-2 bg-transparent placeholder-transparent focus:border-transparent focus:ring-0 focus:outline-none"
         />
-        <span className="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-400 peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
+        <span className="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-400 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
           <strong>Unidad Medida</strong>
         </span>
       </label>
 
-      <div className="text-center mt-4">
+      <div className="mx-auto text-center text-sm mt-2">
         <div className="text-gray-400 mb-1">
           <strong>Aviso Stock</strong>
         </div>
@@ -121,9 +121,10 @@ export default function ModalEditarProducto({ modalData, onClose }) {
           </button>
           <input
             type="number"
+            style={{ WebkitAppearance: "none", MozAppearance: "textfield" }}
             value={avisoStock}
             onChange={(e) => setAvisoStock(parseInt(e.target.value))}
-            className="w-20 text-center border-y-2 border-gray-300 h-9 appearance-none focus:outline-none"
+            className="border-y-2 border-gray-300 text-center w-20 appearance-none focus:outline-none h-9"
           />
           <button onClick={handleIncrease} className="bg-blue-500 hover:bg-blue-800 text-white py-2 px-4 rounded-r">
             +
