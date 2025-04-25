@@ -3,7 +3,7 @@ import ButtonDefault from "./ButtonDefault";
 
 
 
-import ModalAgregarProducto from "./modalComponents/ModalAgregarProducto";
+import ModalAgregarProducto from "./modalComponents/modalAgregarProducto";
 import ModalGenerarReporte from "./modalComponents/modalGenerarReporte";
 import ModalCerrarSesion from "./modalComponents/modalCerrarSesion";
 import ModalEditarProducto from "./modalComponents/modalEditarProducto";

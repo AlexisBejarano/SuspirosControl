@@ -73,7 +73,9 @@ export default function ModalSalidaLote({ modalData, onClose }) {
       const data = await response.json();
 
       if (response.ok) {
+        setShowConfirmModal(false);
         setErrorMessage("");
+        if (onClose) onClose();
       } else {
         alert("Error al registrar la salida: " + (data.message || response.status));
       }
@@ -155,17 +157,14 @@ export default function ModalSalidaLote({ modalData, onClose }) {
         )}
 
         {showConfirmModal && (
-          <div className="fixed inset-0 flex items-center justify-center backdrop-blur-xs bg-gray-300/50 z-20">
-            <div className="bg-white p-6 rounded-lg shadow-lg">
-              <ModalAlerta
-                onAceptar={async () => {
-                  await handleRegistrarSalida();
-                  onClose();
-                  setShowConfirmModal(false);
-                }}
-                loading={loading}
-              />
-            </div>
+          <div className="fixed inset-0 flex items-center justify-center backdrop-blur-xs bg-gray-300/50 z-10">
+              <div className="bg-white p-6 rounded-lg shadow-lg">
+                  <ModalAlerta
+                    onAceptar={handleRegistrarSalida}
+                    onCancelar={() => setShowConfirmModal(false)}
+                    loading={loading}
+                  />
+              </div>
           </div>
         )}
       </div>
