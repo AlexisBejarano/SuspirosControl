@@ -142,7 +142,7 @@ const TableComponent = () => {
                 <th className="py-3 px-2 border-r-1">Entrada</th>
                 <th className="py-3 px-2 border-r-1">Salida</th>
                 <th className="py-3 px-2 border-r-1">Stock</th>
-                <th className="py-3 px-2 border-r-1">Caducidad Próxima</th>
+                <th className="py-3 px-2 border-r-1">Cad. Próxima</th>
                 <th className="py-3 px-2">Acciones</th>
               </tr>
             </thead>

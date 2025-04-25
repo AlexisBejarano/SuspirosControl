@@ -20,7 +20,7 @@ export default function ModalEditarProducto({ modalData, onClose }) {
     if (modalData) {
       setNombre(modalData?.nombre || "");
       setUnidad(modalData?.unidad || "");
-      setAvisoStock(modalData?.aviso_stock || 0);
+      setAvisoStock(Number(modalData?.aviso_stock) || 0);
     }
   }, [modalData]);
 
