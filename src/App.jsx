@@ -226,7 +226,7 @@ const TableComponent = () => {
 
         <div className="overflow-y-auto max-h-[calc(100vh-150px)] w-full">
           <table className="mx-auto table-fixed border-separate border-spacing-y-2">
-            <thead className="sticky top-0 bg-gray-800 text-white z-10">
+            <thead className="sticky top-0 bg-gray-800 text-white">
               <tr>
                 <th className="py-3 px-2 border-r-1">Producto</th>
                 <th className="py-3 px-2 border-r-1">Ud. Medida</th>

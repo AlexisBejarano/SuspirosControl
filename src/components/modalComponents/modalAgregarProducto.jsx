@@ -138,7 +138,7 @@ export default function ModalAgregarProducto({ onClose }) {
             )}
 
             {showConfirmModal && (
-                <div className="fixed inset-0 flex items-center justify-center backdrop-blur-xs bg-gray-300/50 z-20">
+                <div className="fixed inset-0 flex items-center justify-center backdrop-blur-xs bg-gray-300/50 z-10">
                     <div className="bg-white p-6 rounded-lg shadow-lg">
                         <ModalAlerta
                             onAceptar={handleAgregarProducto}
