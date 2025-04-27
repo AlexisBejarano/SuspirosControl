@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import ButtonDefault from "./components/ButtonDefault"
+import ButtonDefault from "./components/ButtonDefault";
 import Cookies from "universal-cookie";
-import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 import ExcelJS from "exceljs";
 import ModalAlerta from "./components/modalComponents/modalAlerta";
@@ -15,13 +14,12 @@ function getCookie(name) {
 const cookies = new Cookies();
 
 //ESTE ES EL APP------------------------------------------
-const TableComponent = ({ modalData, onUpdate }) => {
+const TableComponent = () => {
   const [loading, setLoading] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [ProductoSeleccionado, setProductoSeleccionado] = useState(null);
   const [productos, setProductos] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [reloadTable, setReloadTable] = useState(false);
 
   const handleEliminarProducto = async () => {
     if (!ProductoSeleccionado) return;
@@ -40,9 +38,11 @@ const TableComponent = ({ modalData, onUpdate }) => {
       const data = await response.json();
 
       if (response.ok) {
+        // Si la respuesta del servidor es exitosa, eliminamos el producto de la lista local
+        setProductos(prevProductos => prevProductos.filter(producto => producto.id !== ProductoSeleccionado.id));
         setShowConfirmModal(false);
         setProductoSeleccionado(null);
-        onUpdate?.(); // actualiza la tabla si hay función de update
+        console.log("Producto eliminado:", data);
       } else {
         alert("Error al eliminar: " + (data.message || response.status));
       }
@@ -54,7 +54,6 @@ const TableComponent = ({ modalData, onUpdate }) => {
     }
   };
 
-  //GENERADOR DE REPORTE EXCEL
   //GENERADOR DE REPORTE EXCEL
   const exportToExcel = async () => {
     const workbook = new ExcelJS.Workbook();
@@ -175,7 +174,6 @@ const TableComponent = ({ modalData, onUpdate }) => {
     );
   });
 
-
   const handleCerrarSesion = () => {
     cookies.remove("id", { path: "/" });
     cookies.remove("nombre", { path: "/" });
@@ -206,7 +204,7 @@ const TableComponent = ({ modalData, onUpdate }) => {
         }
 
         const data = await response.json();
-        console.log("Respuesta del servidor:", data);
+        console.log("Respuesta del servidor", data);
         setProductos(data.data);
 
       } catch (error) {
@@ -216,12 +214,7 @@ const TableComponent = ({ modalData, onUpdate }) => {
     };
 
     fetchData();
-
-  },
-    [reloadTable]);
-
-
-
+  }, []);
 
   return (
     <>
