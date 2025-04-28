@@ -331,7 +331,15 @@ const TableComponent = () => {
                         onUpdateData={fetchTodoData}
                       />
                     </td>
-                    <td className="px-4 py-2 text-center border-r-2 border-r-gray-200">{producto.stock}</td>
+                    <td
+                      className={`px-4 py-2 text-center border-r-2 border-r-gray-200 ${
+                        producto.avisoStock < producto.stock
+                          ? 'bg-wite'
+                          : 'bg-red-500 text-white'
+                      }`}
+                    >
+                      {producto.stock}
+                    </td>
                     <td className="px-1 text-center border-r-2 border-r-gray-200">{caducidadProxima}</td>
                     <td className="text-center min-w-28">
                       <ButtonDefault textButton={"✏"} bgButton={"bg-blue-500"} hoverBgButton={"hover:bg-blue-800"} widthButton={"w-12"} marginButton={"ml-1"} paddingButtonX={"px-3"} paddingButtonY={"py-1"} colorButton={"text-white"}
