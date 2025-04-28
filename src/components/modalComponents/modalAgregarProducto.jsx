@@ -57,7 +57,7 @@ export default function ModalAgregarProducto({ onClose, onUpdateData  }) {
                     nombre,
                     unidad,
                     stock: 0,
-                    aviso_stock: number,
+                    avisStock: number,
                 }),
             });
 

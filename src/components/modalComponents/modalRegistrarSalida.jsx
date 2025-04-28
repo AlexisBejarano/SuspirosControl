@@ -30,8 +30,8 @@ export default function ModalRegistrarSalida({ modalData, onUpdate }) {
     const token = getCookie("token");
 
     try {
-      const response = await fetch(`http://localhost:8080/detalles/${detalleSeleccionado.id}/delete`, {
-        method: "POST",
+      const response = await fetch(`http://localhost:8080/detalles/${detalleSeleccionado.id}`, {
+        method: "DELETE",
         headers: {
           "Authorization": `Bearer ${token}`,
         },

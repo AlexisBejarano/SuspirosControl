@@ -120,13 +120,8 @@ const TableComponent = () => {
 
     // Agregar datos
     productos.forEach((producto) => {
-      const entrada = producto.movimientos?.reduce(
-        (total, mov) => total + parseInt(mov.entrada), 0
-      ) ?? 0;
-
-      const salida = producto.movimientos?.reduce(
-        (total, mov) => total + parseInt(mov.salida), 0
-      ) ?? 0;
+      const entrada = producto.movimiento ? parseInt(producto.movimiento.entrada) : 0;
+      const salida = producto.movimiento ? parseInt(producto.movimiento.salida) : 0;
 
       const caducidadMasProxima = producto.detalle_productos
         ?.map((d) => new Date(d.caducidad))
@@ -174,15 +169,8 @@ const TableComponent = () => {
   };
 
   const filteredProductos = productos.filter((producto) => {
-    const entrada = producto.movimientos?.reduce(
-      (total, mov) => total + parseInt(mov.entrada),
-      0
-    ) ?? 0;
-
-    const salida = producto.movimientos?.reduce(
-      (total, mov) => total + parseInt(mov.salida),
-      0
-    ) ?? 0;
+    const entrada = producto.movimiento ? parseInt(producto.movimiento.entrada) : 0;
+    const salida = producto.movimiento ? parseInt(producto.movimiento.salida) : 0;
 
     const caducidadMasProxima = producto.detalle_productos
       ?.map((d) => new Date(d.caducidad))
@@ -311,15 +299,8 @@ const TableComponent = () => {
             <tbody>
               {filteredProductos.map((producto) => {
 
-                const totalEntrada = producto.movimientos?.reduce(
-                  (total, mov) => total + parseInt(mov.entrada),
-                  0
-                ) ?? 0;
-
-                const totalSalida = producto.movimientos?.reduce(
-                  (total, mov) => total + parseInt(mov.salida),
-                  0
-                ) ?? 0;
+                const totalEntrada = producto.movimiento ? parseInt(producto.movimiento.entrada) : 0;
+                const totalSalida = producto.movimiento ? parseInt(producto.movimiento.salida) : 0;
 
                 // Obtener caducidad más próxima
                 const caducidadMasProxima = producto.detalle_productos
@@ -347,6 +328,7 @@ const TableComponent = () => {
                     <td className="px-1 text-center border-r-2 border-r-gray-200">
                       <ButtonDefault textButton={totalSalida} bgButton={"bg-green-500"} hoverBgButton={"hover:bg-emerald-700"} widthButton={"min-w-24"} paddingButtonX={"px-3"} paddingButtonY={"py-1"} marginButton={"ml-1"} colorButton={"text-white"}
                         modalType="registrarSalida" modalData={producto}
+                        onUpdateData={fetchTodoData}
                       />
                     </td>
                     <td className="px-4 py-2 text-center border-r-2 border-r-gray-200">{producto.stock}</td>
