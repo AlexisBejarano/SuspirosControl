@@ -8,7 +8,7 @@ function getCookie(name) {
   if (parts.length === 2) return parts.pop().split(";").shift();
 }
 
-export default function ModalRegistrarSalida({ modalData, onUpdate, onUpdateData }) {
+export default function ModalRegistrarSalida({ modalData, onUpdateData }) {
   const [loading, setLoading] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [detalleSeleccionado, setDetalleSeleccionado] = useState(null);
@@ -42,7 +42,7 @@ export default function ModalRegistrarSalida({ modalData, onUpdate, onUpdateData
       if (response.ok) {
         setShowConfirmModal(false);
         setDetalleSeleccionado(null);
-        onUpdate?.(); // actualiza la tabla si hay función de update
+        if (onUpdateData) onUpdateData();
       } else {
         alert("Error al eliminar: " + (data.message || response.status));
       }
@@ -107,6 +107,7 @@ export default function ModalRegistrarSalida({ modalData, onUpdate, onUpdateData
                     onClick={() => {
                       setDetalleSeleccionado(detalle);
                       setShowConfirmModal(true);
+                      onUpdateData={onUpdateData};
                     }}
                     className="px-3 py-1 mx-1 w-12 rounded bg-red-700 hover:bg-red-900 text-white"
                   >
