@@ -21,6 +21,38 @@ const TableComponent = () => {
   const [productos, setProductos] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
+  const fetchTodoData = async () => {
+    const token = cookies.get("token");
+  
+    if (!token) {
+      handleCerrarSesion();
+      return;
+    }
+  
+    try {
+      const response = await fetch("http://localhost:8080/todo", {
+        method: "GET",
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json"
+        }
+      });
+  
+      if (!response.ok) {
+        throw new Error("Error en la petición");
+      }
+  
+      const data = await response.json();
+      console.log("Respuesta del servidor:", data);
+      setProductos(data.data);
+  
+    } catch (error) {
+      console.error("Hubo un error al obtener los datos:", error);
+      handleCerrarSesion();
+    }
+  };
+  
+
   const handleEliminarProducto = async () => {
     if (!ProductoSeleccionado) return;
 
@@ -38,11 +70,13 @@ const TableComponent = () => {
       const data = await response.json();
 
       if (response.ok) {
-        // Si la respuesta del servidor es exitosa, eliminamos el producto de la lista local
+        // Eliminamos el producto de la lista local
         setProductos(prevProductos => prevProductos.filter(producto => producto.id !== ProductoSeleccionado.id));
         setShowConfirmModal(false);
         setProductoSeleccionado(null);
         console.log("Producto eliminado:", data);
+        // Hacemos nueva petición para actualizar datos
+        fetchTodoData();
       } else {
         alert("Error al eliminar: " + (data.message || response.status));
       }
@@ -204,7 +238,7 @@ const TableComponent = () => {
         }
 
         const data = await response.json();
-        console.log("Respuesta del servidor", data);
+        console.log("Respuesta del servidor:", data);
         setProductos(data.data);
 
       } catch (error) {
@@ -223,6 +257,7 @@ const TableComponent = () => {
           {/* Botón 1: Agregar Producto */}
           <ButtonDefault textButton={"Agregar Producto"} bgButton={"bg-gray-500"} hoverBgButton={"hover:bg-gray-700"} widthButton={"w-40"} paddingButtonX={"px-3"} paddingButtonY={"py-1"} marginButton={"mx-1"} colorButton={"text-white"}
             modalType="agregarProducto" // Tipo de modal
+            onUpdateData={fetchTodoData}
           />
 
           {/* Botón 2: Generar Reporte */}

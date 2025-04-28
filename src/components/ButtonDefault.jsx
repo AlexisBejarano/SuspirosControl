@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ModalContenidoAll from "./ModalContenidoAll";
-export default function ButtonDefault({ textButton, bgButton, hoverBgButton, widthButton, marginButton, colorButton, modalType, modalData, paddingButtonX, paddingButtonY, onCerrarSesion }) {
+export default function ButtonDefault({ textButton, bgButton, hoverBgButton, widthButton, marginButton, colorButton, modalType, modalData, paddingButtonX, paddingButtonY, onCerrarSesion, onUpdateData }) {
   
   const [isOpen, setIsOpen] = useState(false);
 
@@ -18,6 +18,7 @@ export default function ButtonDefault({ textButton, bgButton, hoverBgButton, wid
       }
     },
     setIsOpen,
+    onUpdateData 
   });
 
   return (

@@ -7,7 +7,7 @@ function getCookie(name) {
     if (parts.length === 2) return parts.pop().split(";").shift();
 }
 
-export default function ModalAgregarProducto({ onClose }) {
+export default function ModalAgregarProducto({ onClose, onUpdateData  }) {
 
     const [nombre, setNombre] = useState("");
     const [unidad, setUnidad] = useState("");
@@ -70,6 +70,7 @@ export default function ModalAgregarProducto({ onClose }) {
                 setShowConfirmModal(false);
                 setErrorMessage("");
                 if (onClose) onClose();
+                if (onUpdateData) onUpdateData();
             } else {
                 alert("Error al agregar producto: " + (data.message || response.status));
             }

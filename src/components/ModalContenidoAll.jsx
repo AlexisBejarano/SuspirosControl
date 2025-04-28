@@ -1,7 +1,4 @@
 import React from "react";
-import ButtonDefault from "./ButtonDefault";
-
-
 
 import ModalAgregarProducto from "./modalComponents/modalAgregarProducto";
 import ModalGenerarReporte from "./modalComponents/modalGenerarReporte";
@@ -14,7 +11,7 @@ import ModalEditarDetalle from "./modalComponents/modalEditarDetalle";
 
 
 
-export default function ModalContenidoAll({ modalType, modalData, onClose, setIsOpen }) {
+export default function ModalContenidoAll({ modalType, modalData, onClose, setIsOpen, onUpdateData  }) {
 
   switch (modalType) {
     case "agregarProducto":
@@ -22,7 +19,10 @@ export default function ModalContenidoAll({ modalType, modalData, onClose, setIs
         titulo: "Agregar Producto",
         contenido: (
           <>
-            <ModalAgregarProducto onClose={() => setIsOpen(false)}/>
+            <ModalAgregarProducto 
+              onClose={() => setIsOpen(false)}
+              onUpdateData={onUpdateData} // Pasamos la prop
+            />
           </>
         ),
         buttons: (
