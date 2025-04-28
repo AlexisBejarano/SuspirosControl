@@ -8,7 +8,7 @@ function getCookie(name) {
   if (parts.length === 2) return parts.pop().split(";").shift();
 }
 
-export default function ModalRegistrarSalida({ modalData, onUpdate }) {
+export default function ModalRegistrarSalida({ modalData, onUpdate, onUpdateData }) {
   const [loading, setLoading] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [detalleSeleccionado, setDetalleSeleccionado] = useState(null);
@@ -84,6 +84,7 @@ export default function ModalRegistrarSalida({ modalData, onUpdate }) {
                     colorButton={"text-black"}
                     modalType="SalidaLote"
                     modalData={{ ...detalle, productoNombre: modalData.nombre, productoUnidad: modalData.unidad }}
+                    onUpdateData={onUpdateData}
                   />
                 </td>
                 <td className="px-4 py-2 text-center border-r-2 border-r-gray-200">{detalle.cantidad || "N/A"}</td>

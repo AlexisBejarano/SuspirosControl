@@ -91,7 +91,7 @@ export default function ModalContenidoAll({ modalType, modalData, onClose, setIs
         titulo: "Registrar Salida",
         contenido: (
           <>
-            <ModalRegistrarSalida modalData={modalData} onClose={() => setIsOpen(false)}/>
+            <ModalRegistrarSalida modalData={modalData} onClose={() => setIsOpen(false)} onUpdateData={onUpdateData}/>
           </>
         ),
         buttons: (
@@ -108,7 +108,11 @@ export default function ModalContenidoAll({ modalType, modalData, onClose, setIs
         titulo: "Salida de Lote",
         contenido: (
           <>
-            <ModalSalidaLote modalData={modalData} onClose={() => setIsOpen(false)}/>
+            <ModalSalidaLote
+            modalData={modalData} 
+            onClose={() => setIsOpen(false)}
+            onUpdateData={onUpdateData}
+            />
           </>
         ),
         buttons: (

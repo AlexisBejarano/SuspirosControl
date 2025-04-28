@@ -7,7 +7,7 @@ function getCookie(name) {
   if (parts.length === 2) return parts.pop().split(";").shift();
 }
 
-export default function ModalSalidaLote({ modalData, onClose }) {
+export default function ModalSalidaLote({ modalData, onClose, onUpdateData }) {
   const [number, setNumber] = useState(0);
   const [loading, setLoading] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
@@ -76,6 +76,7 @@ export default function ModalSalidaLote({ modalData, onClose }) {
         setShowConfirmModal(false);
         setErrorMessage("");
         if (onClose) onClose();
+        if (onUpdateData) onUpdateData();
       } else {
         alert("Error al registrar la salida: " + (data.message || response.status));
       }
