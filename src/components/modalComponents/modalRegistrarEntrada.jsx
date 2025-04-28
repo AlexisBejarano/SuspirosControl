@@ -9,7 +9,7 @@ function getCookie(name) {
   if (parts.length === 2) return parts.pop().split(";").shift();
 }
 
-export default function ModalRegistrarEntrada({ modalData, onClose }) {
+export default function ModalRegistrarEntrada({ modalData, onClose, onUpdateData }) {
 
   const [lote, setLote] = useState("");
   const [cantidad, setCantidad] = useState("");
@@ -62,6 +62,7 @@ export default function ModalRegistrarEntrada({ modalData, onClose }) {
         setSelectedDate(null);
         setErrorMessage("");
         if (onClose) onClose();
+        if (onUpdateData) onUpdateData();
       } else {
         alert("Error al registrar la entrada: " + (data.message || response.status));
       }
