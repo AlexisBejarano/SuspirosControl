@@ -101,6 +101,7 @@ export default function ModalRegistrarSalida({ modalData, onUpdate, onUpdateData
                     colorButton={"text-white"}
                     modalType="detalleEditar"
                     modalData={detalle}
+                    onUpdateData={onUpdateData}
                   />
                   <button
                     onClick={() => {

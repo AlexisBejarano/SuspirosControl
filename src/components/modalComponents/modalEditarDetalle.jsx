@@ -8,7 +8,7 @@ function getCookie(name) {
   if (parts.length === 2) return parts.pop().split(";").shift();
 }
 
-export default function ModalEditarDetalle({ modalData, onClose }) {
+export default function ModalEditarDetalle({ modalData, onClose, onUpdateData }) {
   const [lote, setLote] = useState("");
   const [cantidad, setCantidad] = useState(0);
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -63,6 +63,7 @@ export default function ModalEditarDetalle({ modalData, onClose }) {
       if (response.ok) {
         setShowConfirmModal(false);
         if (onClose) onClose();
+        if (onUpdateData) onUpdateData();
       } else {
         alert("Error al actualizar detalle: " + (data.message || response.status));
       }

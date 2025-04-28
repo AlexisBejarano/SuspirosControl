@@ -126,7 +126,7 @@ export default function ModalContenidoAll({ modalType, modalData, onClose, setIs
         titulo: "Editar Detalles",
         contenido: (
           <>
-            <ModalEditarDetalle modalData={modalData} onClose={() => setIsOpen(false)}/>
+            <ModalEditarDetalle modalData={modalData} onClose={() => setIsOpen(false)} onUpdateData={onUpdateData}/>
           </>
         ),
         buttons: (
