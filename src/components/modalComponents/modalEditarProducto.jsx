@@ -20,7 +20,7 @@ export default function ModalEditarProducto({ modalData, onClose, onUpdateData }
     if (modalData) {
       setNombre(modalData?.nombre || "");
       setUnidad(modalData?.unidad || "");
-      setAvisoStock(Number(modalData?.aviso_stock) || 0);
+      setAvisoStock(Number(modalData.avisoStock) || 0);
     }
   }, [modalData]);
 
@@ -53,7 +53,7 @@ export default function ModalEditarProducto({ modalData, onClose, onUpdateData }
         body: JSON.stringify({
           nombre,
           unidad,
-          aviso_stock: avisoStock,
+          avisoStock: avisoStock,
         }),
       });
 
