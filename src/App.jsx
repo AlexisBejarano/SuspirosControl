@@ -337,6 +337,7 @@ const TableComponent = () => {
                       <ButtonDefault textButton={"✏"} bgButton={"bg-blue-500"} hoverBgButton={"hover:bg-blue-800"} widthButton={"w-12"} marginButton={"ml-1"} paddingButtonX={"px-3"} paddingButtonY={"py-1"} colorButton={"text-white"}
                         modalType="editarProducto"
                         modalData={producto}
+                        onUpdateData={fetchTodoData}
                       />
                       <button
                         onClick={() => {

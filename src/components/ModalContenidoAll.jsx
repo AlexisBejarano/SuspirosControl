@@ -141,7 +141,7 @@ export default function ModalContenidoAll({ modalType, modalData, onClose, setIs
         titulo: "Editar Producto",
         contenido: (
           <>
-            <ModalEditarProducto modalData={modalData} onClose={() => setIsOpen(false)}/>
+            <ModalEditarProducto modalData={modalData} onClose={() => setIsOpen(false)} onUpdateData={onUpdateData}/>
           </>
         ),
         buttons: (

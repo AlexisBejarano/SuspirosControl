@@ -7,7 +7,7 @@ function getCookie(name) {
   if (parts.length === 2) return parts.pop().split(";").shift();
 }
 
-export default function ModalEditarProducto({ modalData, onClose }) {
+export default function ModalEditarProducto({ modalData, onClose, onUpdateData }) {
   const [nombre, setNombre] = useState("");
   const [unidad, setUnidad] = useState("");
   const [avisoStock, setAvisoStock] = useState(0);
@@ -63,6 +63,7 @@ export default function ModalEditarProducto({ modalData, onClose }) {
         setShowConfirmModal(false);
         setErrorMessage("");
         if (onClose) onClose();
+        if (onUpdateData) onUpdateData();
       } else {
         alert("Error al actualizar producto: " + (data.message || response.status));
       }
