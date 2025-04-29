@@ -25,11 +25,26 @@ export default function ModalEditarDetalle({ modalData, onClose, onUpdateData })
   }, [modalData]);
 
   const handleOpenConfirmModal = () => {
-    if (!lote.trim() || !cantidad || !selectedDate) {
-      setErrorMessage("Todos los campos son obligatorios.");
+    if (!lote.trim()) {
+      setErrorMessage("El campo Lote es obligatorio.");
       return;
     }
 
+    const cantidadNum = parseInt(cantidad);
+    if (isNaN(cantidadNum)) {
+      setErrorMessage("La cantidad debe ser un número válido.");
+      return;
+    }
+
+    if (cantidadNum <= 0) {
+      setErrorMessage("La cantidad debe ser mayor a cero.");
+      return;
+    }
+
+    if (!selectedDate) {
+      setErrorMessage("Debe seleccionar una fecha de caducidad.");
+      return;
+    }
     setErrorMessage("");
     setShowConfirmModal(true);
   };

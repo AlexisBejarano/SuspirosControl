@@ -25,8 +25,28 @@ export default function ModalEditarProducto({ modalData, onClose, onUpdateData }
   }, [modalData]);
 
   const handleOpenConfirmModal = () => {
-    if (!nombre.trim() || !unidad.trim()) {
-      setErrorMessage("Nombre y Unidad de Medida son obligatorios.");
+    if (!nombre.trim()) {
+      setErrorMessage("El nombre del producto es obligatorio.");
+      return;
+    }
+
+    if (!unidad.trim()) {
+      setErrorMessage("La unidad de medida es obligatoria.");
+      return;
+    }
+
+    if (isNaN(avisoStock)) {
+      setErrorMessage("El aviso de stock debe ser un número válido.");
+      return;
+    }
+
+    if (avisoStock < 0) {
+      setErrorMessage("El aviso de stock no puede ser negativo.");
+      return;
+    }
+
+    if (avisoStock === "") {
+      setErrorMessage("El aviso de stock no puede estar vacío.");
       return;
     }
 
@@ -83,6 +103,14 @@ export default function ModalEditarProducto({ modalData, onClose, onUpdateData }
     setAvisoStock((prev) => prev + 1);
   };
 
+  const handleAvisoStockChange = (e) => {
+    const value = e.target.value;
+    // Solo permite números enteros no negativos
+    if (value === "" || /^[0-9]*$/.test(value)) {
+      setAvisoStock(value === "" ? "" : parseInt(value));
+    }
+  };
+
   return (
     <>
       <label className="relative block mt-2 rounded-md border border-gray-300 shadow-xs">
@@ -123,7 +151,7 @@ export default function ModalEditarProducto({ modalData, onClose, onUpdateData }
             type="number"
             style={{ WebkitAppearance: "none", MozAppearance: "textfield" }}
             value={avisoStock}
-            onChange={(e) => setAvisoStock(parseInt(e.target.value))}
+            onChange={handleAvisoStockChange}
             className="border-y-2 border-gray-300 text-center w-20 appearance-none focus:outline-none h-9"
           />
           <button onClick={handleIncrease} className="bg-blue-500 hover:bg-blue-800 text-white py-2 px-4 rounded-r">

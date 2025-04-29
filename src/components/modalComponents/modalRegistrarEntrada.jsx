@@ -21,15 +21,28 @@ export default function ModalRegistrarEntrada({ modalData, onClose, onUpdateData
    const handleOpenConfirmModal = () => {
     const regex = /^[a-zA-Z0-9\s]+$/;
 
-    if (!lote.trim() || !cantidad.trim() || cantidad==0) {
-        setErrorMessage("Todos los campos son obligatorios.");
-        return;
-    }
+    // Validación de campos vacíos
+  if (!lote.trim()) {
+    setErrorMessage("El campo Lote es obligatorio.");
+    return;
+  }
 
-    if (!regex.test(lote) || !regex.test(cantidad)) {
-        setErrorMessage("Solo se permiten letras, números y espacios.");
-        return;
-    }
+  if (!cantidad.trim() || cantidad == 0) {
+    setErrorMessage("La cantidad debe ser mayor a cero.");
+    return;
+  }
+
+  if (!selectedDate) {
+    setErrorMessage("Debe seleccionar una fecha de caducidad.");
+    return;
+  }
+
+  // Validación de formato
+  if (!regex.test(lote) || !regex.test(cantidad)) {
+    setErrorMessage("Solo se permiten letras, números y espacios.");
+    return;
+  }
+
 
     setErrorMessage("");
     setShowConfirmModal(true);
