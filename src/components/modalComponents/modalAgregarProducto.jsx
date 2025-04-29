@@ -25,7 +25,7 @@ export default function ModalAgregarProducto({ onClose, onUpdateData  }) {
     };
 
     const handleOpenConfirmModal = () => {
-        const regex = /^[a-zA-Z0-9\s]+$/;
+        const regex = /^[a-zA-Z0-9\s.]+$/;
 
         if (!nombre.trim() || !unidad.trim()) {
             setErrorMessage("Todos los campos son obligatorios.");

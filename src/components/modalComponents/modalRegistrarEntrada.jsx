@@ -19,29 +19,39 @@ export default function ModalRegistrarEntrada({ modalData, onClose, onUpdateData
   const [errorMessage, setErrorMessage] = useState("");
 
    const handleOpenConfirmModal = () => {
-    const regex = /^[a-zA-Z0-9\s]+$/;
+    const regexCantidad = /^[0-9]+$/;
+    const regexLote = /^[a-zA-Z0-9\s.]+$/;
 
     // Validación de campos vacíos
-  if (!lote.trim()) {
-    setErrorMessage("El campo Lote es obligatorio.");
-    return;
-  }
+    if (!lote.trim()) {
+        setErrorMessage("El campo Lote es obligatorio.");
+        return;
+    }
 
-  if (!cantidad.trim() || cantidad == 0) {
-    setErrorMessage("La cantidad debe ser mayor a cero.");
-    return;
-  }
+    if (!cantidad.trim()) {
+        setErrorMessage("La cantidad no puede estar vacía.");
+        return;
+    }
 
-  if (!selectedDate) {
-    setErrorMessage("Debe seleccionar una fecha de caducidad.");
-    return;
-  }
+    if (parseInt(cantidad) <= 0) {
+        setErrorMessage("La cantidad debe ser mayor a cero.");
+        return;
+    }
 
-  // Validación de formato
-  if (!regex.test(lote) || !regex.test(cantidad)) {
-    setErrorMessage("Solo se permiten letras, números y espacios.");
-    return;
-  }
+    if (!selectedDate) {
+        setErrorMessage("Debe seleccionar una fecha de caducidad.");
+        return;
+    }
+
+    if (!regexLote.test(lote)) {
+        setErrorMessage("El lote solo puede contener letras, números, espacios y puntos.");
+        return;
+    }
+
+    if (!regexCantidad.test(cantidad)) {
+        setErrorMessage("La cantidad solo puede contener números enteros positivos.");
+        return;
+    }
 
 
     setErrorMessage("");

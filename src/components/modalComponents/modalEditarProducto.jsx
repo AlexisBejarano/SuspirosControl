@@ -25,6 +25,13 @@ export default function ModalEditarProducto({ modalData, onClose, onUpdateData }
   }, [modalData]);
 
   const handleOpenConfirmModal = () => {
+    const regex = /^[a-zA-Z0-9\s.]+$/;
+
+    if (!regex.test(nombre) || !regex.test(unidad)) {
+      setErrorMessage("Solo se permiten letras, números y espacios.");
+      return;
+  }
+
     if (!nombre.trim()) {
       setErrorMessage("El nombre del producto es obligatorio.");
       return;

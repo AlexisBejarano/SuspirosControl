@@ -25,6 +25,19 @@ export default function ModalEditarDetalle({ modalData, onClose, onUpdateData })
   }, [modalData]);
 
   const handleOpenConfirmModal = () => {
+    const regexCantidad = /^[a-zA-Z0-9\s]+$/;
+    const regexLote = /^[a-zA-Z0-9\s.]+$/;
+
+    if (!regexLote.test(lote)) {
+      setErrorMessage("El lote solo puede contener letras, números, espacios y puntos.");
+      return;
+  }
+
+  if (!regexCantidad.test(cantidad)) {
+      setErrorMessage("La cantidad solo puede contener números enteros positivos.");
+      return;
+  }
+
     if (!lote.trim()) {
       setErrorMessage("El campo Lote es obligatorio.");
       return;
