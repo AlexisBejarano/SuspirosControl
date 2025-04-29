@@ -333,8 +333,8 @@ const TableComponent = () => {
                     </td>
                     <td
                       className={`px-4 py-2 text-center border-r-2 border-r-gray-200 ${
-                        producto.avisoStock < producto.stock
-                          ? 'bg-wite'
+                        parseInt(producto.stock) > parseInt(producto.avisoStock || 0)
+                          ? 'bg-white'
                           : 'bg-red-500 text-white'
                       }`}
                     >
