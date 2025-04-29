@@ -274,11 +274,6 @@ const TableComponent = () => {
         </form>
 
         <div className="overflow-y-auto max-h-[calc(100vh-150px)] w-full">
-          {dataLoading ? (
-            <div className="flex justify-center items-center h-64">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
-            </div>
-          ) : (
             <table className="mx-auto table-fixed border-separate border-spacing-y-2">
               <thead className="sticky top-0 bg-gray-800 text-white">
                 <tr>
@@ -387,7 +382,6 @@ const TableComponent = () => {
                 })}
               </tbody>
             </table>
-          )}
         </div>
       </div>
 
@@ -407,11 +401,11 @@ const TableComponent = () => {
       )}
 
       {(loading || exportLoading || dataLoading) && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-30 z-30">
+        <div className="fixed inset-0 flex items-center justify-center backdrop-blur-xs bg-opacity-30 z-30">
           <div className="bg-white p-6 rounded-lg shadow-xl flex flex-col items-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mb-4"></div>
             <p className="text-gray-700">
-              {dataLoading && "Cargando productos..."}
+              {dataLoading && "Actualizando productos..."}
               {loading && "Eliminando producto..."}
               {exportLoading && "Generando reporte..."}
             </p>
