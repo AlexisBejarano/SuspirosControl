@@ -59,10 +59,10 @@ const TableComponent = () => {
 
   const handleEliminarProducto = async () => {
     if (!ProductoSeleccionado) return;
-
-    setLoading(true);
+  
     const token = getCookie("token");
-
+    setLoading(true);
+  
     try {
       const response = await fetch(`http://localhost:8080/producto/${ProductoSeleccionado.id}`, {
         method: "DELETE",
@@ -70,24 +70,24 @@ const TableComponent = () => {
           "Authorization": `Bearer ${token}`,
         },
       });
-
-      const data = await response.json();
-
+  
       if (response.ok) {
-        setProductos(prevProductos => prevProductos.filter(producto => producto.id !== ProductoSeleccionado.id));
+        setProductos(prev => prev.filter(p => p.id !== ProductoSeleccionado.id));
         setShowConfirmModal(false);
         setProductoSeleccionado(null);
         fetchTodoData();
       } else {
-        alert("Error al eliminar: " + (data.message || response.status));
+        const data = await response.json();
+        alert("Error: " + (data.message || response.status));
       }
     } catch (error) {
-      console.error("Error al eliminar producto:", error);
-      alert("Ocurrió un error al intentar eliminar el producto.");
+      console.error("Error:", error);
+      alert("Error al eliminar el producto.");
     } finally {
       setLoading(false);
     }
   };
+  
 
   const exportToExcel = async () => {
     setExportLoading(true);
@@ -400,13 +400,12 @@ const TableComponent = () => {
         </div>
       )}
 
-      {(loading || exportLoading || dataLoading) && (
+      {(sexportLoading || dataLoading) && (
         <div className="fixed inset-0 flex items-center justify-center backdrop-blur-xs bg-opacity-30 z-30">
           <div className="bg-white p-6 rounded-lg shadow-xl flex flex-col items-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mb-4"></div>
             <p className="text-gray-700">
               {dataLoading && "Actualizando productos..."}
-              {loading && "Eliminando producto..."}
               {exportLoading && "Generando reporte..."}
             </p>
           </div>
