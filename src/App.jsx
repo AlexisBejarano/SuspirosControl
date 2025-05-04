@@ -319,7 +319,7 @@ const TableComponent = () => {
               </div>
             </form>
 
-            {/* Icono de ayuda cuadrado con esquinas redondas */}
+            {/* Icono de ayuda cuadrado con esquinas redondass */}
             <button
               type="button"
               onClick={() => setShowManual(true)}
