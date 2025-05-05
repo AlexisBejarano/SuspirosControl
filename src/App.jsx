@@ -4,6 +4,7 @@ import Cookies from "universal-cookie";
 import { saveAs } from "file-saver";
 import ExcelJS from "exceljs";
 import ModalAlerta from "./components/modalComponents/modalAlerta";
+import ModalManual from "./components/modalComponents/modalManual";
 
 function getCookie(name) {
   const value = `; ${document.cookie}`;
@@ -22,6 +23,7 @@ const TableComponent = () => {
   const [ProductoSeleccionado, setProductoSeleccionado] = useState(null);
   const [productos, setProductos] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [showManual, setShowManual] = useState(false);
 
   const fetchTodoData = async () => {
     const token = cookies.get("token");
@@ -319,28 +321,38 @@ const TableComponent = () => {
               </div>
             </form>
 
-            {/* Icono de ayuda cuadrado con esquinas redondass */}
-            <button
-              type="button"
-              onClick={() => setShowManual(true)}
-              title="Ver manual de usuario"
-              className="w-10 h-10 flex items-center justify-center bg-lila rounded-lg border border-gray-300 hover:scale-110 transition-transform duration-200"
-            >
-              <svg
-                className="w-6 h-6 text-white"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth="2"
+            <div>
+              {/* En algún lugar de tu JSX, coloca el botón de ayuda */}
+              <button
+                type="button"
+                onClick={() => setShowManual(true)}
+                title="Ver manual de usuario"
+                className="w-10 h-10 flex items-center justify-center bg-lila rounded-lg border border-gray-300 hover:scale-110 transition-transform duration-200"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M13 16h-1v-4h-1m1-4h.01M12 2a10 10 0 100 20 10 10 0 000-20z"
-                />
-              </svg>
-            </button>
+                <svg
+                  className="w-6 h-6 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M13 16h-1v-4h-1m1-4h.01M12 2a10 10 0 100 20 10 10 0 000-20z"
+                  />
+                </svg>
+              </button>
+
+              {/* Otros elementos de tu componente... */}
+
+              {/* Modal de manual */}
+              <ModalManual
+                isOpen={showManual}
+                onClose={() => setShowManual(false)}
+              />
+            </div>
           </div>
         </div>
 
