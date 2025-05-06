@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect  } from "react";
 import ButtonDefault from "../ButtonDefault";
 import ModalAlerta from "./modalAlerta";
 
@@ -12,6 +12,26 @@ export default function ModalRegistrarSalida({ modalData, onUpdateData }) {
   const [loading, setLoading] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [detalleSeleccionado, setDetalleSeleccionado] = useState(null);
+  const [openAccionId, setOpenAccionId] = useState(null);
+
+  const accionRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (accionRef.current && !accionRef.current.contains(event.target)) {
+        setOpenAccionId(null); // Cierra el acordeón
+      }
+    };
+  
+    if (openAccionId !== null) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+  
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [openAccionId]);
+  
 
   const formatDate = (dateString) => {
     if (!dateString) return "Sin fecha";
@@ -89,30 +109,48 @@ export default function ModalRegistrarSalida({ modalData, onUpdateData }) {
                 </td>
                 <td className="px-4 py-2 text-center border-r-2 border-r-gray-200">{detalle.cantidad || "N/A"}</td>
                 <td className="px-1 text-center border-r-2 border-r-gray-200">{formatDate(detalle.caducidad)}</td>
-                <td className="text-center min-w-28">
-                  <ButtonDefault
-                    textButton={"✏"}
-                    bgButton={"bg-blue-500"}
-                    hoverBgButton={"hover:bg-blue-800"}
-                    widthButton={"w-12"}
-                    marginButton={"ml-1"}
-                    paddingButtonX={"px-3"}
-                    paddingButtonY={"py-1"}
-                    colorButton={"text-white"}
-                    modalType="detalleEditar"
-                    modalData={detalle}
-                    onUpdateData={onUpdateData}
-                  />
-                  <button
-                    onClick={() => {
-                      setDetalleSeleccionado(detalle);
-                      setShowConfirmModal(true);
-                      onUpdateData={onUpdateData};
-                    }}
-                    className="px-3 py-1 mx-1 w-12 rounded bg-red-700 hover:bg-red-900 text-white"
-                  >
-                    🗑
-                  </button>
+                <td className="text-center px-1">
+                  {/* Botón de engrane */}
+                  {openAccionId !== detalle.id ? (
+                    <button
+                      onClick={() => setOpenAccionId(detalle.id)}
+                      className="px-3 py-1 w-12 rounded bg-gray-700 hover:bg-gray-900 text-white"
+                      title="Opciones"
+                    >
+                      ⚙️
+                    </button>
+                  ) : (
+                    <div 
+                    ref={accionRef}
+                    className="flex justify-center items-center gap-1 transition-all duration-300">
+                      <ButtonDefault
+                        textButton={"✏"}
+                        bgButton={"bg-blue-500"}
+                        hoverBgButton={"hover:bg-blue-800"}
+                        widthButton={"w-10"}
+                        paddingButtonX={"px-2"}
+                        paddingButtonY={"py-1"}
+                        colorButton={"text-white"}
+                        modalType="detalleEditar"
+                        modalData={detalle}
+                        onUpdateData={() => {
+                          setOpenAccionId(null);
+                          if (onUpdateData) onUpdateData();
+                        }}
+                      />
+                      <button
+                        onClick={() => {
+                          setDetalleSeleccionado(detalle);
+                          setShowConfirmModal(true);
+                          setOpenAccionId(null); // cerrar acordeón
+                        }}
+                        className="px-2 py-1 w-10 rounded bg-red-700 hover:bg-red-900 text-white"
+                        title="Eliminar"
+                      >
+                        🗑
+                      </button>
+                    </div>
+                  )}
                 </td>
               </tr>
             ))}

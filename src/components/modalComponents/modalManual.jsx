@@ -159,27 +159,6 @@ export default function ModalManual({ isOpen, onClose }) {
                 </div>
               </div>
             </section>
-
-            <section>
-              <h3 className="text-xl font-semibold text-gray-800 mb-4 pb-2 border-b">
-                Contactos
-              </h3>
-              <div className="bg-white/70 p-4 rounded-lg border border-gray-200">
-                <p className="text-sm mb-2">
-                  Si encuentra un error en la aplicación o tiene alguna duda, no
-                  dude en comunicarse con nosotros.
-                </p>
-                <ul className="list-disc pl-5 space-y-1 text-sm">
-                  <li>yolanda.martinez244378@potros.itson.edu.mx</li>
-                  <li>luis.dominguez244206@potros.itson.edu.mx</li>
-                  <li>omar.castelan244309@potros.itson.edu.mx</li>
-                  <li>sergio.gracia244608@potros.itson.edu.mx</li>
-                  <p className="text-sm mb-2">Contactos telefonicos</p>
-                  <li>622 142 0476</li>
-                  <li>622 172 14296</li>
-                </ul>
-              </div>
-            </section>
           </div>
         </div>
 
