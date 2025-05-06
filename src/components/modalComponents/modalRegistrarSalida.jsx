@@ -81,8 +81,8 @@ export default function ModalRegistrarSalida({ modalData, onUpdateData }) {
       <h3><i>{modalData?.unidad || "No disponible"}</i></h3>
       <div className="mt-3 max-h-96 overflow-y-auto w-full">
         <table className="min-w-full">
-          <thead>
-            <tr className="bg-gray-800 text-white text-sm">
+          <thead className="bg-gray-800 sticky top-0">
+            <tr className="text-white text-sm">
               <th className="py-3 px-2 border-r-1">Lote</th>
               <th className="py-3 px-2 border-r-1">Cantidad</th>
               <th className="py-3 px-2 border-r-1">Caducidad</th>
