@@ -80,9 +80,9 @@ export default function ModalRegistrarSalida({ modalData, onUpdateData }) {
       <h3><strong>{modalData?.nombre || "No disponible"}</strong></h3>
       <h3><i>{modalData?.unidad || "No disponible"}</i></h3>
       <div className="mt-3 max-h-96 overflow-y-auto w-full">
-        <table className="min-w-full">
-          <thead className="bg-gray-800 sticky top-0">
-            <tr className="text-white text-sm">
+        <table className="mx-auto table-fixed border-separate border-spacing-0">
+          <thead className="sticky top-0 bg-[#8a1329] text-white text-sm">
+            <tr>
               <th className="py-3 px-2 border-r-1">Lote</th>
               <th className="py-3 px-2 border-r-1">Cantidad</th>
               <th className="py-3 px-2 border-r-1">Caducidad</th>
@@ -95,13 +95,13 @@ export default function ModalRegistrarSalida({ modalData, onUpdateData }) {
                 <td className="px-1 text-center border-r-2 border-r-gray-200">
                   <ButtonDefault
                     textButton={detalle.lote || "N/A"}
-                    bgButton={"bg-green-500"}
-                    hoverBgButton={"hover:bg-green-700"}
+                    bgButton={"bg-[#34070a]"} 
+                    hoverBgButton={"hover:bg-[#6d0a1c]"} 
                     widthButton={"w-25"}
                     paddingButtonX={"px-4"}
                     paddingButtonY={"py-1"}
                     marginButton={"mx-1"}
-                    colorButton={"text-black"}
+                    colorButton={"text-white"}
                     modalType="SalidaLote"
                     modalData={{ ...detalle, productoNombre: modalData.nombre, productoUnidad: modalData.unidad }}
                     onUpdateData={onUpdateData}
@@ -125,8 +125,8 @@ export default function ModalRegistrarSalida({ modalData, onUpdateData }) {
                     className="flex justify-center items-center gap-1 transition-all duration-300">
                       <ButtonDefault
                         textButton={"✏"}
-                        bgButton={"bg-blue-500"}
-                        hoverBgButton={"hover:bg-blue-800"}
+                        bgButton={"bg-[#9a526a]"} 
+                          hoverBgButton={"hover:bg-[#550b19]"} 
                         widthButton={"w-10"}
                         paddingButtonX={"px-2"}
                         paddingButtonY={"py-1"}
@@ -144,7 +144,7 @@ export default function ModalRegistrarSalida({ modalData, onUpdateData }) {
                           setShowConfirmModal(true);
                           setOpenAccionId(null); // cerrar acordeón
                         }}
-                        className="px-2 py-1 w-10 rounded bg-red-700 hover:bg-red-900 text-white"
+                        className="px-2 py-1 w-10 rounded bg-[#8a1329] hover:bg-[#550b19] text-white"
                         title="Eliminar"
                       >
                         🗑

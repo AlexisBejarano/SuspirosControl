@@ -55,7 +55,7 @@ export default function Login() {
     }, []);
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-purple-500 to-pink-500">
+        <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-[#ddd2c5] to-[#FFFF]">
             <div className="bg-white/60 p-8 rounded-2xl shadow-xl max-w-sm w-full relative">
                 <div className="absolute flex items-center justify-center pb-3 -top-14 shadow-lg shadow-gray-300 left-1/2 transform -translate-x-1/2 w-30 h-30 bg-gradient-to-br from-purple-100 to-pink-100 rounded-full">
                     <img src="/public/img/suspiros-red.png" alt="Logo" className="w-30 h-15" />
@@ -67,7 +67,7 @@ export default function Login() {
                             type="text"
                             name="nombre"
                             onChange={handleChange}
-                            className="w-full py-3 px-4 pl-12 bg-gray-100 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                            className="w-full py-3 px-4 pl-12 bg-gray-100 border-2 border-[#34070a] rounded-lg focus:ring-0 outline-none"
                             placeholder="User"
                         />
                         <div className="absolute left-4 top-3 text-gray-500">
@@ -82,7 +82,7 @@ export default function Login() {
                             type="password"
                             name="password"
                             onChange={handleChange}
-                            className="w-full py-3 px-4 pl-12 bg-gray-100 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                            className="w-full py-3 px-4 pl-12 bg-gray-100 border-2 border-[#34070a] rounded-lg  focus:ring-0 outline-none"
                             placeholder="Password"
                         />
                         <div className="absolute left-4 top-3 text-gray-500">
@@ -101,8 +101,8 @@ export default function Login() {
                         disabled={loading}
                         className={`w-full mt-6 p-2 text-white py-3 rounded-lg text-lg font-semibold transition ${
                             loading
-                                ? "bg-gradient-to-r from-purple-800 to-pink-800 cursor-not-allowed"
-                                : "bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-400 hover:to-pink-400 hover:border-2 hover:p-2.5"}`}
+                                ? "bg-gradient-to-r from-[#34070a] to-[#34070a] cursor-not-allowed"
+                                : "bg-gradient-to-r from-[#8a1329] to-[#680f1f] hover:from-[#680f1f] hover:to-[#8a1329] hover:border-2 hover:p-2.5"}`}
                     >
                         {loading ? "Procesando..." : "Acceder"}
                     </button>

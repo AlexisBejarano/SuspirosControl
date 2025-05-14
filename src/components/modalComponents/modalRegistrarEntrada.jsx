@@ -151,7 +151,7 @@ export default function ModalRegistrarEntrada({ modalData, onClose, onUpdateData
         </button>
         <button
           onClick={onClose}
-          className="px-6 py-2 bg-red-500 hover:bg-red-700 text-white rounded"
+          className="px-6 py-2 bg-[#8a1329] hover:bg-[#550b19] text-white rounded"
         >
           Cancelar
         </button>

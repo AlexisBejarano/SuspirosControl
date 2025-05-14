@@ -205,12 +205,12 @@ const TableComponent = () => {
 
   return (
     <>
-      <div className="items-center p-4 bg-gradient-to-r from-purple-500 to-pink-500 h-screen">
+      <div className="items-center p-4 bg-gradient-to-r from-[#ddd2c5] to-[#FFFF] h-screen">
         <div className="m-auto max-w-xl flex justify-center gap-2">
           <ButtonDefault 
             textButton={dataLoading ? "Cargando..." : "Agregar Producto"} 
-            bgButton={dataLoading ? "bg-gray-400" : "bg-gray-500"} 
-            hoverBgButton={dataLoading ? "" : "hover:bg-gray-700"} 
+            bgButton={dataLoading ? "bg-[#4a4a58]" : "bg-[#181820]"} 
+            hoverBgButton={dataLoading ? "" : "hover:bg-[#4a4a58]"} 
             widthButton={"w-40"} 
             paddingButtonX={"px-3"} 
             paddingButtonY={"py-1"} 
@@ -224,10 +224,10 @@ const TableComponent = () => {
           <button
             onClick={exportToExcel}
             disabled={exportLoading || dataLoading || productos.length === 0}
-            className={`bg-gray-500 w-40 text-white px-3 py-1 mx-1 rounded-lg transition ${
+            className={`bg-[#181820] w-40 text-white px-3 py-1 mx-1 rounded-lg transition ${
               exportLoading || dataLoading || productos.length === 0 
-                ? "opacity-50 cursor-not-allowed" 
-                : "hover:bg-gray-700"
+                ? "opacity-80 cursor-not-allowed" 
+                : "hover:bg-[#4a4a58]"
             }`}
           >
             {exportLoading ? "Generando..." : "Generar Reporte"}
@@ -235,8 +235,8 @@ const TableComponent = () => {
 
           <ButtonDefault 
             textButton={"Cerrar Sesión"} 
-            bgButton={"bg-red-700"} 
-            hoverBgButton={"hover:bg-red-900"} 
+            bgButton={"bg-[#8a1329]"} 
+            hoverBgButton={"hover:bg-[#550b19]"} 
             widthButton={"w-40"} 
             paddingButtonX={"px-3"} 
             paddingButtonY={"py-1"} 
@@ -251,14 +251,14 @@ const TableComponent = () => {
         <form className="w-full max-w-md mx-auto flex my-3 gap-2">
           <div className="relative flex-grow">
             <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-              <svg className="w-4 h-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+              <svg className="w-4 h-4 text-[#181820]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                 <path stroke="currentColor" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
               </svg>
             </div>
             <input 
               type="search"
               id="default-search"
-              className="block w-full px-4 py-3 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-white focus:border-white"
+              className="block w-full px-4 py-3 ps-10 text-sm text-gray-900 border border-[#181820] rounded-lg bg-gray-50 focus:ring-white focus:border-white"
               placeholder="Buscar Producto..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -268,7 +268,7 @@ const TableComponent = () => {
           <button  type="button" 
             onClick={() => setShowManual(true)} 
             title="Ver manual de usuario"
-            className="w-12 h-11.5 flex items-center justify-center bg-lila rounded-lg border border-gray-300 hover:scale-110 transition-transform duration-200"
+            className="w-12 h-11.5 flex items-center justify-center bg-lila rounded-lg bg-[#181820] hover:bg-[#4a4a58] hover:scale-110 transition-transform duration-200"
           >
             <svg className="w-6 h-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
               <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M12 2a10 10 0 100 20 10 10 0 000-20z"/>
@@ -281,7 +281,7 @@ const TableComponent = () => {
 
         <div className="overflow-y-auto max-h-[calc(100vh-150px)] w-full">
             <table className="mx-auto table-fixed border-separate border-spacing-y-2">
-              <thead className="sticky top-0 bg-gray-800 text-white">
+              <thead className="sticky top-0 bg-[#8a1329] text-white">
                 <tr>
                   <th className="py-3 px-2 border-r-1">Producto</th>
                   <th className="py-3 px-2 border-r-1">Ud. Medida</th>
@@ -311,13 +311,13 @@ const TableComponent = () => {
 
                   return (
                     <tr key={producto.id} className="bg-white shadow-md">
-                      <td className="px-4 py-2 text-center border-r-2 border-r-gray-200">{producto.nombre}</td>
-                      <td className="px-4 py-2 text-center border-r-2 border-r-gray-200">{producto.unidad}</td>
-                      <td className="px-1 text-center border-r-2 border-r-gray-200">
+                      <td className="bg-gray-50 px-4 py-2 text-center border-r-2 border-r-gray-200">{producto.nombre}</td>
+                      <td className="bg-gray-50 px-4 py-2 text-center border-r-2 border-r-gray-200">{producto.unidad}</td>
+                      <td className="bg-gray-50 px-1 text-center border-r-2 border-r-gray-200">
                         <ButtonDefault 
                           textButton={totalEntrada} 
-                          bgButton={"bg-green-500"} 
-                          hoverBgButton={"hover:bg-emerald-700"} 
+                          bgButton={"bg-[#34070a]"} 
+                          hoverBgButton={"hover:bg-[#6d0a1c]"} 
                           widthButton={"min-w-24"} 
                           paddingButtonX={"px-3"} 
                           paddingButtonY={"py-1"} 
@@ -329,11 +329,11 @@ const TableComponent = () => {
                           disabled={loading || exportLoading || dataLoading}
                         />
                       </td>
-                      <td className="px-1 text-center border-r-2 border-r-gray-200">
+                      <td className="bg-gray-50 px-1 text-center border-r-2 border-r-gray-200">
                         <ButtonDefault 
                           textButton={totalSalida} 
-                          bgButton={"bg-green-500"} 
-                          hoverBgButton={"hover:bg-emerald-700"} 
+                          bgButton={"bg-[#34070a]"} 
+                          hoverBgButton={"hover:bg-[#6d0a1c]"} 
                           widthButton={"min-w-24"} 
                           paddingButtonX={"px-3"} 
                           paddingButtonY={"py-1"} 
@@ -347,17 +347,17 @@ const TableComponent = () => {
                       </td>
                       <td className={`px-4 py-2 text-center border-r-2 border-r-gray-200 ${
                         parseInt(producto.stock) > parseInt(producto.avisoStock || 0)
-                          ? 'bg-white'
-                          : 'bg-red-500 text-white'
+                          ? 'bg-gray-50'
+                          : 'bg-[#8a1329] text-white'
                       }`}>
                         {producto.stock}
                       </td>
-                      <td className="px-1 text-center border-r-2 border-r-gray-200">{caducidadProxima}</td>
-                      <td className="text-center min-w-28">
+                      <td className="bg-gray-50 px-1 text-center border-r-2 border-r-gray-200">{caducidadProxima}</td>
+                      <td className="bg-gray-50 text-center min-w-28">
                         <ButtonDefault 
                           textButton={"✏"} 
-                          bgButton={"bg-blue-500"} 
-                          hoverBgButton={"hover:bg-blue-800"} 
+                          bgButton={"bg-[#9a526a]"} 
+                          hoverBgButton={"hover:bg-[#550b19]"} 
                           widthButton={"w-12"} 
                           marginButton={"ml-1"} 
                           paddingButtonX={"px-3"} 
@@ -374,10 +374,10 @@ const TableComponent = () => {
                             setShowConfirmModal(true);
                           }}
                           disabled={loading || exportLoading || dataLoading}
-                          className={`px-3 py-1 mx-1 w-12 rounded bg-red-700 text-white ${
+                          className={`px-3 py-1 mx-1 w-12 rounded bg-[#8a1329] text-white ${
                             loading || exportLoading || dataLoading 
                               ? "opacity-50 cursor-not-allowed" 
-                              : "hover:bg-red-900"
+                              : "hover:bg-[#550b19]"
                           }`}
                         >
                           🗑

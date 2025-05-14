@@ -151,7 +151,7 @@ export default function ModalEditarDetalle({ modalData, onClose, onUpdateData })
         >
           {loading ? "Guardando..." : "Aceptar"}
         </button>
-        <button onClick={onClose} className="px-6 py-2 bg-red-500 hover:bg-red-700 text-white rounded">
+        <button onClick={onClose} className="px-6 py-2 bg-[#8a1329] hover:bg-[#550b19] text-white rounded">
           Cancelar
         </button>
       </div>

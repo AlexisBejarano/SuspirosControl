@@ -118,7 +118,7 @@ export default function ModalSalidaLote({ modalData, onClose, onUpdateData }) {
           <strong>Cantidad a retirar:</strong>
         </div>
         <div>
-          <button onClick={handleDecrease} className="bg-blue-500 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded-l">
+          <button onClick={handleDecrease} className="bg-[#34070a] hover:bg-[#550b19] text-white font-bold py-2 px-4 rounded-l">
             -
           </button>
           <input
@@ -128,7 +128,7 @@ export default function ModalSalidaLote({ modalData, onClose, onUpdateData }) {
             className="border-y-2 border-gray-300 text-center w-20 appearance-none focus:outline-none h-9"
             style={{ WebkitAppearance: "none", MozAppearance: "textfield" }}
           />
-          <button onClick={handleIncrease} className="bg-blue-500 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded-r">
+          <button onClick={handleIncrease} className="bg-[#34070a] hover:bg-[#550b19] text-white font-bold py-2 px-4 rounded-r">
             +
           </button>
         </div>
@@ -147,7 +147,7 @@ export default function ModalSalidaLote({ modalData, onClose, onUpdateData }) {
           </button>
           <button
             onClick={onClose}
-            className="px-6 py-2 bg-red-500 hover:bg-red-700 text-white rounded"
+            className="px-6 py-2 bg-[#8a1329] hover:bg-[#550b19] text-white rounded"
           >
             Cancelar
           </button>
