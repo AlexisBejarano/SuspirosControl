@@ -58,7 +58,7 @@ export default function Login() {
         <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-[#ddd2c5] to-[#FFFF]">
             <div className="bg-white/60 p-8 rounded-2xl shadow-xl max-w-sm w-full relative">
                 <div className="absolute flex items-center justify-center pb-3 -top-14 shadow-lg shadow-gray-300 left-1/2 transform -translate-x-1/2 w-30 h-30 bg-gradient-to-br from-purple-100 to-pink-100 rounded-full">
-                    <img src="/public/img/suspiros-red.png" alt="Logo" className="w-30 h-15" />
+                    <img src="../public/img/suspiros-red.png" alt="Logo" className="w-30 h-15" />
                 </div>
                 <h1 className="text-center text-2xl font-semibold text-gray-700 mt-12 bold">Suspiros Control</h1>
                 <div className="mt-6">
