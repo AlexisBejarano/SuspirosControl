@@ -67,7 +67,7 @@ export default function Login() {
                             type="text"
                             name="nombre"
                             onChange={handleChange}
-                            className="w-full py-d3 px-4 pl-12 bg-gray-100 border-2 border-[#34070a] rounded-lg focus:ring-0 outline-none"
+                            className="w-full py-3 px-4 pl-12 bg-gray-100 border-2 border-[#34070a] rounded-lg focus:ring-0 outline-none"
                             placeholder="User"
                         />
                         <div className="absolute left-4 top-3 text-gray-500">
